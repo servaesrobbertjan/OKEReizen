@@ -152,14 +152,13 @@ public function getAllePakketten()
 
 {
 
-
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisiNummer bestemmingsId, reisomschrijving, reis, hotel FROM reizen ORDER BY berichtid desc");
+    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisomschrijving, reis, hotel FROM reizen");
 
-    $berichtenLijst = array();
+    $pakkettenLijst = array();
 
-    foreach ($resultSet as $bericht) {
-        $berichtObj = new Bericht($bericht["berichtid"], $bericht["naam"], $bericht["bericht"], $bericht["datum"]);
+    foreach ($resultSet as $pakket) {
+        $berichtObj = new Bericht($pakket["berichtid"], $pakket["naam"], $pakket["bericht"], $pakket["datum"]);
         array_push($berichtenLijst, $berichtObj);
     }
 
