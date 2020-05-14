@@ -143,9 +143,22 @@ public function getReisId()
 
     }
 
-public function getPakketByReisid($id){
+    public function getPakketById($id)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisomschrijving, prijs FROM bestemmingen
+        INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsid
+        INNER JOIN reisTypes on reitypes.reisTypeId = reizen.reisTypeId
+        WHERE reisNummer = :id");
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-}
+        $pakketObj = new Pakket($id, $resultSet["Naam"], $resultSet["Alcohol"], $resultSet["Soort"], $resultSet["BrNaam"]);
+
+        $dbh = null;
+        return $pakketObj;
+    }
 
 
 public function getAllePakketten()

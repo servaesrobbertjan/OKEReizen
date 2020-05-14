@@ -129,9 +129,9 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         <h2> Onze 3 best beoordeelde Zomer reizen </h2>
         <div>
        <?php  foreach ($pakkettenzomer as $pakket) {
-        echo $pakket->getNaam() . "<br>";
+       
         echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getHotelNaam() . "<br>";
         echo $pakket->getOmschrijving() . "<br>";
         echo $pakket->getPrijs() . "<br>";
         
@@ -142,9 +142,9 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
 <h2> Onze 3 best beoordeelde Winter reizen </h2>
         <div>
        <?php  foreach ($pakkettenwinter as $pakket) {
-        echo $pakket->getNaam() . "<br>";
+      
         echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getHotelNaam() . "<br>";
         echo $pakket->getOmschrijving() . "<br>";
         echo $pakket->getPrijs() . "<br>";
         
@@ -154,9 +154,9 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
 <h2> Onze 3 best beoordeelde City Trips </h2>
         <div>
        <?php  foreach ($pakkettencitytrip as $pakket) {
-        echo $pakket->getNaam() . "<br>";
+  
         echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getHotelNaam() . "<br>";
         echo $pakket->getOmschrijving() . "<br>";
         echo $pakket->getPrijs() . "<br>";
         
