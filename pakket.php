@@ -146,7 +146,7 @@ public function getReisId()
     public function getPakketById($id)
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisomschrijving, prijs FROM bestemmingen
+        $stmt = $dbh->prepare("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisOmschrijving, prijs FROM bestemmingen
         INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsid
         INNER JOIN reisTypes on reitypes.reisTypeId = reizen.reisTypeId
         WHERE reisNummer = :id");
@@ -166,9 +166,9 @@ public function getAllePakketten()
 {
 
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisomschrijving, prijs FROM bestemmingen
-    INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsid
-    INNER JOIN reisTypes on reitypes.reisTypeId = reizen.reisTypeId
+    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisOmschrijving, prijs FROM bestemmingen
+    INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsId
+    INNER JOIN reisTypes on reistypes.reisTypeId = reizen.reisTypeId
     order by stad asc
     ");
 

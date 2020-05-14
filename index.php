@@ -42,27 +42,38 @@ if (isset($_POST["submitKnop"]))
 
 if ($_POST["eindreis"] <= $_POST["startreis"]) {
 
-    $error= 'Uw vertrekdatum kan niet vroeger zijn dan of gelijk zijn aan uw datum van terugkeer.';
+    $error.= 'Uw vertrekdatum kan niet vroeger zijn dan of gelijk zijn aan uw datum van terugkeer. ';
 }
 
 if ($_POST["startreis"] < $vandaag || $_POST["eindreis"] < $morgen)  {
 
-    $error= 'U kan niet in het verleden vertrekken of aankomen.';
+    $error.= 'U kan niet in het verleden vertrekken of aankomen. ';
 }
 
 if ($_POST["startreis"] > $limiet || $_POST["eindreis"] > $limiet)  {
 
-    $error= 'Deze datum is nog niet beschikbaar om te boeken';
+    $error.= 'Deze datum is nog niet beschikbaar om te boeken. ';
 }
 
 if (empty($_POST["eindreis"]) || empty($_POST["startreis"])) {
 
-    $error= 'U moet een datum voor vertrek en terugkomst opgeven.';
+    $error.= 'U moet een datum voor vertrek en terugkomst opgeven. ';
 }
 
-if ($error == "") {
-   
 
+if (empty($_POST["bestemming"]))
+
+{
+    $error.="Gelieve een bestemming in te geven. ";
+}
+if (empty($_POST["reistype"]))
+
+{
+    $error.="Gelieve een reistype in te geven. ";
+}
+
+
+if ($error == "") {
 
 
 }
