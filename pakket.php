@@ -154,7 +154,7 @@ public function getReisId()
         $stmt->execute();
         $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $pakketObj = new Pakket($id, $resultSet["Naam"], $resultSet["Alcohol"], $resultSet["Soort"], $resultSet["BrNaam"]);
+        $pakketObj = new Pakket($id, $resultSet["reisNummer"], $resultSet["bestemmingsId"], $resultSet["reisType"], $resultSet["stad"], $resultSet["hotelNaam"], $resultSet["reisOmschrijving"], $resultSet["prijs"]);
 
         $dbh = null;
         return $pakketObj;
