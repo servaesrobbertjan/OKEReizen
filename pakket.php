@@ -175,7 +175,7 @@ public function getAllePakketten()
     $pakkettenLijst = array();
 
     foreach ($resultSet as $pakket) {
-        $pakketObj = new Pakket($pakket["reisNummer"], $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["stad"],$resultSet["land"], 0,  $resultSet["hotelNaam"], $resultSet["prijs"]);
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["stad"],$pakket["land"], 0,  $pakket["hotelNaam"], $resultSet["prijs"]);
         array_push($pakkettenLijst, $pakketObj);
     }
 
@@ -202,7 +202,7 @@ public function getPakketByReisTypeAndBestemming($reistype,$bestemming)
         $pakkettenLijst = array();
 
         foreach ($resultSet as $pakket) {
-            $pakketObj = new Pakket($pakket["reisNummer"], $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["stad"],$resultSet["land"], 0,  $resultSet["hotelNaam"], $resultSet["prijs"]);
+            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["stad"],$pakket["land"], 0,  $pakket["hotelNaam"], $pakket["prijs"]);
             array_push($pakkettenLijst, $pakketObj);
         }
 
@@ -258,7 +258,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
         $pakkettenLijst = array();
 
         foreach ($resultSet as $pakket) {
-            $pakketObj = new Pakket($pakket["reisNummer"], $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["stad"],$resultSet["land"], 0,  $resultSet["hotelNaam"], $resultSet["prijs"]);
+            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["stad"],$pakket["land"], 0,  $pakket["hotelNaam"], $pakket["prijs"]);
             array_push($pakkettenLijst, $pakketObj);
         }
 
