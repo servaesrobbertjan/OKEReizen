@@ -175,7 +175,7 @@ public function getAllePakketten()
     $pakkettenLijst = array();
 
     foreach ($resultSet as $pakket) {
-        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["stad"],$pakket["land"], 0,  $pakket["hotelNaam"], $resultSet["prijs"]);
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["stad"], $pakket["land"], 0, $pakket["hotelNaam"], $resultSet["prijs"]);
         array_push($pakkettenLijst, $pakketObj);
     }
 
