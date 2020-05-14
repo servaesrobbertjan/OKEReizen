@@ -1,12 +1,25 @@
 <?php
 session_start();
+require_once("gebruiker.php");
 include_once("pakket.php");
 
+$naam='';
+$pakketObj= new Pakket();
+$pakketLijst = $pakketObj->getAllePakketten();
+$typesLijst = $pakketObj->getAlleReistypes();
+$pakkettenzomer = $pakketObj->getPakketByReisTypeWithBestReviewScore("zomer");
+$pakkettenwinter = $pakketObj->getPakketByReisTypeWithBestReviewScore("winter");
+$pakkettencitytrip = $pakketObj->getPakketByReisTypeWithBestReviewScore("citytrip");
 
-$pakket= new Pakket();
-$pakketLijst = $pakket->getAllePakketten();
+//* kijken of gebruiker ingelogd is 
 
+if (isset($_SESSION["gebruiker"]))
+{
 
+$gebruiker = unserialize($_SESSION["gebruiker"], ["User"]);
+$naam = $gebruiker->getEmailAdres();
+
+}
 
 $error ='';
 
@@ -47,6 +60,13 @@ if (empty($_POST["eindreis"]) || empty($_POST["startreis"])) {
     $error= 'U moet een datum voor vertrek en terugkomst opgeven.';
 }
 
+if ($error == "") {
+   
+
+
+
+}
+
 
 
 }
@@ -61,7 +81,7 @@ if (empty($_POST["eindreis"]) || empty($_POST["startreis"])) {
 require_once("header.php");
 ?>
 
-<h1>Welkom op onze Website <h1>
+<h1>Hallo <?php echo $naam ?>. Welkom op onze Website <h1>
 
         <h2>Welke reis wil u maken?</h2>
 
@@ -81,7 +101,7 @@ require_once("header.php");
 
             Type reis: <select name="reistype">
                 <?php
-                foreach ($pakketLijst as $pakket) {
+                foreach ($reisTypeLijst as $reisType) {
                     echo "<option value=\"" . $pakket->getReisType() . "</option>";
                 }
                 ?>
@@ -106,13 +126,44 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         </form>
 
 
-        <h2> Onze best beoordeelde reizen </h2>
+        <h2> Onze 3 best beoordeelde Zomer reizen </h2>
         <div>
-            <div>reis1</div>
-            <div>reis2</div>
-            <div>reis3</div>
+       <?php  foreach ($pakkettenzomer as $pakket) {
+        echo $pakket->getNaam() . "<br>";
+        echo $pakket->getStad() . "<br>";
+        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getOmschrijving() . "<br>";
+        echo $pakket->getPrijs() . "<br>";
+        
+    }
+?>
 
-            <!-- getPakketten where reviewscore is max order by desc and row_number < 4 -->
+
+<h2> Onze 3 best beoordeelde Winter reizen </h2>
+        <div>
+       <?php  foreach ($pakkettenwinter as $pakket) {
+        echo $pakket->getNaam() . "<br>";
+        echo $pakket->getStad() . "<br>";
+        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getOmschrijving() . "<br>";
+        echo $pakket->getPrijs() . "<br>";
+        
+    }
+?>
+
+<h2> Onze 3 best beoordeelde City Trips </h2>
+        <div>
+       <?php  foreach ($pakkettencitytrip as $pakket) {
+        echo $pakket->getNaam() . "<br>";
+        echo $pakket->getStad() . "<br>";
+        echo $pakket->getHotel() . "<br>";
+        echo $pakket->getOmschrijving() . "<br>";
+        echo $pakket->getPrijs() . "<br>";
+        
+    }
+?>
+
+
 
 
         </div>

@@ -153,26 +153,105 @@ public function getAllePakketten()
 {
 
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisomschrijving, reis, hotel FROM reizen");
+    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisType, stad, hotelNaam, reisomschrijving, prijs FROM bestemmingen
+    INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsid
+    INNER JOIN reisTypes on reitypes.reisTypeId = reizen.reisTypeId
+    order by stad asc
+    ");
 
     $pakkettenLijst = array();
 
     foreach ($resultSet as $pakket) {
-        $berichtObj = new Bericht($pakket["berichtid"], $pakket["naam"], $pakket["bericht"], $pakket["datum"]);
-        array_push($berichtenLijst, $berichtObj);
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["bestemmingsId"], $pakket["reisType"], $pakket["stad"], $pakket["hotelNaam"], $pakket["reisOmschrijving"], $pakket["prijs"]);
+        array_push($pakkettenLijst, $pakketObj);
     }
 
     $dbh = null;
-    return $berichtenLijst;
+    return $pakkettenLijst;
 
 }
 
-public function getPakketByReisTypeAndBestemming($type,$bestemming)
+
+public function getPakketByReisTypeAndBestemming($reistype,$bestemming)
+
+//* functie die de klant toelaat om op reistype & bestemming te zoeken */
+{
+
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT reisNummer, bestemmingdId, reisType, stad, hotelNaam, reisOmschrijving, prijs from reizen 
+        INNER JOIN reisTypes on reisTypes.reisTypeId = reizen.reisTypeId
+        WHERE bestemming =:bestemming AND reisType = :reistype ");
+        $stmt->bindValue(":bestemming", $bestemming);
+        $stmt->bindValue(":reistype", $reistype);
+        $stmt->execute();
+        $resultSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $pakkettenLijst = array();
+
+        foreach ($resultSet as $pakket) {
+            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["bestemmingsId"], $pakket["reisType"], $pakket["stad"], $pakket["hotelNaam"], $pakket["reisOmschrijving"], $pakket["prijs"]);
+            array_push($pakkettenLijst, $pakketObj);
+        }
+
+        $dbh = null;
+        return $pakkettenLijst;
+    }
+
+
+
+
+public function getAlleReisTypes() {
+ 
+//* Ophalen van alle reistypes in de databank */
+
+$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+$resultSet = $dbh->query("SELECT reisType FROM reizen");
+
+$reisTypeLijst = array();
+
+foreach ($resultSet as $type) {
+    $reisTypeObj = new Pakket($type["reisType"]);
+    array_push($reistypeLijst, $reisTypeObj);
+}
+
+$dbh = null;
+return $reisTypeLijst;
+
+}
+
+
+public function getPakketByReisTypeWithBestReviewScore($reistype)
+
+//* Per reistype worden de drie beste pakketten getoond */
 
 {
 
-}
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, hotelNaam, reisOmschrijving, prijs from 
+        reizen
+        INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
+        INNER JOIN hotel on hotel.hotelId = reizen.hotelId
+        INNER JOIN klantenreviews on klantenreviews.reisNummer = klantenreviews.reisNummer
+        INNER JOIN reviews on reviews.reviewId = klantenreviews.reviewId
+        WHERE reisType =:reistype 
+        order by reviewScore desc
+        fetch first 3 rows only"
+        );
+ 
+        $stmt->bindValue(":reistype", $reistype);
+        $stmt->execute();
+        $resultSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $pakkettenLijst = array();
+
+        foreach ($resultSet as $pakket) {
+            $pakketObj = new Pakket($pakket["reizen.reisNummer"], $pakket["bestemmingen.bestemmingsId"], $pakket["reisType"], $pakket["stad"], $pakket["hotelNaam"], $pakket["reisOmschrijving"], $pakket["prijs"]);
+            array_push($pakkettenLijst, $pakketObj);
+        }
+
+        $dbh = null;
+        return $pakkettenLijst;
+    }
 
 
 }
