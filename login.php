@@ -22,7 +22,7 @@ if (isset($_POST["btnLogin"])) {
 
     if ($error == "") {
         try {
-            $gebruiker = new klanten(null, $email, $wachtwoord);
+            $gebruiker = new klanten(null, null, null, null, null, $email, $wachtwoord);
             $gebruiker = $gebruiker->login();
             $_SESSION["gebruiker"] = serialize($gebruiker);
         } catch (GebruikerBestaatNietException $e) {
