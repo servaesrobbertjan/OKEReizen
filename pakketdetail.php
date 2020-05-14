@@ -14,7 +14,11 @@ echo $pakket->getHotelNaam() . "<br>";
 echo $pakket->getOmschrijving() . "<br>";
 echo $pakket->getPrijs() . "<br>";
 
+
+/*knop "boeken" */
 ?>
+
+
 
 <?php 
 require_once("footer.php");

@@ -130,10 +130,10 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         <div>
        <?php  foreach ($pakkettenzomer as $pakket) {
        
-        echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotelNaam() . "<br>";
-        echo $pakket->getOmschrijving() . "<br>";
-        echo $pakket->getPrijs() . "<br>";
+       echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+       . $pakket->getStad() 
+       . " " . $pakket->getLand() . " ". $pakket->getReistype() . " " . $pakket->getOmscrhijving()
+       . " " . $pakket->getHotel() . " ". $pakket->getPrijs() . " ". "</a></li>";
         
     }
 ?>
@@ -143,10 +143,10 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         <div>
        <?php  foreach ($pakkettenwinter as $pakket) {
       
-        echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotelNaam() . "<br>";
-        echo $pakket->getOmschrijving() . "<br>";
-        echo $pakket->getPrijs() . "<br>";
+      echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+      . $pakket->getStad() 
+      . " " . $pakket->getLand() . " ". $pakket->getReistype() . " " . $pakket->getOmscrhijving()
+      . " " . $pakket->getHotel() . " ". $pakket->getPrijs() . " ". "</a></li>";
         
     }
 ?>
@@ -154,13 +154,14 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
 <h2> Onze 3 best beoordeelde City Trips </h2>
         <div>
        <?php  foreach ($pakkettencitytrip as $pakket) {
-  
-        echo $pakket->getStad() . "<br>";
-        echo $pakket->getHotelNaam() . "<br>";
-        echo $pakket->getOmschrijving() . "<br>";
-        echo $pakket->getPrijs() . "<br>";
+  echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+  . $pakket->getStad() 
+  . " " . $pakket->getLand() . " ". $pakket->getReistype() . " " . $pakket->getOmscrhijving()
+  . " " . $pakket->getHotel() . " ". $pakket->getPrijs() . " ". "</a></li>";
+}
+
         
-    }
+    
 ?>
 
 
