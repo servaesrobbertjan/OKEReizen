@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("gebruiker.php");
+require_once("klanten.php");
 include_once("pakket.php");
 
 $naam='';
