@@ -92,7 +92,9 @@ if ($error == "") {
 require_once("header.php");
 ?>
 
-<h1>Hallo<?php echo " ".$naam ?>. Welkom op onze Website <h1>
+<h1>Hallo<?php 
+if ($naam !=""){
+echo " ".$naam; }?>. Welkom op onze Website <h1>
 
         <h2>Welke reis wil u maken?</h2>
 
