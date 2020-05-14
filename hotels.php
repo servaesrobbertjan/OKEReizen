@@ -68,7 +68,7 @@ class Hotels
         $hotelLijst = array();
 
         foreach ($resultSet as $hotel) {
-            $hotelObj = new Bericht($hotel["id"], $hotel["hotelNaam"], $hotel["hotelTelefoon"], $hotel["hotelEmail"]);
+            $hotelObj = new Hotels($hotel["id"], $hotel["hotelNaam"], $hotel["hotelTelefoon"], $hotel["hotelEmail"]);
             array_push($hotelLijst, $hotelObj);
         }
 
