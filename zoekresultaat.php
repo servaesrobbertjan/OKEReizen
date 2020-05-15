@@ -7,9 +7,9 @@ require_once("pakket.php");
 if (isset($_SESSION["zoekresultaat"])){
 $pakketObj = new Pakket();
 $zoekresultaat->unserialize($_SESSION["zoekresultaat"]);
-$bestemming=$zoekresultaat->getBestemming();
+$bestemming=$zoekresultaat->getBestemmingsId();
 $reistype=$zoekresultaat->getReistype();
-$PakketenLijst = $pakketObj->getPakketByReisTypeAndBestemming($reistype,$bestemming);
+$PakketenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bestemming);
 
  } else {
   

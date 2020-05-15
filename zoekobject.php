@@ -1,13 +1,13 @@
 <?php
 class Zoekobject {
 
-    private $bestemming;
+    private $bestemmingsid;
     private $reistype;
  
 
-    public function __construct($bestemming = null, $reistype=null)
+    public function __construct($bestemmingsid = null, $reistype=null)
     {
-        $this->bestemming = $bestemming;
+        $this->bestemmingsid = $bestemmingsid;
         $this->reistype = $reistype;
        
         
@@ -15,15 +15,15 @@ class Zoekobject {
 
 
  
-    public function getBestemming()
+    public function getBestemmingsId()
     {
-        return $this->bestemming;
+        return $this->bestemmingsid;
     }
 
  
-    public function setBestemming($bestemming)
+    public function setBestemmingsId($bestemmingsid)
     {
-        $this->bestemming = $bestemming;
+        $this->bestemmingsid = $bestemmingsid;
 
    
     }
