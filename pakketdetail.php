@@ -1,7 +1,25 @@
 <?php
+session_start();
 require_once("pakket.php");
-$pakketObj = new Pakket();
-$pakket = $pakketObj->getPakketById($_GET["id"]);
+
+if (!empty($_GET["id"])) {
+    $pakketObj = new Pakket();
+    $pakket = $pakketObj->getPakketById($_GET["id"]);
+
+
+    if (isset($_POST["submitKnop"])) {
+        $_SESSION["boeking"] = $_POST["boeking"];
+        header("Location: reisboeken.php");
+       exit;
+    }
+}
+else 
+
+{
+    header("Location: index.php");
+    exit;
+
+}
 require_once("header.php");
 ?>
 
@@ -18,8 +36,13 @@ echo $pakket->getPrijs() . "<br>";
 /*knop "boeken" */
 ?>
 
+<form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <input type="hidden" value="<?php $_GET["id"] ?>" name=boeking>
+    <input type="submit" value="Boek Nu" name="submitKnop">
+</form>
 
 
-<?php 
+
+<?php
 require_once("footer.php");
 ?>
