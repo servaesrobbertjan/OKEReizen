@@ -4,6 +4,7 @@ require_once("klanten.php");
 require_once("pakket.php");
 require_once("zoekobject.php");
 
+/*object aanmaken en ophalen pakketten db*/
 
 $naam = '';
 $pakketObj = new Pakket();
@@ -70,6 +71,8 @@ if (isset($_POST["submitKnop"])) {
 
     if ($error == "") {
 
+        /*zoekobject aanmaken en serializen + sturen gebruiker naar de resultatenpagina */
+
         $zoekobject = new Zoekobject($_POST["bestemming"], $_POST["reistype"]);
         $_SESSION["zoekresultaat"] = serialize($zoekobject);
         header("Location: zoekresultaat.php");
@@ -129,8 +132,9 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
 
 
             <input type="submit" value="OK" name="submitKnop">
+            <br>
 
-
+<a href="allepakketten.php">Geef alle reispakketten weer.</a>
 
         </form>
 

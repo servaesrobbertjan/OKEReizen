@@ -2,24 +2,28 @@
 session_start();
 require_once("pakket.php");
 
+if (empty($_GET["id"]) && empty($_POST["boeking"])) {
+
+    header("Location: index.php");
+   exit;
+}
+
+
 if (!empty($_GET["id"])) {
     $pakketObj = new Pakket();
     $pakket = $pakketObj->getPakketById($_GET["id"]);
 
-
-    if (isset($_POST["submitKnop"])) {
-        $_SESSION["boeking"] = $_POST["boeking"];
-        header("Location: reisboeken.php");
-       exit;
     }
-}
-else 
 
-{
-    header("Location: index.php");
-    exit;
+   
+if (isset($_POST["submitKnop"]) && !empty($_POST["boeking"])) {
+    $_SESSION["boeking"] = $_POST["boeking"];
+    header("Location: reisboeken.php");
+   exit;
 
 }
+
+
 require_once("header.php");
 ?>
 
@@ -37,7 +41,7 @@ echo $pakket->getPrijs() . "<br>";
 ?>
 
 <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
-    <input type="hidden" value="<?php $_GET["id"] ?>" name=boeking>
+    <input type="hidden" value="<?php echo $_GET["id"] ?>" name="boeking">
     <input type="submit" value="Boek Nu" name="submitKnop">
 </form>
 

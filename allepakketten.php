@@ -3,7 +3,7 @@
 require_once("pakket.php");
 
 $pakketObj = new Pakket();
-$PakkettenLijst = $pakketObj->getAllePakketten();
+$pakkettenLijst = $pakketObj->getAllePakketten();
 
 ?>
 <?php
@@ -17,7 +17,7 @@ require_once("header.php");
         foreach ($pakkettenLijst as $pakket) {
             echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">" . $pakket->getStad() 
             . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . "<br>" . $pakket->getOmscrhijving()
-            . "<br>" . $pakket->getHotel() . " <br><br> €". $pakket->getPrijs() * 7 . " per persoon/per week". "</a>
+            . "<br>" . $pakket->getHotel() . " <br><br> €". $pakket->getPrijs()  . " per persoon/per overnachting". "</a>
             </li>";
 
 

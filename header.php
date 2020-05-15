@@ -8,11 +8,11 @@
 
 <body>
     <a href="index.php">Home</a> -
-    <a href="publicpage.php">Welkom</a> -
+    <a href="allepakketten.php">Onze Pakketten</a> -
     <a href="review.php">Reviews</a> -
     <?php if (!isset($_SESSION["gebruiker"])) { ?>
         <a href="login.php">Login</a> -
-        <a href="registreer.php">Registreren</a> -
+        <a href="registreer.php">Registreren </a>
     <?php } else { ?>
         <a href="logout.php">Logout</a> -
         <a href="privatepage.php">Privé-pagina</a>
