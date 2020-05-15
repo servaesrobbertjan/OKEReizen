@@ -6,15 +6,25 @@ if (empty($_GET["id"]) && empty($_POST["boeking"])) {
 
     header("Location: index.php");
    exit;
-}
+} else {
 
-
-if (!empty($_GET["id"])) {
     $pakketObj = new Pakket();
+    
+if (!empty($_SESSION["boeking"]) && empty($_GET["id"])) {
+ 
+    $pakket = $pakketObj->getPakketById($_SESSION["boeking"]);
+
+  
+
+if (!empty($_GET["id"]) && empty(($_SESSION["boeking"])) {
+  
     $pakket = $pakketObj->getPakketById($_GET["id"]);
 
     }
 
+}
+
+}
    
 if (isset($_POST["submitKnop"]) && !empty($_POST["boeking"])) {
     $_SESSION["boeking"] = $_POST["boeking"];
