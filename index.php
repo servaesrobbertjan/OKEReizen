@@ -17,7 +17,7 @@ if (isset($_SESSION["gebruiker"]))
 {
 
 $gebruiker = unserialize($_SESSION["gebruiker"], ["User"]);
-$naam = $gebruiker->getEmailAdres();
+$naam = $gebruiker->getNaam();
 
 }
 
