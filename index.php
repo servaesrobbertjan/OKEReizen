@@ -103,7 +103,7 @@ require_once("header.php");
             Bestemming: <select name="bestemming">
                 <?php
                 foreach ($pakketLijst as $pakket) {
-                    echo "<option value=\"" . $pakket->getBestemmingsID() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
+                    echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
                 }
                 ?>
             </select><br>
