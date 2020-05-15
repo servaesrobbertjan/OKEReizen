@@ -70,7 +70,7 @@ if (isset($_POST["submitKnop"])) {
 
     if ($error == "") {
 
-        $zoekobject = new Pakket($_POST["bestemming"], $_POST["reistype"]);
+        $zoekobject = new Zoekobject($_POST["bestemming"], $_POST["reistype"]);
         $_SESSION["zoekresultaat"] = serialize($zoekobject);
         header("Location: zoekresultaat.php");
         exit;
