@@ -12,7 +12,7 @@ class Pakket {
 */ 
 private $reisid;
     private $omschrijving;
-    private $bestemmingid;
+
     private $reistype;
     private $stad;
     private $land;
@@ -164,11 +164,11 @@ public function getReisId()
 public function getAllePakketten()
 
 {
-
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, bestemmingsId, reisType, stad, land, hotelNaam, reisOmschrijving, prijs FROM bestemmingen
+    $resultSet = $dbh->query("SELECT reisNummer, reisType, stad, land, hotelNaam, reisOmschrijving, prijs FROM bestemmingen
     INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsId
     INNER JOIN reisTypes on reistypes.reisTypeId = reizen.reisTypeId
+    INNER JOIN hotel on hotel.hotelId = reizen.hotelId
     order by stad asc
     ");
 
@@ -181,7 +181,7 @@ public function getAllePakketten()
 
     $dbh = null;
     return $pakkettenLijst;
-
+    
 }
 
 
@@ -193,6 +193,7 @@ public function getPakketByReisTypeAndBestemming($reistype,$bestemming)
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
         $stmt = $dbh->prepare("SELECT reisNummer, bestemmingdId, reisType, stad, land hotelNaam, reisOmschrijving, prijs from reizen 
         INNER JOIN reisTypes on reisTypes.reisTypeId = reizen.reisTypeId
+        INNER JOIN hotel on hotel.hotelId = reizen.hotelId
         WHERE bestemming =:bestemming AND reisType = :reistype ");
         $stmt->bindValue(":bestemming", $bestemming);
         $stmt->bindValue(":reistype", $reistype);
@@ -218,7 +219,8 @@ public function getAlleReisTypes() {
 //* Ophalen van alle reistypes in de databank */
 
 $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-$resultSet = $dbh->query("SELECT reisType FROM reizen");
+$resultSet = $dbh->query("SELECT reisType FROM reizen
+     INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId");
 
 $reisTypeLijst = array();
 
