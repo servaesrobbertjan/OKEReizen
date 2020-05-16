@@ -91,7 +91,7 @@ if (!isset($_SESSION["gebruiker"])) {
         Naam en Voornaam: <input type="text" name="txtNaam"> <br>
         Straat en Huisnummer: <input type="text" name="txtAdres"> <br>
         Postcode en gemeente: <input type="text" name="txtPlaats"> <br>
-        geboortedatum: <input type="text" name="txtGeboorteDatum"> <br>
+        geboortedatum: <input type="date" name="txtGeboorteDatum"> <br>
         E-mailadres: <input type="email" name="txtEmail"> <br>
         Wachtwoord: <input type="password" name="txtWachtwoord"> <br>
         Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> <br>
