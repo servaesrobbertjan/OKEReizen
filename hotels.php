@@ -7,7 +7,7 @@ require_once("klanten.php");
 class Hotels
 {
 
-    private $id;
+    private $hotelId;
     private $hotelNaam;
     private $hotelTelefoon;
     private $hotelEmail;
@@ -16,7 +16,7 @@ class Hotels
 
     public function __construct($cid = null, $chotelNaam=null, $chotelTelefoon = null, $chotelEmail = null)
     {
-        $this->id = $cid;
+        $this->hotelId = $cid;
         $this->hotelNaam = $chotelNaam;
         $this->hotelTelefoon = $chotelTelefoon;
         $this->hotelEmail = $chotelEmail;
@@ -25,7 +25,7 @@ class Hotels
 
     public function getId()
     {
-        return $this->id;
+        return $this->hotelId;
     }
 
     public function getHotelNaam()
@@ -63,23 +63,35 @@ class Hotels
     public function getAllHotel()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $resultSet = $dbh->query("SELECT id, hotelNaam, hotelTelefoon, hotelEmail FROM hotels ORDER BY ID asc");
+        $resultSet = $dbh->query("SELECT hotelId, hotelNaam, hotelTelefoon, hotelEmail FROM hotel ORDER BY hotelId asc");
 
         $hotelLijst = array();
 
         foreach ($resultSet as $hotel) {
-            $hotelObj = new Hotels($hotel["id"], $hotel["hotelNaam"], $hotel["hotelTelefoon"], $hotel["hotelEmail"]);
+            $hotelObj = new Hotels($hotel["hotelId"], $hotel["hotelNaam"], $hotel["hotelTelefoon"], $hotel["hotelEmail"]);
             array_push($hotelLijst, $hotelObj);
         }
 
         $dbh = null;
         return $hotelLijst;
     }
+
+    public function getHotelByID($hotelId)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT hotelNaam, hotelTelefoon, hotelEmail FROM hotel WHERE hotelId = :hoteIid");
+        $stmt->bindValue(":hotelId", $hotelId);
+        $stmt->execute();
+        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
+        $hotelObj = new Hotels($hotelId, $resultSet["hotelNaam"], $resultSet["hotelTelefoon"],$resultSet["hotelEmail"]);
+        $dbh = null;
+        return $hotelObj;
+    }
    
     public function hotelBestaatAl()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT * FROM hotels WHERE hotelNaam = :hotelNaam");
+        $stmt = $dbh->prepare("SELECT * FROM hotel WHERE hotelNaam = :hotelNaam");
         $stmt->bindValue(":hotelNaam", $this->hotelNaam);
         $stmt->execute();
         $rowCount = $stmt->rowCount();
@@ -95,17 +107,32 @@ class Hotels
             throw new HotelBestaatAlException();
         }
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("INSERT INTO hotels (hotelNaam, hotelTelefoon, hotelEmail) VALUES (:hotelNaam, :hotelTelefoon,:hotelEmail)");
-        $stmt->bindValue(":klantNaam", $this->naam);
-        $stmt->bindValue(":klantAdres", $this->adres);
-        $stmt->bindValue(":plaatsId", $this->plaats);
-        $stmt->bindValue(":geboortedatum", $this->geboortedatum);
-        $stmt->bindValue(":emailAdres", $this->email);
-        $stmt->bindValue(":wachtwoord", $this->wachtwoord);
+        $stmt = $dbh->prepare("INSERT INTO hotel (hotelNaam, hotelTelefoon, hotelEmail) VALUES (:hotelNaam, :hotelTelefoon,:hotelEmail)");
+        $stmt->bindValue(":hotelNaam", $this->hotelNaam);
+        $stmt->bindValue(":hotelTelefoon", $this->hotelTelefoon);
+        $stmt->bindValue(":hotelEmail", $this->hotelEmail);
         $stmt->execute();
         $laatsteNieuweId = $dbh->lastInsertId();
         $dbh = null;
         $this->id = $laatsteNieuweId;
         return $this;
+    }
+    public function deleteHotelByID($hotelId) {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("DELETE FROM hotel WHERE hotelId = :id");
+        $stmt->bindValue(":id", $hotelId);
+        $stmt->execute();
+        $dbh = null;
+    }
+    public function updateHotel()
+    {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("UPDATE hotel SET hotelNaam = :hotelNaam, hotelTelefoon = :hotelTelefoon, hotelEmail = :hotelEmail WHERE hotelId = :hotelId");
+        $stmt->bindValue(":hotelId", $this->hotelId);
+        $stmt->bindValue(":hotelNaam", $this->hotelNaam);
+        $stmt->bindValue(":hotelTelefoon", $this->hotelTelefoon);
+        $stmt->bindValue(":hotelEmail", $this->hotelEmail);
+        $stmt->execute();
+        $dbh = null;
     }
 }

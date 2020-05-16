@@ -73,7 +73,8 @@ class Klanten
     }
     public function setGeboorteDatum($sgeboortedatum)
     {
-
+        $date = new DateTime(null, new DateTimeZone('Europe/Brussels'));
+        $sgeboortedatum=$date->format("Y-m-d");
         $this->geboortedatum = $sgeboortedatum;
     }
     public function setEmail($semail)
