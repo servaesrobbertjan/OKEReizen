@@ -9,7 +9,7 @@ class Boeking
         /* 
          
          * We maken een Object "Boeking", met alle relevante info van de boeking. Hierin zit: het object van het Pakket, het object van de User, object van de medereizigers, het aantal personen,  het aantal dagen,
-         * vertrekdatum, boekingsid
+         * object van het hotel, luchthaven, vertrekdatum, boekingsid
         
         */ 
         
