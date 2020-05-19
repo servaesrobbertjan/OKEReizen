@@ -60,7 +60,7 @@ if (isset($_POST["btnDelete"])) {
 
         echo "<h1>Hotel \"" . $hotel->getHotelNaam() . "\" verwijderd</h1>";
 
-        echo "Klik <a href=\"oefening5.php\">hier</a> om terug te gaan naar de overzichtspagina.";
+        echo "Klik <a href=\"index.php\">hier</a> om terug te gaan naar de overzichtspagina.";
     } else if (isset($_POST["btnUpdate"])) {
         echo "<h1>Hotel \"" . $hotel->getHotelNaam() . "\" geüpdatet</h1>";
         echo "Nieuwe waarden:<br>";

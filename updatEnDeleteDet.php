@@ -8,7 +8,7 @@ $hotelLijst = $hotelObj->getAllHotel();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Oefening5</title>
+    <title>update en delete</title>
 </head>
 <body>
     <ul>

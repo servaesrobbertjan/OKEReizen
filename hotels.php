@@ -69,7 +69,7 @@ class Hotels
 
         foreach ($resultSet as $hotel) {
             $hotelObj = new Hotels($hotel["hotelId"], $hotel["hotelNaam"], $hotel["hotelTelefoon"], $hotel["hotelEmail"]);
-            array_push($hotelLijst, $hotelObj);
+            array_push($hotelLijst,$hotelObj);
         }
 
         $dbh = null;
