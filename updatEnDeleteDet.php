@@ -1,21 +1,21 @@
 <?php
-require_once("hotels.php");
-$hotelObj = new Hotels();
-$hotelLijst = $hotelObj->getAllHotel();
+require_once("pakket.php");
+$pakketObj = new Pakket();
+$pakketLijst = $pakketObj->getAllePakketten();
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Oefening5</title>
+    <title>update en delete</title>
 </head>
 <body>
     <ul>
         <?php 
         
-        foreach ($hotelLijst as $hotel) {
-            echo "<li><a href=\"deleteEnUpdateHotel.php?id=" . $hotel->getId() . "\">" . $hotel->getHotelNaam()  . $hotel->getHotelEmail(). "</a></li>";
+        foreach ($pakketLijst as $pakket) {
+            echo "<li><a href=\"index.php?id=" . $pakket->getReisId() . "\">" . $pakket->getHotelNaam()  . $hotel->getHotelEmail(). "</a></li>";
         }
         
         ?>
