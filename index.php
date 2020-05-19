@@ -131,7 +131,7 @@ voor de rest gaan we hier niets mee doen bij de zoekresultaten omdat onze reizen
 Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het object opslaan -->
 
 
-            <input type="submit" value="OK" name="submitKnop">
+            <input type="submit" value="Zoek uw reis" name="submitKnop">
             <br>
 
 <a href="allepakketten.php">Geef alle reispakketten weer.</a>
@@ -139,7 +139,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         </form>
 
 
-        <h2> Onze 3 best beoordeelde Zomer reizen </h2>
+        <h2> Onze best beoordeelde Zomerreizen </h2>
         <div>
             <?php foreach ($pakkettenzomer as $pakket) {
 
@@ -151,7 +151,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
             ?>
 
 
-            <h2> Onze 3 best beoordeelde Winter reizen </h2>
+            <h2> Onze best beoordeelde Winterreizen </h2>
             <div>
                 <?php foreach ($pakkettenwinter as $pakket) {
 
@@ -162,7 +162,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                 }
                 ?>
 
-                <h2> Onze 3 best beoordeelde City Trips </h2>
+                <h2> Onze best beoordeelde City Trips </h2>
                 <div>
                     <?php foreach ($pakkettencitytrip as $pakket) {
                         echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
