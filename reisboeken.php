@@ -1,6 +1,15 @@
 <?php
 require_once("header.php");
 require_once("boeking.php");
+
+$today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
+$vandaag = $today->format("Y-m-d");
+
+$tomorrow = $today->modify('+1 day');
+$morgen = $tomorrow->format("Y-m-d");
+
+$limit = $tomorrow->modify('+730 day');
+$limiet = $limit->format("Y-m-d");
 ?>
 
 

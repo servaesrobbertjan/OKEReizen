@@ -16,7 +16,7 @@ class Boeking
         
         */
     private $boekingsid;
-    private $klantid;
+    private $klantnid;
     private $reisid;
     private $luchthaven;
     private $hotel;
@@ -137,10 +137,26 @@ class Boeking
     }
 
 
-    public function GetBoekingById($id)
+    public function GetBoekingById($reisid)
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("select from boekingen INNER JOIN reizen ON INNER JOIN hotels ON bieren.SoortNr = soorten.SoortNr WHERE BierNr = :id");
+        $stmt = $dbh->prepare("select boekingsId, boekingsdatum from boekingen INNER JOIN reizen ON INNER JOIN hotels ON bieren.SoortNr = soorten.SoortNr WHERE BierNr = :id");
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
+        $hotelObj = new Hotels($resultSet[]);
+        $pakketObj = new Pakket(($resultSet[]));
+        $boekingsObj = new Boeking($id, $resultSet[], $pakketObj, $hotelObj);
+
+        $dbh = null;
+        return $boekingsObj;
+    }
+
+
+    public function GetBoekingByKlantenId($klantenid)
+    {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("select boekingsId, boekingsdatum from boekingen INNER JOIN reizen ON INNER JOIN hotels ON bieren.SoortNr = soorten.SoortNr WHERE BierNr = :id");
         $stmt->bindValue(":id", $id);
         $stmt->execute();
         $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -162,6 +178,19 @@ class Boeking
         $stmt->bindValue(":aantaldagen", $aantaldagen);
         $stmt->bindValue(":aantalpersonen", $aantalpersonen);
         $stmt->execute();
+        $laatsteNieuweId = $dbh->lastInsertId();
+        
+        return $laatsteNieuweId;
+
+        if ($laatsteNieuweId != 0)
+        {
+            $stmt = $dbh->prepare("INSERT INTO reizen (boekingsId) VALUES (:boekingsid) WHERE  reisnummer" );
+            $stmt->bindValue(":boekingsid", $laatsteNieuweId);
+            $stmt->execute();
+            $laatsteNieuweId = $dbh->lastInsertId();
+        }
+
+
         $dbh = null;
     }
 
