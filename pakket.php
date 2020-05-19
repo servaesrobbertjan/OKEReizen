@@ -262,6 +262,22 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
         $dbh = null;
         return $pakkettenLijst;
     }
-
+    public function deletePakketByID($id) {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("DELETE FROM boekingen  WHERE boekingsId = :id");
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+        $dbh = null;
+    }
+    public function updatePakket()
+    {
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("UPDATE boekingen SET  reis TypeId = :reis TypeId, reisOmschrijving = :reisOmschrijving, prijs = :prijs WHERE boekingsId = :boekingsId");
+        $stmt->bindValue(":reis TypeId", $this->reisid);
+        $stmt->bindValue(":reisOmschrijving", $this->omschrijving);
+        $stmt->bindValue(":prijs", $this->prijs);
+        $stmt->execute();
+        $dbh = null;
+    }
 
 }
