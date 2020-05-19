@@ -16,14 +16,21 @@ if (empty($_GET["id"]) && empty($_POST["boeking"])) {
     } else {
         $pakket = $pakketObj->getPakketById($_SESSION["boeking"]);
     }
+
+
+
 }
 
 
 
-if (isset($_POST["submitKnop"]) && !empty($_POST["boeking"])) {
+if (isset($_POST["submitKnop"]){
+
+if (!empty($_POST["boeking"])) {
     $_SESSION["boeking"] = $_POST["boeking"];
     header("Location: reisboeken.php");
     exit;
+
+}
 }
 
 

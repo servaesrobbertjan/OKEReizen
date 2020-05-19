@@ -11,6 +11,7 @@ $bestemming=$zoekresultaat->getBestemmingsId();
 $reistype=$zoekresultaat->getReistype();
 $PakketenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bestemming);
 
+
  } else {
   
     header("Location: index.php");

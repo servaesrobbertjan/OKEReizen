@@ -1,6 +1,9 @@
 <?php
+session_start();
 require_once("header.php");
 require_once("boeking.php");
+
+
 
 $today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
 $vandaag = $today->format("Y-m-d");
@@ -10,11 +13,38 @@ $morgen = $tomorrow->format("Y-m-d");
 
 $limit = $tomorrow->modify('+730 day');
 $limiet = $limit->format("Y-m-d");
+
+
+$pakket = new Pakket();
+
+/*if (isset($_SESSION["boeking"])){ */
+    $gekozenreis = $pakket->getPakketById(1);
+
+    /*
+}
+
+else {
+
+        if (isset($_SESSION["zoekresultaat"])){
+            header("Location: zoekresultaat.php");
+            exit;
+        }else{
+  
+    header("Location: index.php");
+    exit;
+        }
+}
+*/
 ?>
 
 
 
 <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
+
+Uw gekozen pakket: <?php var_dump($gekozenreis) ?>
+
+
+
 
 Aantal personen <input type="number" id="aantaldagen" name="dagen" value="2" min="1" max="10">
 
@@ -40,10 +70,10 @@ voor de rest gaan we hier niets mee doen bij de zoekresultaten omdat onze reizen
 Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het object opslaan -->
 
 
-<input type="submit" value="Zoek uw reis" name="submitKnop">
+<input type="submit" value="Boek uw reis" name="submitKnop">
 <br>
 
-<a href="allepakketten.php">Geef alle reispakketten weer.</a>
+<a href="zoekresultaat.php">Terug naar zoekresultaten.</a>
 
 </form>
 
