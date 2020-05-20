@@ -1,6 +1,6 @@
 <?php
 require_once("DBconfig.php");
-require_once("Exception.php");
+require_once("Exceptions.php");
 
 class review
 {
