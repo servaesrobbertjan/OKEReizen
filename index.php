@@ -73,7 +73,7 @@ if (isset($_POST["submitKnop"])) {
 
         /*zoekobject aanmaken en serializen + sturen gebruiker naar de resultatenpagina */
 
-        $zoekobject = new Zoekobject($_POST["bestemming"], $_POST["reistype"]);
+        $zoekobject = new Zoekobject($_POST["bestemmingsid"], $_POST["reistype"]);
         $_SESSION["zoekresultaat"] = serialize($zoekobject);
         header("Location: zoekresultaat.php");
         exit;
@@ -103,7 +103,7 @@ require_once("header.php");
 
             <!-- Van alle reispakketten de bestemming(stad) en reistypes in een selectielijst zetten -->
 
-            Bestemming: <select name="bestemming">
+            Bestemming: <select name="bestemmingsid">
                 <?php
                 foreach ($pakketLijst as $pakket) {
                     echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
@@ -114,7 +114,7 @@ require_once("header.php");
             Type reis: <select name="reistype">
                 <?php
                 foreach ($reisTypeLijst as $reistype) {
-                    echo "<option value=\"" . $reistype->getReisType() . "</option>";
+                    echo "<option value=\"" . $reistype->getReisType() . "\">" . $reistype->getReisType() . "</option>";
                 }
                 ?>
             </select>

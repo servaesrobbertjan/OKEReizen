@@ -9,14 +9,18 @@ $pakketObj = new Pakket();
 $zoekresultaat->unserialize($_SESSION["zoekresultaat"]);
 $bestemming=$zoekresultaat->getBestemmingsId();
 $reistype=$zoekresultaat->getReistype();
-$PakketenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bestemming);
+$pakkettenLijst = $pakketObj->getPakketById($reistype,$bestemming);
 
 
  } else {
   
-    header("Location: index.php");
+    $pakketObj = new Pakket();
+    $pakkettenLijst = $pakketObj->getPakketById(1);
+    var_dump($pakkettenLijst);
+  
+    /* header("Location: index.php");
     exit;
-
+*/
  }
 
 
@@ -30,7 +34,7 @@ require_once("header.php");
         
         foreach ($pakkettenLijst as $pakket) {
             echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">" . $pakket->getStad() 
-            . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . "<br>" . $pakket->getOmscrhijving()
+            . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
             . "<br>" . $pakket->hotelid->getHotelNaam() . " <br><br> €". $pakket->getPrijs() . " per persoon/per nacht". "</a>
             </li>";
 
