@@ -160,7 +160,7 @@ public function getAllePakketten()
 
 {
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, reisType, stad, land, hotelNaam, reisOmschrijving, prijs FROM bestemmingen
+    $resultSet = $dbh->query("SELECT reisNummer, reisType, stad, land, hotelNaam, reisOmschrijving, prijs, bestemmingsId FROM bestemmingen
     INNER JOIN reizen on reizen.bestemmingsId = bestemmingen.bestemmingsId
     INNER JOIN reisTypes on reistypes.reisTypeId = reizen.reisTypeId
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId
@@ -170,7 +170,7 @@ public function getAllePakketten()
     $pakkettenLijst = array();
 
     foreach ($resultSet as $pakket) {
-        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsid"], $pakket["stad"], $pakket["land"], $pakket["hotelNaam"], $resultSet["prijs"]);
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"], $pakket["land"], $pakket["hotelNaam"], $resultSet["prijs"]);
         array_push($pakkettenLijst, $pakketObj);
     }
 
