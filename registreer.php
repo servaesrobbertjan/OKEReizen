@@ -5,7 +5,7 @@ session_start();
 require_once("klanten.php");
 
 $today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
-$minimumage = $today->modify('-6570 day');
+$minimumage = $today->modify('-6576 day');
 $minleeftijd = $minimumage->format("Y-m-d");
 
 $error = "";
