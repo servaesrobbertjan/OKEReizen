@@ -23,7 +23,7 @@ if (empty($_GET["id"]) && empty($_POST["boeking"])) {
 
 
 
-if (isset($_POST["submitKnop"]){
+if (isset($_POST["submitKnop"])){
 
 if (!empty($_POST["boeking"])) {
     $_SESSION["boeking"] = $_POST["boeking"];
@@ -42,7 +42,7 @@ require_once("header.php");
 
 
 echo $pakket->getStad() . "<br>";
-echo $pakket->getHotelNaam() . "<br>";
+echo $pakket->hotelid->getHotelNaam() . "<br>";
 echo $pakket->getOmschrijving() . "<br>";
 echo $pakket->getPrijs() . "<br>";
 

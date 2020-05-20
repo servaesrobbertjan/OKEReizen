@@ -2,8 +2,10 @@
 session_start();
 require_once("header.php");
 require_once("boeking.php");
+require_once("pakket.php");
 
 
+$gekozenreis="";
 
 $today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
 $vandaag = $today->format("Y-m-d");
@@ -17,8 +19,11 @@ $limiet = $limit->format("Y-m-d");
 
 $pakket = new Pakket();
 
+
 /*if (isset($_SESSION["boeking"])){ */
-    $gekozenreis = $pakket->getPakketById(1);
+$allepakketten = $pakket->getAllePakketten();
+    $gekozenpakket = $pakket->getPakketById(1);
+
 
     /*
 }
@@ -41,33 +46,21 @@ else {
 
 <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-Uw gekozen pakket: <?php var_dump($gekozenreis) ?>
+Uw gekozen pakket: <?php echo $gekozenpakket->getStad() . "<br>";
+echo $gekozenpakket->hotelid->getHotelNaam() . "<br>";
+echo $gekozenpakket->getOmschrijving() . "<br>";
+echo $gekozenpakket->getPrijs() . " per persoon/nacht.<br>"; ?>
 
-
-
+<br>
 
 Aantal personen <input type="number" id="aantaldagen" name="dagen" value="2" min="1" max="10">
 
-Bestemming: <select name="bestemming">
-    <?php
-    foreach ($pakketLijst as $pakket) {
-        echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
-    }
-    ?>
-</select><br>
+ 
 
-
-
-Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $vandaag ?>" min=" <?php echo $vandaag ?> " max="<?php echo  $limiet ?>">
+Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>">
 <br>
 
-Aantal dagen <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31">
-
-
-
-<!--eindreis mag niet kleiner of gelijk zijn dan startreis én het veld moet ingevuld zijn, 
-voor de rest gaan we hier niets mee doen bij de zoekresultaten omdat onze reizen geen specifieke start en einddata hebben.
-Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het object opslaan -->
+Aantal dagen <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31"><br>
 
 
 <input type="submit" value="Boek uw reis" name="submitKnop">

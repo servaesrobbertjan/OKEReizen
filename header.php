@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>header</title>
+    <title>OKEReizen. Het beste reisbureau in West-Europa</title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
         <a href="registreer.php">Registreren</a>
     <?php } else { ?>
         <a href="logout.php">Logout</a> -
-        <a href="privatepage.php">Privé-pagina</a>
+        <a href="klantPage.php">Privé-pagina</a>
     <?php 
     } 
     ?>

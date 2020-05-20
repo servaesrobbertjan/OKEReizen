@@ -113,8 +113,8 @@ require_once("header.php");
 
             Type reis: <select name="reistype">
                 <?php
-                foreach ($reisTypeLijst as $reisType) {
-                    echo "<option value=\"" . $pakket->getReisType() . "</option>";
+                foreach ($reisTypeLijst as $reistype) {
+                    echo "<option value=\"" . $reistype->getReisType() . "</option>";
                 }
                 ?>
             </select>

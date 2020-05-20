@@ -1,6 +1,6 @@
 <?php
-require_once("DBconfig.php");
-require_once("Exceptions.php");
+require_once("dbconfig.php");
+require_once("exceptions.php");
 
 class review
 {
@@ -92,7 +92,7 @@ class review
 
         if($laatsteNewId != NULL){
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("INSERT INTO klantenreviews (klantNummer, reisNummer) VALUES (:klantnummer, :reisNummer)");
+        $stmt = $dbh->prepare("INSERT INTO klantenreviews (klantNummer, reisNummer) VALUES (:klantnummer, :reisnummer)");
         $stmt->bindValue(":klantnummer", $this->klantnummer);
         $stmt->bindValue(":reisnummer", $this->reisnummer);
         $stmt->execute();
