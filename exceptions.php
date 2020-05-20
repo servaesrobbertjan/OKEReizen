@@ -25,4 +25,9 @@ class HotelBestaatAlException extends Exception
     
 }
 
+class reviewTeLang extends Exception
+{
+    
+}
+
 ?>
