@@ -147,7 +147,7 @@ public function getReisId()
         $stmt->bindValue(":id", $id);
         $stmt->execute();
         $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-        $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], 0, 0,);
+        $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], 0, 0);
         $pakketObj = new Pakket($id, $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["bestemmingsId"], $resultSet["stad"], $resultSet["land"], $hotelObj, $resultSet["prijs"]);
        
 
@@ -162,7 +162,7 @@ public function getAllePakketten()
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
     $resultSet = $dbh->query("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs FROM reizen
     INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
-    INNER JOIN reisTypes on reistypes.reisTypeId = reizen.reisTypeId
+    INNER JOIN reisTypes on reisTypes.reisTypeId = reizen.reisTypeId
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId
     ");
  
@@ -171,7 +171,8 @@ public function getAllePakketten()
     foreach ($resultSet as $pakket) {
        
         $hotelObj = new Hotels($pakket["reizen.hotelId"],$pakket["hotelNaam"], 0, 0,);
-        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsid"], $pakket["stad"], $pakket["land"], $hotelObj, $resultSet["prijs"]);
+       
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsid"], $pakket["stad"], $pakket["land"], $hotelObj, $pakket["prijs"]);
       
         array_push($pakkettenLijst, $pakketObj);
     }
@@ -193,7 +194,7 @@ public function getPakketByReisTypeAndBestemmingsId($reistype,$bestemmingsid)
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId
         WHERE reizen.bestemmingsId =:bestemmingsid AND reisType = :reistype");
-        $stmt->bindValue(":bestemmingsId", $bestemmingsid);
+        $stmt->bindValue(":bestemmingsid", $bestemmingsid);
         $stmt->bindValue(":reistype", $reistype);
         $stmt->execute();
         $resultSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
