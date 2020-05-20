@@ -4,6 +4,10 @@ session_start();
 
 require_once("klanten.php");
 
+$today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
+$minimumage = $today->modify('-6570 day');
+$minleeftijd = $minimumage->format("Y-m-d");
+
 $error = "";
 
 if (isset($_POST["btnRegistreer"])) {
@@ -88,11 +92,11 @@ if (!isset($_SESSION["gebruiker"])) {
 ?>
 
     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
-        Naam en Voornaam: <input type="text" name="txtNaam"> <br>
-        Straat en Huisnummer: <input type="text" name="txtAdres"> <br>
+        Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> <br>
+        Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"> <br>
         Postcode en gemeente: <input type="text" name="txtPlaats"> <br>
-        geboortedatum: <input type="date" name="txtGeboorteDatum"> <br>
-        E-mailadres: <input type="email" name="txtEmail"> <br>
+        Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> <br>
+        E-mailadres: <input type="email" name="txtEmail" maxlength="64"> <br>
         Wachtwoord: <input type="password" name="txtWachtwoord"> <br>
         Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> <br>
         <input type="submit" value="Registreren" name="btnRegistreer">

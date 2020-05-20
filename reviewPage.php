@@ -41,7 +41,7 @@ if (isset($_POST["knopOK"]) && isset($_SESSION["gebruiker"])) {
 
 //indien review en score ingevuld en verzonden en de user is ingelogd dan voeg bericht toe aan DB
 
-if ($error == "") {
+if ($error == "" && isset($_SESSION["gebruiker"])) {
     try {
         $gebruiker = unserialize($_SESSION["gebruiker"]);
         $klantNummer = $gebruiker->getId();
