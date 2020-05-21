@@ -1,5 +1,5 @@
 <?php
-require_once("DBconfig.php");
+require_once("dbconfig.php");
 require_once("exceptions.php");
 
 class review
