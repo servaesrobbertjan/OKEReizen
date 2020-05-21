@@ -1,6 +1,6 @@
 <?php
 
-require_once("DBConfig.php");
+require_once("dbconfig.php");
 
 class Boeking
 {
