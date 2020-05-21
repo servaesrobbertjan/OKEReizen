@@ -22,7 +22,7 @@ require_once("header.php");
 
 <h1>OKEReizen Klanten-pagina</h1>
 <h2>Welkom <?php 
-//echo $klantnaam; ?></h2>
+echo $klantnaam; ?></h2>
 
 <body>
 
