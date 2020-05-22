@@ -1,6 +1,6 @@
 <?php
-require_once("DBconfig.php");
-require_once("Exceptions.php");
+require_once("dbconfig.php");
+require_once("exceptions.php");
 
 class review
 {
@@ -12,8 +12,10 @@ class review
     private $datum;
     private $stad;
     private $land;
+    private $klantnummer;
+    private $reisnummer;
 
-    public function __construct($cid = null, $cnaam = null, $creview = null, $cscore = null, $cdatum = null, $cstad = null, $cland = null)
+    public function __construct($cid = null, $cnaam = null, $creview = null, $cscore = null, $cdatum = null, $cstad = null, $cland = null, $klantnummer = null, $reisnummer = null)
     {
         $this->id = $cid;
         $this->naam = $cnaam;
@@ -22,6 +24,8 @@ class review
         $this->datum = $cdatum;
         $this->stad = $cstad;
         $this->land = $cland;
+        $this->klantnummer = $klantnummer;
+        $this->reisnummer = $reisnummer;
     }
 
     public function getId()
@@ -59,6 +63,16 @@ class review
         return $this->land;
     }
 
+    public function getklantnummer()
+    {
+        return $this->klantnummer;
+    }
+
+    public function getreisnummer()
+    {
+        return $this->reisnummer;
+    }
+
     public function setReview($review)
     {
         if (strlen($review) > 250) {
@@ -75,6 +89,15 @@ class review
         $stmt->execute();
         $laatsteNewId = $dbh->lastInsertId();
         $dbh = null;
+
+        if($laatsteNewId != NULL){
+        $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("INSERT INTO klantenreviews (klantNummer, reisNummer) VALUES (:klantnummer, :reisNummer)");
+        $stmt->bindValue(":klantnummer", $this->klantnummer);
+        $stmt->bindValue(":reisnummer", $this->reisnummer);
+        $stmt->execute();
+        $dbh = null;}
+
         $this->id = $laatsteNewId;
         return $this;
     }

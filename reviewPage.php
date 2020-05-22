@@ -2,10 +2,12 @@
 
 session_start();
 require_once("ReviewClass.php");
+require_once("klanten.php");
 
 $review = "";
 $error = "";
 $score = "";
+$reisNummer="";
 $naam = "";
 
 // controleer of review is verstuurd en gebruiker is ingelogd
@@ -28,15 +30,6 @@ if (isset($_POST["knopOK"]) && isset($_SESSION["gebruiker"])) {
         $score = $_POST["txtScore"];
     }
 
-     /*
-    // controleer of klantnummer is gevuld
-
-   if (empty($_POST["txtKlantnummer"])) {
-        $error .= "je klantnummer mag niet leeg zijn";
-    } else {
-        $klantNummer = $_POST["txtKlantnummer"];
-    }
-
     // controleer of reisnummer is gevuld
 
     if (empty($_POST["txtReisnummer"])) {
@@ -44,14 +37,15 @@ if (isset($_POST["knopOK"]) && isset($_SESSION["gebruiker"])) {
     } else {
         $reisNummer = $_POST["txtReisnummer"];
     }
-    */
 }
 
 //indien review en score ingevuld en verzonden en de user is ingelogd dan voeg bericht toe aan DB
 
 if ($error == "") {
     try {
-        $bericht = new review(null, null, $review, $score, null, null);
+        $gebruiker = unserialize($_SESSION["gebruiker"]);
+        $klantNummer = $gebruiker->getId();
+        $bericht = new review(null, null, $review, $score, null, null, null, $klantNummer, $reisNummer);
         $bericht->setReview($review);
         $bericht = $bericht->reviewToevoegen();
     } catch (reviewTeLang $e) {
@@ -80,7 +74,7 @@ if (isset($_SESSION["gebruiker"])) {
     <H2>Vul hier je review in</H2>
 
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-
+        Reisnummer: <input type="text" name="txtReisnummer"><br>
         <fieldset>
             <legend>Review jouw reis </legend><br>
             Score: <br> <input type="radio" name="txtScore" value="0">0

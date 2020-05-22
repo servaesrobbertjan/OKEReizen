@@ -1,10 +1,6 @@
 <?php
 
-require_once("pakket.php");
-require_once("hotels.php");
-require_once("exceptions.php");
 require_once("dbconfig.php");
-require_once("klanten.php");
 
 class Boeking
 {
@@ -15,185 +11,159 @@ class Boeking
          * object van het hotel, luchthaven, vertrekdatum, boekingsid
         
         */
-    private $boekingsid;
-    private $klantnid;
+
     private $reisid;
-    private $luchthaven;
-    private $hotel;
-    private $aantalpersonen;
-    private $aantaldagen;
-    private $vertrekdatum;
+    private $omschrijving;
+    private $reistype;
+    private $boekingsdatum;
+    private $aantalDagen;
+    private $aantalPersonen;
+    private $stad;
+    private $land;
+    private $hotelnaam;
+    private $prijs;
+    private $klantNummer;
 
 
-
-    public function __construct($boekingsid = null, $klantid=null, $reisid = null, $luchthaven = null, $hotel = null, $aantalpersonen = null, $aantaldagen = null, $vertrekdatum = null)
-
+    public function __construct($reisid = null, $omschrijving = null, $reistype = null, $boekingsdatum = null, $aantalDagen = null, $aantalPersonen = null, $stad = null, $land = null, $hotelnaam = null, $prijs = null, $klantNummer = null)
     {
-        $this->boekingsid = $boekingsid;
-        $this->klantid = $klantid; 
         $this->reisid = $reisid;
-        $this->luchthaven = $luchthaven;
-        $this->hotel = $hotel;
-        $this->aantalpersonen = $aantalpersonen;
-        $this->aantaldagen = $aantaldagen;
-        $this->vertrekdatum = $vertrekdatum;
+        $this->omschrijving = $omschrijving;
+        $this->reistype = $reistype;
+        $this->boekingsdatum = $boekingsdatum;
+        $this->aantalDagen = $aantalDagen;
+        $this->aantalPersonen = $aantalPersonen;
+        $this->stad = $stad;
+        $this->land = $land;
+        $this->hotelnaam = $hotelnaam;
+        $this->prijs = $prijs;
+        $this->klantNummer = $klantNummer;
     }
 
 
-    /*object in object, pakket.php + hotel.php */
-
-
-    public function getBoekingsid()
-    {
-        return $this->boekingsid;
-    }
-
-
-    public function getReisid()
+    public function getreisId()
     {
         return $this->reisid;
     }
 
-
-    public function setReisid($reisid)
+    public function getomschrijving()
     {
-        $this->reisid = $reisid;
+        return $this->omschrijving;
     }
 
-
-
-    public function getLuchthaven()
+    public function getreisType()
     {
-        return $this->luchthaven;
+        return $this->reistype;
     }
 
-
-    public function setLuchthaven($luchthaven)
+    public function getboekingsDatum()
     {
-        $this->luchthaven = $luchthaven;
-
-        return $this;
+        return $this->boekingsdatum;
     }
 
-
-
-    public function getAantaldagen()
+    public function getaantalDagen()
     {
-        return $this->aantaldagen;
+        return $this->aantalDagen;
     }
 
-
-    public function setAantaldagen($aantaldagen)
+    public function getaantalPersonen()
     {
-        $this->aantaldagen = $aantaldagen;
+        return $this->aantalPersonen;
     }
 
-
-    public function getVertrekdatum()
+    public function getstad()
     {
-        return $this->vertrekdatum;
+        return $this->stad;
     }
 
-
-    public function setVertrekdatum($vertrekdatum)
+    public function getland()
     {
-        $this->vertrekdatum = $vertrekdatum;
+        return $this->land;
     }
 
-
-    public function getAantalpersonen()
+    public function gethotelnaam()
     {
-        return $this->aantalpersonen;
+        return $this->hotelnaam;
     }
 
-
-    public function setAantalpersonen($aantalpersonen)
+    public function getprijs()
     {
-        $this->aantalpersonen = $aantalpersonen;
+        return $this->prijs;
     }
 
-    public function getHotel()
+    public function getklantNummer()
     {
-        return $this->hotel;
+        return $this->klantNummer;
     }
 
-
-    public function setHotel($hotel)
+    public function totaalPrijs()
     {
-        $this->hotel = $hotel;
+        $totaalPrijs = $this->aantalDagen * $this->aantalPersonen * $this->prijs;
+        return $totaalPrijs;
     }
 
-
-    public function getKlantid()
+    public function toonToekomstigeReizen($klantNummer)
     {
-            return $this->klantid;
-    }
-
-    
-    public function setKlantid($klantid)
-    {
-            $this->klantid = $klantid;
-         
-    }
-
-
-    public function GetBoekingById($reisid)
-    {
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("select boekingsId, boekingsdatum from boekingen INNER JOIN reizen ON INNER JOIN hotels ON bieren.SoortNr = soorten.SoortNr WHERE BierNr = :id");
-        $stmt->bindValue(":id", $id);
+        $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT reizen.boekingsId,reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
+        FROM reizen INNER JOIN boekingen on reizen.boekingsId = boekingen.boekingsId INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
+        INNER JOIN klantenreizen on klantenreizen.reisNummer = reizen.reisNummer INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
+        WHERE boekingen.boekingsDatum > CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
-        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-        $hotelObj = new Hotels($resultSet[]);
-        $pakketObj = new Pakket(($resultSet[]));
-        $boekingsObj = new Boeking($id, $resultSet[], $pakketObj, $hotelObj);
+        $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $boekinglijst = array();
+        foreach ($resultset as $boeking) {
 
-        $dbh = null;
-        return $boekingsObj;
-    }
-
-
-    public function GetBoekingByKlantenId($klantenid)
-    {
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("select boekingsId, boekingsdatum from boekingen INNER JOIN reizen ON INNER JOIN hotels ON bieren.SoortNr = soorten.SoortNr WHERE BierNr = :id");
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
-        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
-        $hotelObj = new Hotels($resultSet[]);
-        $pakketObj = new Pakket(($resultSet[]));
-        $boekingsObj = new Boeking($id, $resultSet[], $pakketObj, $hotelObj);
-
-        $dbh = null;
-        return $boekingsObj;
-    }
-
-
-    public function addBoeking($datum, $heendatum, $aantaldagen, $aantalpersonen)
-    {
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("INSERT INTO boekingen (boekingsDatum, heenDatum, aantalDagen, aantalPersonen) VALUES (:datum, :heendatum, :aantaldagen, :aantalpersonen)");
-        $stmt->bindValue(":datum", $datum);
-        $stmt->bindValue(":heendatum", $heendatum);
-        $stmt->bindValue(":aantaldagen", $aantaldagen);
-        $stmt->bindValue(":aantalpersonen", $aantalpersonen);
-        $stmt->execute();
-        $laatsteNieuweId = $dbh->lastInsertId();
-        
-        return $laatsteNieuweId;
-
-        if ($laatsteNieuweId != 0)
-        {
-            $stmt = $dbh->prepare("INSERT INTO reizen (boekingsId) VALUES (:boekingsid) WHERE  reisnummer" );
-            $stmt->bindValue(":boekingsid", $laatsteNieuweId);
-            $stmt->execute();
-            $laatsteNieuweId = $dbh->lastInsertId();
+            $boekingobj = new Boeking(
+                $boeking["boekingsId"],
+                $boeking["reisOmschrijving"],
+                $boeking["reisType"],
+                $boeking["boekingsDatum"],
+                $boeking["aantalDagen"],
+                $boeking["aantalPersonen"],
+                $boeking["stad"],
+                $boeking["land"],
+                $boeking["hotelNaam"],
+                $boeking["prijs"]
+            );
+            array_push($boekinglijst, $boekingobj);
         }
-
-
         $dbh = null;
+        return $boekinglijst;
     }
 
-       
-   
+    public function toonVorigeReizen($klantNummer)
+    {
+        $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
+        $stmt = $dbh->prepare("SELECT reizen.boekingsId,reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
+        FROM reizen INNER JOIN boekingen on reizen.boekingsId = boekingen.boekingsId INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
+        INNER JOIN klantenreizen on klantenreizen.reisNummer = reizen.reisNummer INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
+        WHERE boekingen.boekingsDatum < CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        $stmt->bindValue(":klantNummer", $klantNummer);
+        $stmt->execute();
+        $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $boekinglijst = array();
+        foreach ($resultset as $boeking) {
+
+            $boekingobj = new Boeking(
+                $boeking["boekingsId"],
+                $boeking["reisOmschrijving"],
+                $boeking["reisType"],
+                $boeking["boekingsDatum"],
+                $boeking["aantalDagen"],
+                $boeking["aantalPersonen"],
+                $boeking["stad"],
+                $boeking["land"],
+                $boeking["hotelNaam"],
+                $boeking["prijs"]
+            );
+            array_push($boekinglijst, $boekingobj);
+        }
+        $dbh = null;
+        return $boekinglijst;
+    }
+
+
+
 }
