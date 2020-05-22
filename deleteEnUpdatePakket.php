@@ -53,16 +53,18 @@ if (isset($_POST["btnDelete"])) {
     if (isset($_POST["btnDelete"])) {
 
         echo "<h1>Pakket \"" . $pakket->getOmschrijving() . "\" verwijderd</h1>";
+        echo "<h1>prijs \"" . $pakket->getPrijs() . "\" verwijderd</h1>";
 
         echo "Klik <a href=\"index.php\">hier</a> om terug te gaan naar de overzichtspagina.";
     } else if (isset($_POST["btnUpdate"])) {
         echo "<h1>pakket \"" . $pakket->getOmschrijving() . "\" geüpdatet</h1>";
+        echo "<h1>prijs \"" . $pakket->getPrijs() . "\" geüpdatet</h1>";
         echo "Nieuwe waarden:<br>";
         echo "<ul>";
         echo "<li>omschrijving: " . $pakket->getOmschrijving() . "</li>";
         echo "<li>Prijs: " . $pakket->getPrijs() . "</li>";
         echo "</ul>";
-        echo "Klik <a href=\"deleteEnUpdateHotel.php\">hier</a> om terug te gaan naar de overzichtspagina.";
+        echo "Klik <a href=\"index.php\">hier</a> om terug te gaan naar de overzichtspagina.";
     } else {
     ?>
 
