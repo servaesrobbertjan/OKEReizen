@@ -74,7 +74,7 @@ if (empty($_POST["personen"])){
 
 if ($_POST["personen"] < 1 || $_POST["personen"] > 10){
 
-    $error .= 'Het minimum aantal personen is 1. Het maximum aantal personen is 30. ';
+    $error .= 'Het minimum aantal personen is 1. Het maximum aantal personen is 10. ';
 } 
 
 if (empty($_POST["dagen"])){

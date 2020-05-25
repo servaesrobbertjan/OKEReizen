@@ -43,17 +43,15 @@ if (!empty($_POST["gekozenreis"])) {
 
 require_once("header.php");
 ?>
-
+<?php if ($pakket) {?>
 <h2>Pakketinformatie </h2>
 <?php
 
-
-if ($pakket) {
 echo $pakket->getStad() . "<br>";
 echo $pakket->hotelid->getHotelNaam() . "<br>";
 echo $pakket->getOmschrijving() . "<br>";
 echo $pakket->getPrijs() . "<br>";
-}
+
 
 /*knop "boeken" */
 ?>
@@ -63,7 +61,10 @@ echo $pakket->getPrijs() . "<br>";
     <input type="submit" value="Boek Nu" name="submitKnop">
 </form>
 
+<?php } else
 
+echo "<br><br> U heeft geen reis geselecteerd.<br><a href=\"zoekresultaat.php\"> Terug naar de zoekresultaten <a>"
+?>
 
 <?php
 require_once("footer.php");
