@@ -114,7 +114,7 @@ require_once("header.php");
             Type reis: <select name="reistype">
                 <?php
                 foreach ($reisTypeLijst as $reistype) {
-                    echo "<option value=\"" . $reistype->getReisType() . "\">" . $reistype->getReisType() . "</option>";
+                    echo "<option value=\"" . $reistype . "\">" . $reistype . "</option>";
                 }
                 ?>
             </select>
@@ -146,7 +146,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                 echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
                     . $pakket->getStad()
                     . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                    . " " . $pakket->getHotel() . " " . $pakket->getPrijs() . " " . "</a></li>";
+                    . " " . $pakket->hoteld->getHotelId() . " " . $pakket->getPrijs() . " " . "</a></li>";
             }
             ?>
 
@@ -158,7 +158,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                     echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
                         . $pakket->getStad()
                         . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                        . " " . $pakket->getHotel() . " " . $pakket->getPrijs() . " " . "</a></li>";
+                        . " " . $pakket->hoteld->getHotelId(). " " . $pakket->getPrijs() . " " . "</a></li>";
                 }
                 ?>
 
@@ -168,7 +168,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                         echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
                             . $pakket->getStad()
                             . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                            . " " . $pakket->getHotel() . " " . $pakket->getPrijs() . " " . "</a></li>";
+                            . " " . $pakket->hoteld->getHotelId() . " " . $pakket->getPrijs() . " " . "</a></li>";
                     }
 
 

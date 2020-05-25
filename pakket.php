@@ -144,9 +144,13 @@ public function getReisId()
         $stmt->bindValue(":id", $id);
         $stmt->execute();
         $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $pakketObj=array();
+        $hotelObj=array();
+        if ($resultSet){
         $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], null, null);
         $pakketObj = new Pakket($id, $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["bestemmingsId"], $resultSet["stad"], $resultSet["land"], $hotelObj, $resultSet["prijs"]);
-       
+        }
 
         $dbh = null;
         return $pakketObj;
@@ -162,6 +166,7 @@ public function getAllePakketten()
     INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId");
  
+ if($resultSet){
     $pakkettenLijst = array();
 
     foreach ($resultSet as $pakket) {
@@ -172,7 +177,7 @@ public function getAllePakketten()
      
         array_push($pakkettenLijst, $pakketObj);
     }
-
+ }
     $dbh = null;
     return $pakkettenLijst;
     
@@ -196,13 +201,15 @@ public function getPakketByReisTypeAndBestemmingsId($reistype,$bestemmingsid)
         $resultSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $pakkettenLijst = array();
+        if($resultSet){
+   
 
         foreach ($resultSet as $pakket) {
             $hotelObj = new Hotels($pakket["hotelId"],$pakket["hotelNaam"], null, null,);
             $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"]);
             array_push($pakkettenLijst, $pakketObj);
         }
-
+    }
         $dbh = null;
         return $pakkettenLijst;
     }
@@ -221,7 +228,7 @@ $resultSet = $dbh->query("SELECT DISTINCT reisType FROM reizen
 $reisTypeLijst = array();
 
 foreach ($resultSet as $type) {
-    $reisTypeObj = new Pakket($type["reisType"]);
+    $reisTypeObj = $type["reisType"];
     array_push($reistypeLijst, $reisTypeObj);
 }
 
@@ -253,15 +260,16 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
         $stmt->bindValue(":reistype", $reistype);
         $stmt->execute();
         $resultSet = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         $pakkettenLijst = array();
-
+        
+        if ($resultSet){
+    
         foreach ($resultSet as $pakket) {
             $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], 0, 0, );
             $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"]);
             array_push($pakkettenLijst, $pakketObj);
         }
-
+    }
         $dbh = null;
         return $pakkettenLijst;
     }
