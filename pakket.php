@@ -225,15 +225,15 @@ $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSW
 $resultSet = $dbh->query("SELECT DISTINCT reisType FROM reizen
      INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId");
 
-$reisTypeLijst = array();
+$reistypeLijst = array();
 
 foreach ($resultSet as $type) {
-    $reisTypeObj = $type["reisType"];
-    array_push($reistypeLijst, $reisTypeObj);
+    $reistype=$type["reisType"];
+    array_push($reistypeLijst, $reistype);
 }
 
 $dbh = null;
-return $reisTypeLijst;
+return $reistypeLijst;
 
 }
 
@@ -245,7 +245,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
 {
 
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, reisOmschrijving, prijs from 
+        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs from 
         reizen
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId
@@ -265,7 +265,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
         if ($resultSet){
     
         foreach ($resultSet as $pakket) {
-            $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], 0, 0, );
+            $hotelObj = new Hotels($pakket["hotelId"],$pakket["hotelNaam"], 0, 0, );
             $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"]);
             array_push($pakkettenLijst, $pakketObj);
         }

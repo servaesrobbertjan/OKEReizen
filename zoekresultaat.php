@@ -11,7 +11,7 @@ $pakketObj = new Pakket();
 /* het zoekobject bestaat uit twee elementen nl, bestemmingsid en reistype. We halen dit uit de session en stoppen dit in de pakketfunctie om de 
 gezocht reizen op te halen */
 
-$zoekresultaat->unserialize($_SESSION["zoekresultaat"]);
+$zoekresultaat=unserialize($_SESSION["zoekresultaat"]);
 $bestemming=$zoekresultaat->getBestemmingsId();
 $reistype=$zoekresultaat->getReistype();
 $pakkettenLijst = $pakketObj->getPakketById($reistype,$bestemming);

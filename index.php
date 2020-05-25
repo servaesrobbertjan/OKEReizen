@@ -10,9 +10,10 @@ $naam = '';
 $pakketObj = new Pakket();
 $pakketLijst = $pakketObj->getAllePakketten();
 $typesLijst = $pakketObj->getAlleReistypes();
-$pakkettenzomer = $pakketObj->getPakketByReisTypeWithBestReviewScore("zomer");
-$pakkettenwinter = $pakketObj->getPakketByReisTypeWithBestReviewScore("winter");
-$pakkettencitytrip = $pakketObj->getPakketByReisTypeWithBestReviewScore("citytrip");
+
+$pakkettenzomer = $pakketObj->getPakketByReisTypeWithBestReviewScore("Zomer reizen");
+$pakkettenwinter = $pakketObj->getPakketByReisTypeWithBestReviewScore("winter reizen");
+$pakkettencitytrip = $pakketObj->getPakketByReisTypeWithBestReviewScore("city trips");
 
 //* kijken of gebruiker ingelogd is 
 
@@ -73,7 +74,7 @@ if (isset($_POST["submitKnop"])) {
 
         /*zoekobject aanmaken en serializen + sturen gebruiker naar de resultatenpagina */
 
-        $zoekobject = new Zoekobject($_POST["bestemmingsid"], $_POST["reistype"]);
+        $zoekobject = new Zoekobject($_POST["bestemming"], $_POST["reistype"]);
         $_SESSION["zoekresultaat"] = serialize($zoekobject);
         header("Location: zoekresultaat.php");
         exit;
@@ -103,7 +104,7 @@ require_once("header.php");
 
             <!-- Van alle reispakketten de bestemming(stad) en reistypes in een selectielijst zetten -->
 
-            Bestemming: <select name="bestemmingsid">
+            Bestemming: <select name="bestemming">
                 <?php
                 foreach ($pakketLijst as $pakket) {
                     echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
@@ -113,8 +114,8 @@ require_once("header.php");
 
             Type reis: <select name="reistype">
                 <?php
-                foreach ($reisTypeLijst as $reistype) {
-                    echo "<option value=\"" . $reistype . "\">" . $reistype . "</option>";
+                foreach ($typesLijst as $reistype) {
+                    echo "<option value=\"" . $reistype  . "\">" . $reistype. "</option>";
                 }
                 ?>
             </select>
@@ -143,10 +144,10 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
         <div>
             <?php foreach ($pakkettenzomer as $pakket) {
 
-                echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+                echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                     . $pakket->getStad()
-                    . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                    . " " . $pakket->hoteld->getHotelId() . " " . $pakket->getPrijs() . " " . "</a></li>";
+                    . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
+                    . " " . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br> " . "</a></li><br><br>";
             }
             ?>
 
@@ -155,20 +156,20 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
             <div>
                 <?php foreach ($pakkettenwinter as $pakket) {
 
-                    echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+                    echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                         . $pakket->getStad()
-                        . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                        . " " . $pakket->hoteld->getHotelId(). " " . $pakket->getPrijs() . " " . "</a></li>";
+                        . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . " " . $pakket->getOmschrijving()
+                        . "<br>" . $pakket->hotelid->getHotelNaam(). "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
                 }
                 ?>
 
                 <h2> Onze best beoordeelde City Trips </h2>
                 <div>
                     <?php foreach ($pakkettencitytrip as $pakket) {
-                        echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">"
+                        echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                             . $pakket->getStad()
-                            . " " . $pakket->getLand() . " " . $pakket->getReistype() . " " . $pakket->getOmscrhijving()
-                            . " " . $pakket->hoteld->getHotelId() . " " . $pakket->getPrijs() . " " . "</a></li>";
+                            . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
+                            . "<br>" . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
                     }
 
 
