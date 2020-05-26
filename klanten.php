@@ -144,7 +144,7 @@ class Klanten
             throw new WachtwoordIncorrectException();
         }
 
-        $this->email = $resultSet["klantNummer"];
+        $this->email = $resultSet["emailAdres"];
         $dbh = null;
         return $this;
     }
