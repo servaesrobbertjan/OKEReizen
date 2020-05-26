@@ -3,6 +3,7 @@
 session_start();
 
 require_once("klanten.php");
+require_once("plaatsen.php");
 
 $today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
 $minimumage = $today->modify('-6576 day');
@@ -51,7 +52,6 @@ if (isset($_POST["btnRegistreer"])) {
     } else {
         $geboortedatum = $_POST["txtGeboorteDatum"];
     }
-
     if ($error == "") {
         // Alles is ingevuld, dus alles kan opgeslagen worden in de database
         try {
@@ -94,7 +94,17 @@ if (!isset($_SESSION["gebruiker"])) {
     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
         Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> <br>
         Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"> <br>
-        Postcode en gemeente: <input type="text" name="txtPlaats"> <br>
+        Postcode en gemeente: <select name="txtPlaats">
+            <?php
+            $plaatsen = new plaatsen();
+            $plaatsen = $plaatsen->getAlleGemeente();
+            foreach ($plaatsen as $plaats) {
+            ?>
+                <option value="<?php echo $plaats->getPlaatsId()?>"><?php echo $plaats->getPostcode() . " " . $plaats->getGemeente() ?></option><br>
+            <?php   
+            }
+            ?>
+            </select><br>
         Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> <br>
         E-mailadres: <input type="email" name="txtEmail" maxlength="64"> <br>
         Wachtwoord: <input type="password" name="txtWachtwoord"> <br>
@@ -105,6 +115,5 @@ if (!isset($_SESSION["gebruiker"])) {
 
 <?php
 }
-
 require_once("footer.php");
 ?>
