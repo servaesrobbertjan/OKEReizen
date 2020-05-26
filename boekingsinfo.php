@@ -6,23 +6,23 @@ require_once("klanten.php");
 
 
 
-/*if (empty($_SESSION["boekingsid"])) {
+if (empty($_SESSION["boekingsid"])) {
 
   header("Location: pakketdetail.php");
   exit;
 } 
 
 else {
-*/
+
     $boekingObj = new Boeking();
 
     $boeking = $boekingObj->getBoekingbyId($_SESSION["boekingsid"]);
 
     echo "<br>";
 
-/*
+
 }
-*/
+
 
 
 
@@ -52,7 +52,7 @@ echo "Uw reisgegevens:"
 
 . $boeking->getStad() . " (" . $boeking->getLand() . ")<br>"
 
-. "Uw hotel" . $boeking->hotelnaam->getHotelNaam() . "<br><br>". 
+. "Uw hotel: " . $boeking->hotelnaam->getHotelNaam() . "<br><br>". 
 
 "Heendatum: ".  $boeking->getHeendatum() . "<br>". 
 
