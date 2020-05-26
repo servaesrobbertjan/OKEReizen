@@ -16,9 +16,9 @@ class Pakket {
     private $land;
     public $hotelid;
     private $prijs;
+    private $luchthaven;
 
-
-    public function __construct($reisid = null, $omschrijving = null, $reistype = null, $bestemmingsid = null, $stad = null, $land = null, $hotelid = null, $prijs=null)
+    public function __construct($reisid = null, $omschrijving = null, $reistype = null, $bestemmingsid = null, $stad = null, $land = null, $hotelid = null, $prijs=null, $luchthaven=null)
     {
         $this->reisid = $reisid;
         $this->omschrijving = $omschrijving;
@@ -28,6 +28,7 @@ class Pakket {
         $this->land = $land;
         $this->hotelid = $hotelid;
         $this->prijs = $prijs;
+        $this->luchthaven = $luchthaven;
 
     }
 
@@ -133,10 +134,23 @@ public function getReisId()
 
     }
 
+    public function getLuchthaven()
+    {
+            return $this->luchthaven;
+    }
+
+  
+    public function setLuchthaven($luchthaven)
+    {
+            $this->luchthaven = $luchthaven;
+
+         
+    }
+
     public function getPakketById($id)
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, hotel.hotelId, hotelNaam, reisOmschrijving, prijs FROM reizen
+        $stmt = $dbh->prepare("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, hotel.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven FROM reizen
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsid
         INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
         INNER JOIN hotel on hotel.HotelId = reizen.HotelId
@@ -149,7 +163,7 @@ public function getReisId()
         $hotelObj=array();
         if ($resultSet){
         $hotelObj = new Hotels($resultSet["hotelId"],$resultSet["hotelNaam"], null, null);
-        $pakketObj = new Pakket($id, $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["bestemmingsId"], $resultSet["stad"], $resultSet["land"], $hotelObj, $resultSet["prijs"]);
+        $pakketObj = new Pakket($id, $resultSet["reisOmschrijving"], $resultSet["reisType"], $resultSet["bestemmingsId"], $resultSet["stad"], $resultSet["land"], $hotelObj, $resultSet["prijs"],$resultSet["luchthaven"]);
         }
 
         $dbh = null;
@@ -161,7 +175,7 @@ public function getAllePakketten()
 
 {
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs FROM reizen 
+    $resultSet = $dbh->query("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven FROM reizen 
     INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
     INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId");
@@ -173,7 +187,7 @@ public function getAllePakketten()
        
         $hotelObj = new Hotels($pakket["hotelId"], $pakket["hotelNaam"], null, null);
        
-        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"], $pakket["land"], $hotelObj, $pakket["prijs"]);
+        $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"], $pakket["land"], $hotelObj, $pakket["prijs"], $pakket["luchthaven"]);
      
         array_push($pakkettenLijst, $pakketObj);
     }
@@ -190,7 +204,7 @@ public function getPakketByReisTypeAndBestemmingsId($reistype,$bestemmingsid)
 {
 
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs from reizen 
+        $stmt = $dbh->prepare("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven from reizen 
         INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId
@@ -206,7 +220,7 @@ public function getPakketByReisTypeAndBestemmingsId($reistype,$bestemmingsid)
 
         foreach ($resultSet as $pakket) {
             $hotelObj = new Hotels($pakket["hotelId"],$pakket["hotelNaam"], null, null,);
-            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"]);
+            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"],$pakket["luchthaven"]);
             array_push($pakkettenLijst, $pakketObj);
         }
     }
@@ -245,7 +259,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
 {
 
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs from 
+        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven from 
         reizen
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId
@@ -266,7 +280,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
     
         foreach ($resultSet as $pakket) {
             $hotelObj = new Hotels($pakket["hotelId"],$pakket["hotelNaam"], 0, 0, );
-            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"]);
+            $pakketObj = new Pakket($pakket["reisNummer"], $pakket["reisOmschrijving"], $pakket["reisType"], $pakket["bestemmingsId"], $pakket["stad"],$pakket["land"], $hotelObj, $pakket["prijs"],$pakket["luchthaven"]);
             array_push($pakkettenLijst, $pakketObj);
         }
     }
@@ -297,4 +311,6 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
         $dbh = null;
     }
 
+
+     
 }

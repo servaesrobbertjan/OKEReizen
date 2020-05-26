@@ -30,6 +30,10 @@ if (isset($_POST["btnLogin"])) {
         } catch (WachtwoordIncorrectException $e) {
             $error .= "Het ingegeven wachtwoord is niet correct.<br>";
         }
+        if (isset($_SESSION["gekozenreis"])){
+            header("Location: reisboeken.php");
+            exit;
+        }
     }
 }
 

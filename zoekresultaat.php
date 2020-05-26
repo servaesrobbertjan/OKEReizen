@@ -1,6 +1,7 @@
 <?php 
 
 session_start();
+require_once("zoekobject.php");
 require_once("pakket.php");
 
 /* we kijken over de er een zoekopdracht door de klant is ingegeven */ 
@@ -12,9 +13,12 @@ $pakketObj = new Pakket();
 gezocht reizen op te halen */
 
 $zoekresultaat=unserialize($_SESSION["zoekresultaat"]);
+
 $bestemming=$zoekresultaat->getBestemmingsId();
+
 $reistype=$zoekresultaat->getReistype();
-$pakkettenLijst = $pakketObj->getPakketById($reistype,$bestemming);
+
+$pakkettenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bestemming);
 
 
  } else {
@@ -38,14 +42,20 @@ require_once("header.php");
         <?php 
         
 /*We tonen de gezochte pakketten */
+if (count($pakkettenLijst)>0){
 
         foreach ($pakkettenLijst as $pakket) {
-            echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">" . $pakket->getStad() 
-            . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
-            . "<br>" . $pakket->hotelid->getHotelNaam() . " <br><br> €". $pakket->getPrijs() . " per persoon/per nacht". "</a>
+            echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">" . $pakket->getStad() 
+            . " (" . $pakket->getLand() . ")<br>". $pakket->getReistype() . " <br><br> €". $pakket->getPrijs() . " per persoon per overnachting". "</a>
             </li>";
 
         }
+    } else {
+
+        echo "Er werden geen pakketten gevonden die aan uw zoekopdracht voldoen.";
+    }
+
+
         
         ?>
     </ul>

@@ -145,8 +145,8 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
             <?php foreach ($pakkettenzomer as $pakket) {
 
                 echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
-                    . $pakket->getStad()
-                    . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
+                 . $pakket->getStad()
+                    . " (" . $pakket->getLand() . ")<br> ". $pakket->getOmschrijving()
                     . " " . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br> " . "</a></li><br><br>";
             }
             ?>
@@ -156,19 +156,19 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
             <div>
                 <?php foreach ($pakkettenwinter as $pakket) {
 
-                    echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
+ echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                         . $pakket->getStad()
-                        . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . " " . $pakket->getOmschrijving()
+                        . " (" . $pakket->getLand() . ")<br> " . $pakket->getOmschrijving()
                         . "<br>" . $pakket->hotelid->getHotelNaam(). "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
                 }
                 ?>
 
                 <h2> Onze best beoordeelde City Trips </h2>
                 <div>
-                    <?php foreach ($pakkettencitytrip as $pakket) {
+                  <?php foreach ($pakkettencitytrip as $pakket) {
                         echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
-                            . $pakket->getStad()
-                            . " (" . $pakket->getLand() . ")<br> " . $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
+                        . $pakket->getStad()
+                            . " (" . $pakket->getLand() . ")<br> ". $pakket->getOmschrijving()
                             . "<br>" . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
                     }
 

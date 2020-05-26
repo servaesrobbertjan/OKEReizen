@@ -10,14 +10,13 @@ $pakketLijst = $pakketObj->getAllePakketten();
 require_once("header.php");
 ?>
 
-
+<h2> Al onze pakketten </h2>
     <ul>
         <?php 
         
         foreach ($pakketLijst as $pakket) {
-            echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getPakketId() . "\">" . $pakket->getStad() 
-            . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . "<br>" . $pakket->getOmschrijving()
-            . "<br>" . $pakket->hotelid->getHotelNaam() . " <br><br> €". $pakket->getPrijs()  . " per persoon/per overnachting". "</a>
+            echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">" . $pakket->getStad() 
+            . " " . $pakket->getLand() . "<br>". $pakket->getReistype() . " <br> €". $pakket->getPrijs()  . " per persoon/per overnachting". "<br><br></a>
             </li>";
 
 

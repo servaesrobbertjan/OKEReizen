@@ -23,23 +23,21 @@ $limit = $tomorrow->modify('+730 day');
 $limiet = $limit->format("Y-m-d");
 
 
-/* if (!isset($_SESSION["gebruiker"])){
+
+if (!isset($_SESSION["gebruiker"])){
     header("Location: login.php");
     exit;
     }
 
 
-    */
-
-
 $pakket = new Pakket();
 
-/*if (isset($_SESSION["gekozenreis"])){ */
+if (isset($_SESSION["gekozenreis"])){ 
 $allepakketten = $pakket->getAllePakketten();
-    $gekozenpakket = $pakket->getPakketById(1);
+    $gekozenpakket = $pakket->getPakketById($_SESSION["gekozenreis"]);
 
 
-    /*
+    
 }
 
 else {
@@ -48,14 +46,16 @@ else {
             header("Location: zoekresultaat.php");
             exit;
         }else{
-  
+            if (!isset($_SESSION["zoekresultaat"])){
     header("Location: index.php");
     exit;
+            }
         }
+        
 }
-*/
 
-if (isset($_POST["submitKnop"]) && isset($_SESSION["gebruiker"])) {
+
+if (isset($_POST["submitKnop"])) {
 
 if ($_POST["startreis"] < $morgen) {
 
@@ -82,7 +82,7 @@ if (empty($_POST["dagen"])){
     $error .= 'U moet een aantal dagen opgeven';
 } 
 
-if ($error=''){
+if ($error=""){
 
 
 }
@@ -100,13 +100,14 @@ if(isset($_POST["submitKnop"]))
 
     
     if ($error == "" && isset($_SESSION["gebruiker"])) {
-
+       
+        try {
         $gebruiker = unserialize($_SESSION["gebruiker"]);
         $klantnummer = $gebruiker->getId();
         $reisnummer = $gekozenpakket->getReisId();
         $omschrijving = $gekozenpakket->getOmschrijving();
         $reistype = $gekozenpakket->getReistype();
-        $boekingsdatum = $today;
+        $boekingsdatum = $vandaag;
         $heendatum = $_POST["startreis"];
         $aantaldagen = $_POST["dagen"];
         $aantalpersonen = $_POST["personen"];
@@ -117,10 +118,19 @@ if(isset($_POST["submitKnop"]))
     
 
             $boekingObj = new Boeking(0, $reisnummer, $omschrijving, $reistype, $boekingsdatum, $heendatum, $aantaldagen, $aantalpersonen, $stad,$land, $hotelnaam, $prijs,$klantnummer);
+    
             $boeking = $boekingObj->addBoeking();
-        
-            $_SESSION["boekingsid"] = $boeking->getBoekingsid();
+            
 
+
+             }
+
+             catch (Boekingmislukt $e) {
+                $error .= "Uw boeking is mislukt. Gelieve ons te contacteren";
+            }
+            $_SESSION["boekingsid"] = $boeking->getBoekingsid();
+            header("Location: boekingsinfo.php");
+            exit;
 
         }
     }
@@ -130,33 +140,35 @@ if(isset($_POST["submitKnop"]))
 
 ?>
 
-
+<h2> Vervolledig de boekingsinformatie </h2>
 
 <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-Uw gekozen pakket: <?php echo $gekozenpakket->getStad() . "<br>";
-echo $gekozenpakket->hotelid->getHotelNaam() . "<br>";
+Uw gekozen pakket: <?php echo $gekozenpakket->getStad() . " (". $gekozenpakket->getLand(). ")<br>";
+echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br>";
 echo $gekozenpakket->getOmschrijving() . "<br>";
-echo $gekozenpakket->getPrijs() . " per persoon/nacht.<br>"; ?>
+echo "€ ".$gekozenpakket->getPrijs() . " per persoon/nacht.<br>"; ?>
 
 <br>
 
 
-Aantal personen <input type="number" id="aantalpersonen" name="personen" value="2" min="1" max="10">
+Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>"><br>
+U vertrekt vanuit de volgende luchthaven: <?php echo " ".$gekozenpakket->getLuchthaven() ?><br>
+
+Aantal personen: <input type="number" id="aantalpersonen" name="personen" value="2" min="1" max="10"><br>
 
 
-Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>">
-<br>
-
-Aantal dagen <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31"><br>
+Aantal overnachtingen: <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31"><br>
 
 
 <input type="submit" value="Boek uw reis" name="submitKnop">
+
+</form>
 <br>
 
 <a href="zoekresultaat.php">Terug naar zoekresultaten.</a>
 
-</form>
+
 
 <?php 
 require_once("footer.php");

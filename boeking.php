@@ -133,8 +133,8 @@ class Boeking
         $stmt = $dbh->prepare("INSERT INTO boekingen (boekingsDatum, heenDatum, aantalDagen, aantalPersonen) VALUES (:boekingsdatum,:heendatum,:aantaldagen,:aantalpersonen)");
         $stmt->bindValue(":boekingsdatum", $this->boekingsdatum);
         $stmt->bindValue(":heendatum", $this->heendatum);
-        $stmt->bindValue(":aantaldagen", $this->aantaldagen);
-        $stmt->bindValue(":aantalpersonen", $this->aantalpersonen);
+        $stmt->bindValue(":aantaldagen", $this->aantalDagen);
+        $stmt->bindValue(":aantalpersonen", $this->aantalPersonen);
         $stmt->execute();
         $laatsteNewId = $dbh->lastInsertId();
         $dbh = null;
@@ -143,8 +143,8 @@ class Boeking
         if($laatsteNewId != NULL){
             $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
             $stmt = $dbh->prepare("INSERT INTO klantenreizen (klantNummer, reisNummer, boekingsId) VALUES (:klantnummer, :reisnummer, :boekingsid)");
-            $stmt->bindValue(":klantnummer", $this->klantnummer);
-            $stmt->bindValue(":reisnummer", $this->reisnummer);
+            $stmt->bindValue(":klantnummer", $this->klantNummer);
+            $stmt->bindValue(":reisnummer", $this->reisid);
             $stmt->bindValue(":boekingsid", $this->boekingsid);
             $stmt->execute();
             $dbh = null;}
