@@ -19,7 +19,7 @@ if (isset($_POST["btnLogin"])) {
     } else {
         $wachtwoord = $_POST["txtWachtwoord"];
     }
-
+    //login
     if ($error == "") {
         try {
             $gebruiker = new klanten(null, null, null, null, null, $email, $wachtwoord);
