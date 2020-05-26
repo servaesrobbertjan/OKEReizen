@@ -1,12 +1,13 @@
 <?php
 session_start();
+require_once("Hotels.php");
 
 $error = "";
 
 if (isset($_POST["CSVSubmit"])) {
 
     try {
-        $CSVObj = new bericht();
+        $CSVObj = new Hotels();
         $CSVObj->CSVImport($_FILES["CSVBestand"]["tmp_name"]);
     }catch(GeenCSVOpgeladen $e) {
         $error .= "Er is geen CSV bestand geslecteerd.";
