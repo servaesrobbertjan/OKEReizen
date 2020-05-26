@@ -124,7 +124,7 @@ class Klanten
         $this->id = $laatsteNieuweId;
         return $this;
     }
-
+    //  login
     public function login()
     {
         $rowCount = $this->emailAlInGebruik();
