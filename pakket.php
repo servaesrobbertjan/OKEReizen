@@ -181,7 +181,7 @@ public function getAllePakketten()
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId");
     $stmt->execute();
     $resultSet=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($resultSet);
+    
  if($resultSet){
     $pakkettenLijst = array();
 

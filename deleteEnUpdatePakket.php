@@ -31,12 +31,12 @@ if (isset($_POST["btnDelete"])) {
     if ($error == "") {
         $pakketObj = new Pakket($pakketId, $pakketOmschrijving, $pakketPrijs);
         $pakketObj->updatePakket();
-        $pakket = $pakketObj->getAllePakketten();
+        $pakket = $pakketObj->getPakketById($id);
     }
 } else {
     $pakketObj = new Pakket();
     $pakketObj->deletePakketByID($id);
-    $pakket = $pakketObj->getAllePakketten();
+    $pakket = $pakketObj->getPakketById($id);
     
 }
 
@@ -70,7 +70,7 @@ if (isset($_POST["btnDelete"])) {
     } else {
     ?>
 
-        <h1>pakket: <?php echo $pakket->getAllePakketten(); ?></h1>
+        <h1>pakket: <?php echo $pakket->getPakketById($id); ?></h1>
         <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
             Omschrijving : <input type="text" name="txtOmschrijving" value="<?php echo $pakket->getOmschrijving(); ?>"><br>
             Prijs: <input type="number" name="txtPrijs" value="<?php echo $pakket->getPrijs(); ?>"><br>
