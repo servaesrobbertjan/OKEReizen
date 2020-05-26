@@ -24,9 +24,9 @@ class Boeking
     private $aantalPersonen;
     private $stad;
     private $land;
-    private $hotelnaam;
+    public $hotelnaam;
     private $prijs;
-    private $klantNummer;
+    public $klantNummer;
 
 
     public function __construct($boekingsid = null, $reisid = null, $omschrijving = null, $reistype = null, $boekingsdatum = null, $heendatum = null, $aantalDagen = null, $aantalPersonen = null, $stad = null, $land = null, $hotelnaam = null, $prijs = null, $klantNummer = null)
@@ -171,31 +171,30 @@ class Boeking
         WHERE boekingen.boekingsId = :id");
         $stmt->bindValue(":id", $id);
         $stmt->execute();
-        $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $boekinglijst = array();
-        foreach ($resultset as $boeking) {
-
-            $hotelObj = new Hotels($boeking["hotelId"], $boeking["hotelNaam"], null, null);
-            $klantObj = new Klanten ($boeking["klantNummer"], $boeking["klantNaam"],null,null,null,$boeking["emailAdres"],null); 
+        $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+    
+            $hotelObj = new Hotels($resultSet["hotelId"], $resultSet["hotelNaam"], null, null);
+            $klantObj = new Klanten ($resultSet["klantNummer"], $resultSet["klantNaam"],null,null,null,$resultSet["emailAdres"],null); 
 
             $boekingobj = new Boeking(
-                $boeking["boekingsId"],
-                $boeking["reisNummer"],
-                $boeking["reisOmschrijving"],
-                $boeking["boekingsDatum"],
-                $boeking["heenDatum"],
-                $boeking["aantalDagen"],
-                $boeking["aantalPersonen"],
-                $boeking["stad"],
-                $boeking["land"], 
+                $resultSet["boekingsId"],
+                $resultSet["reisNummer"],
+                $resultSet["reisOmschrijving"],
+                $resultSet["reisType"],
+                $resultSet["boekingsDatum"],
+                $resultSet["heenDatum"],
+                $resultSet["aantalDagen"],
+                $resultSet["aantalPersonen"],
+                $resultSet["stad"],
+                $resultSet["land"], 
                 $hotelObj, 
-                $boeking["prijs"], 
+                $resultSet["prijs"], 
                 $klantObj
             );
-            array_push($boekinglijst, $boekingobj);
-        }
+     
         $dbh = null;
-        return $boekinglijst;
+        return $boekingobj;
     }
 
 
