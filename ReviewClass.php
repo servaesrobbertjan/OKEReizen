@@ -107,8 +107,8 @@ class review
 
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
         $resultset = $dbh->query("SELECT DISTINCT klanten.klantnaam, bestemmingen.stad, bestemmingen.land, reviews.reviewBericht, reviews.reviewScore, reviews.reviewDatum 
-        FROM reviews left JOIN klantenreviews on reviews.reviewId = klantenreviews.reviewId join klanten on klanten.klantNummer 
-        join reizen on reizen.reisNummer join bestemmingen on bestemmingen.bestemmingsId ORDER BY reviews.reviewDatum DESC");
+        FROM reviews JOIN klantenreviews on reviews.reviewId = klantenreviews.reviewId join klanten on klanten.klantNummer = klantenreviews.klantNummer
+        join reizen on reizen.reisNummer = klantenreviews.reisNummer join bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId  ORDER BY reviews.reviewDatum DESC");
         $reviewlijst = array();
         foreach ($resultset as $bericht) {
             $reviewobj = new review(null, $bericht["klantnaam"], $bericht["reviewBericht"], $bericht["reviewScore"], $bericht["reviewDatum"], $bericht["stad"], $bericht["land"]);
