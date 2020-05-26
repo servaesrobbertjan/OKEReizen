@@ -259,7 +259,7 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
 {
 
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven from 
+        $stmt = $dbh->prepare("SELECT DISTINCT reizen.reisNummer, bestemmingen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven from 
         reizen
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId
