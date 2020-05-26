@@ -12,9 +12,9 @@ if (!isset($_SESSION["gebruiker"])) {
 }
 
 $gebruiker = unserialize($_SESSION["gebruiker"]);
-$klantNummer = 1;
-//$klantNummer = $gebruiker->getId();
-//$klantnaam = $gebruiker->getNaam();
+//$klantNummer = 1;
+$klantNummer = $gebruiker->getId();
+$klantnaam = $gebruiker->getNaam();
 // Start van de header html
 require_once("header.php");
 // Einde van de header html
