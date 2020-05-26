@@ -92,7 +92,8 @@ class review
 
         if($laatsteNewId != NULL){
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("INSERT INTO klantenreviews (klantNummer, reisNummer) VALUES (:klantnummer, :reisnummer)");
+        $stmt = $dbh->prepare("INSERT INTO klantenreviews (reviewId, klantNummer, reisNummer) VALUES (:reviewid, :klantnummer, :reisnummer)");
+        $stmt->bindValue(":reviewid", $laatsteNewId);
         $stmt->bindValue(":klantnummer", $this->klantnummer);
         $stmt->bindValue(":reisnummer", $this->reisnummer);
         $stmt->execute();

@@ -148,7 +148,6 @@ class Klanten
         $this->email = $resultSet["emailAdres"];
         
         $dbh = null;
-        var_dump($this);
         return $this;
     }
 

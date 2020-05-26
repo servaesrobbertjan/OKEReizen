@@ -135,4 +135,33 @@ class Hotels
         $stmt->execute();
         $dbh = null;
     }
+    public function CSVImport($bestand)
+    {
+        if (empty($bestand)) {
+            throw new GeenCSVOpgeladen();
+        }
+
+        $file = fopen($bestand, "r");
+
+        $header = true;
+
+        while (!feof($file)) {
+            $line_of_text = fgetcsv($file);
+
+            if ($header) {
+                $header = false;
+            }else {
+                $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
+                $stmt = $dbh->prepare("INSERT INTO hotel (hotelNaam, hotelTelefoon, hotelMail) VALUES (:hotelNaam, :hotelTelefoon, :hotelMail)");
+                $stmt->bindValue(":hotelNaam", $line_of_text[0]);
+                $stmt->bindValue(":hotelTelefoon", $line_of_text[1]);
+                $stmt->bindValue(":hotelMail", $line_of_text[2]);
+                $stmt->execute();
+                
+                $dbh = null;
+            }
+        }
+
+        fclose($file);
+    }
 }

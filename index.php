@@ -7,6 +7,7 @@ require_once("zoekobject.php");
 /*object aanmaken en ophalen pakketten db*/
 
 $naam = '';
+$gebruiker = "";
 $pakketObj = new Pakket();
 $pakketLijst = $pakketObj->getAllePakketten();
 $typesLijst = $pakketObj->getAlleReistypes();
@@ -19,7 +20,7 @@ $pakkettencitytrip = $pakketObj->getPakketByReisTypeWithBestReviewScore("city tr
 
 if (isset($_SESSION["gebruiker"])) {
 
-    $gebruiker = unserialize($_SESSION["gebruiker"], ["User"]);
+    $gebruiker = unserialize($_SESSION["gebruiker"]);
     $naam = $gebruiker->getNaam();
 }
 
