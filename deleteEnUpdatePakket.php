@@ -3,13 +3,13 @@ session_start();
 require_once("pakket.php");
 require_once("updatEnDeleteDet.php");
 
-
+$pakket="";
 $error = "";
 
 if (isset($_POST["btnDelete"])) {
     $pakketId = $_POST["boekingsId"];
     $pakketObj = new Pakket();
-    $pakket = $pakketObj->getPakketByID($id);
+    $pakket = $pakketObj->getPakketById($id);
     $pakketObj->deletePakketByID($id);
 } else if (isset($_POST["btnUpdate"])) {
     $pakketId = $_POST["boekingsId"];
@@ -31,11 +31,13 @@ if (isset($_POST["btnDelete"])) {
     if ($error == "") {
         $pakketObj = new Pakket($pakketId, $pakketOmschrijving, $pakketPrijs);
         $pakketObj->updatePakket();
-        $pakket = $pakketObj->getPakketByID($id);
+        $pakket = $pakketObj->getAllePakketten();
     }
 } else {
     $pakketObj = new Pakket();
-    $pakket = $pakketObj->getPakketByID($id);
+    $pakketObj->deletePakketByID($id);
+    $pakket = $pakketObj->getAllePakketten();
+    
 }
 
 ?>
@@ -68,7 +70,7 @@ if (isset($_POST["btnDelete"])) {
     } else {
     ?>
 
-        <h1>pakket: <?php echo $pakket->getOmschrijving(); ?></h1>
+        <h1>pakket: <?php echo $pakket->getAllePakketten(); ?></h1>
         <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
             Omschrijving : <input type="text" name="txtOmschrijving" value="<?php echo $pakket->getOmschrijving(); ?>"><br>
             Prijs: <input type="number" name="txtPrijs" value="<?php echo $pakket->getPrijs(); ?>"><br>

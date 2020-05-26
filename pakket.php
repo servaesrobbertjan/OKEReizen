@@ -175,11 +175,13 @@ public function getAllePakketten()
 
 {
     $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-    $resultSet = $dbh->query("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven FROM reizen 
+    $stmt = $dbh->prepare("SELECT reisNummer, reizen.bestemmingsId, reisType, stad, land, reizen.hotelId, hotelNaam, reisOmschrijving, prijs, luchthaven FROM reizen 
     INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
     INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
     INNER JOIN hotel on hotel.hotelId = reizen.hotelId");
- 
+    $stmt->execute();
+    $resultSet=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($resultSet);
  if($resultSet){
     $pakkettenLijst = array();
 
@@ -297,16 +299,11 @@ public function getPakketByReisTypeWithBestReviewScore($reistype)
     public function updatePakket()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("UPDATE reis SET  luchthaven = :luchthaven, bestemmingsId = :bestemmingsid ,  hotelId = :hotelid, reisTypeId = :reistypeid, reisOmschrijving = :reisomschrijving, prijs = :prijs WHERE reisNummer = :reisid");
+        $stmt = $dbh->prepare("UPDATE boekingen SET  reisOmschrijving = :reisomschrijving, prijs = :prijs WHERE reisNummer = :reisid");
 
         
-        $stmt->bindValue(":luchthaven", $this->luchthaven);
-        $stmt->bindValue(":bestemmingsid", $this->bestemmingsid);
-        $stmt->bindValue(":hotelId", $this->hotelid);
-        $stmt->bindValue(":reistypeid", $this->reistype);
-        $stmt->bindValue(":reisomschrijving", $this->omschrijving);
         $stmt->bindValue(":reisid", $this->reisid);
-        $stmt->bindValue(":prijs", $this->prijs);
+       
         $stmt->execute();
         $dbh = null;
     }
