@@ -40,6 +40,7 @@ echo $klantnaam; ?></h2>
                     <?php
                     echo  "<b>" . "BoekingId: " . "</b>" . $reis->getreisId() ."<br>" .
                         "<b>" . "boekingsDatum: " . "</b>" . $reis->getboekingsDatum() . "<b>" . "<br>".
+                        "<b>" . "heenDatum: " . "</b>" . $reis->getHeendatum() . "<b>" . "<br>".
                         "<b>" . "land: " . "</b>" . $reis->getland() . "<b>" . "<br>".
                         "<b>" . "stad: " . "</b>" . $reis->getstad() . "<b>" . "<br>" . 
                         "<b>" . "hotel: " . "</b>" . $reis->gethotelnaam() . "<b>" . "<br>" .
@@ -66,6 +67,7 @@ echo $klantnaam; ?></h2>
                     <?php
                     echo  "<b>" . "BoekingId: " . "</b>" . $reis->getreisId() ."<br>" .
                         "<b>" . "boekingsDatum: " . "</b>" . $reis->getboekingsDatum() . "<b>" . "<br>".
+                        "<b>" . "heenDatum: " . "</b>" . $reis->getHeendatum() . "<b>" . "<br>".
                         "<b>" . "land: " . "</b>" . $reis->getland() . "<b>" . "<br>".
                         "<b>" . "stad: " . "</b>" . $reis->getstad() . "<b>" . "<br>" . 
                         "<b>" . "hotel: " . "</b>" . $reis->gethotelnaam() . "<b>" . "<br>" .

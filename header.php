@@ -15,7 +15,7 @@
         <a href="registreer.php">Registreren</a> -
         <?php } else { ?>
         <a href="logout.php">Logout</a> -
-        <a href="klantPage.php">Mijn OKERreizen</a> -
+        <a href="klantPage.php">Mijn OKERreizen</a>
     <?php 
     } 
     ?>
