@@ -34,4 +34,8 @@ class Boekingmislukt extends Exception
 {
     
 }
+class GeenCSVOpgeladen extends Exception
+{
+    
+}
 ?>
