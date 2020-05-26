@@ -18,12 +18,15 @@ if (empty($_GET["id"]) && empty($_SESSION["gekozenreis"])) {
     $pakketObj = new Pakket();
 
     if (!empty($_GET["id"])){
-
-        $pakket = $pakketObj->getPakketById($_GET["id"]);
+        $_SESSION["gekozenreis"]=$_GET["id"];
+        $pakket = $pakketObj->getPakketById($_SESSION["gekozenreis"]);
     
     } else {
         if(!empty($_SESSION["gekozenreis"])){
         $pakket = $pakketObj->getPakketById($_SESSION["gekozenreis"]);
+        } else {
+            header("Location: index.php");
+            exit;
         }
     }
 
@@ -39,7 +42,7 @@ if (!empty($_POST["gekozenreis"])) {
     header("Location: reisboeken.php");
     exit;
 
-}
+} 
 }
 
 
@@ -52,8 +55,7 @@ require_once("header.php");
 
 echo "Bestemming: " . $pakket->getStad() . "<br>";
 echo "Hotel: " . $pakket->hotelid->getHotelNaam() . "<br>";
-echo "Wat kan u verwachten? " . $pakket->getOmschrijving() . "<br>".
-"U vertrekt vanuit volgende luchthaven: " . $pakket->getLuchthaven()."<br>"
+echo "Wat kan u verwachten? " . $pakket->getOmschrijving() . "<br>"
 ;
 echo "Wat zal het u kosten? " . "€ ". $pakket->getPrijs() . " per persoon<br>";
 

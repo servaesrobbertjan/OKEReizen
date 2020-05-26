@@ -1,6 +1,8 @@
 <?php
 
 require_once("dbconfig.php");
+require_once("klanten.php");
+require_once("hotels.php");
 
 class Boeking
 {
@@ -138,27 +140,34 @@ class Boeking
         $stmt->execute();
         $laatsteNewId = $dbh->lastInsertId();
         $dbh = null;
+        $this->boekingsid = $laatsteNewId;  
 
 
-        if($laatsteNewId != NULL){
+        if($laatsteNewId != null){
             $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
             $stmt = $dbh->prepare("INSERT INTO klantenreizen (klantNummer, reisNummer, boekingsId) VALUES (:klantnummer, :reisnummer, :boekingsid)");
             $stmt->bindValue(":klantnummer", $this->klantNummer);
             $stmt->bindValue(":reisnummer", $this->reisid);
             $stmt->bindValue(":boekingsid", $this->boekingsid);
             $stmt->execute();
-            $dbh = null;}
+            $dbh = null;
+        }
 
-        $this->id = $laatsteNewId;
         return $this;
     }
 
     public function getBoekingbyId($id)
     {
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.boekingsId,reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
-        FROM reizen INNER JOIN boekingen on reizen.boekingsId = boekingen.boekingsId INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
-        INNER JOIN klantenreizen on klantenreizen.reisNummer = reizen.reisNummer INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
+        $stmt = $dbh->prepare("SELECT klanten.klantNummer, klantNaam, emailAdres, boekingen.boekingsId, boekingsDatum, 
+        heenDatum, aantalDagen, aantalPersonen, reizen.reisNummer, reizen.bestemmingsId, reisType, stad, land, 
+        reizen.hotelId, hotelNaam, reisOmschrijving, prijs FROM boekingen 
+        LEFT JOIN klantenreizen on klantenreizen.boekingsId = boekingen.boekingsId
+        INNER JOIN reizen on reizen.reisNummer = klantenreizen.reisNummer
+        INNER JOIN klanten on klanten.klantNummer = klantenreizen.klantNummer 
+        INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId
+        INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId
+        INNER JOIN hotel on hotel.hotelId = reizen.hotelId
         WHERE boekingen.boekingsId = :id");
         $stmt->bindValue(":id", $id);
         $stmt->execute();
@@ -166,19 +175,22 @@ class Boeking
         $boekinglijst = array();
         foreach ($resultset as $boeking) {
 
+            $hotelObj = new Hotels($boeking["hotelId"], $boeking["hotelNaam"], null, null);
+            $klantObj = new Klanten ($boeking["klantNummer"], $boeking["klantNaam"],null,null,null,$boeking["emailAdres"],null); 
+
             $boekingobj = new Boeking(
                 $boeking["boekingsId"],
                 $boeking["reisNummer"],
                 $boeking["reisOmschrijving"],
-                $boeking["reisType"],
                 $boeking["boekingsDatum"],
                 $boeking["heenDatum"],
                 $boeking["aantalDagen"],
                 $boeking["aantalPersonen"],
                 $boeking["stad"],
-                $boeking["land"],
-                $boeking["hotelNaam"],
-                $boeking["prijs"]
+                $boeking["land"], 
+                $hotelObj, 
+                $boeking["prijs"], 
+                $klantObj
             );
             array_push($boekinglijst, $boekingobj);
         }
@@ -240,13 +252,13 @@ class Boeking
         $stmt = $dbh->prepare("SELECT reizen.reisNummer, boekingen.boekingsId, reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
         FROM boekingen 
         LEFT JOIN klantenreizen on klantenreizen.boekingsId = boekingen.boekingsId 
-        LEFT JOIN reizen on reizen.reisNummer = klantenreizen.reisNummer 
+        INNER JOIN reizen on reizen.reisNummer = klantenreizen.reisNummer 
         INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId 
         INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
         
         INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId 
         INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
-        WHERE boekingen.heenDatum > CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        WHERE boekingen.heenDatum >= CURRENT_DATE AND klanten.klantNummer = :klantNummer");
         $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
         $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);

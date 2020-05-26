@@ -23,13 +23,10 @@ $pakkettenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bes
 
  } else {
   
-    $pakketObj = new Pakket();
-    $pakkettenLijst = $pakketObj->getPakketById(1);
     
-  
-    /* header("Location: index.php");
+    header("Location: index.php");
     exit;
-*/
+
  }
 
 

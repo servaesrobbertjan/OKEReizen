@@ -4,20 +4,21 @@ require_once("boeking.php");
 
 
 
-if (empty($_SESSION["boekingsid"])) {
+/*if (empty($_SESSION["boekingsid"])) {
 
-    header("Location: pakketdetail.php");
-    exit;
-} else {
+  header("Location: pakketdetail.php");
+  exit;
+} 
 
-
-
+else {
+*/
     $boekingObj = new Boeking();
-    $boeking =  $boekingObj->getBoekingbyId($_SESSION["boekingsid"]);
+    $boeking = $boekingObj->getBoekingbyId($_SESSION["boekingsid"]);
 
 
+/*
 }
-
+*/
 
 
 
@@ -57,6 +58,9 @@ echo "Uw reisgegevens:"
 
 echo "<h2>Totale Prijs:". $boeking->totaalPrijs()  . "</h2><br>";
 
+}
+else {
+    echo "Er liep iets fout. <br>";
 }
 
 
