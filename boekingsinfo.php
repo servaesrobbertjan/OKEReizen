@@ -47,7 +47,7 @@ echo "Uw klantengegevens: ". $boeking->klantNummer->getNaam() . "<br>".  $boekin
 
 echo "Uw boekingsnummer: ". $boeking->getBoekingsid()  . "<br>";
 
-echo "Uw reisgegevens:" 
+echo "Uw bestemminggegevens:" 
 
 
 . $boeking->getStad() . " (" . $boeking->getLand() . ")<br>"
@@ -61,7 +61,7 @@ echo "Uw reisgegevens:"
 "Aantal Personen: " . $boeking->getaantalPersonen() . "<br>";
 
 
-echo "<h2>Totale Prijs:". $boeking->totaalPrijs()  . "</h2><br>";
+echo "<h2>Totale Prijs: € ". $boeking->totaalPrijs()  . "</h2><br>";
 
 }
 else {
