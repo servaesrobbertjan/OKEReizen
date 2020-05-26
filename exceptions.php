@@ -30,4 +30,8 @@ class reviewTeLang extends Exception
     
 }
 
+class Boekingmislukt extends Exception
+{
+    
+}
 ?>

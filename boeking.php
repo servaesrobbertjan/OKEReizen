@@ -12,7 +12,7 @@ class Boeking
         
         */
 
-        private $boekingsid;
+    private $boekingsid;
     private $reisid;
     private $omschrijving;
     private $reistype;
@@ -237,10 +237,16 @@ class Boeking
     public function toonToekomstigeReizen($klantNummer)
     {
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.reisNummer, reizen.boekingsId,reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
-        FROM reizen INNER JOIN boekingen on reizen.boekingsId = boekingen.boekingsId INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
-        INNER JOIN klantenreizen on klantenreizen.reisNummer = reizen.reisNummer INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
-        WHERE boekingen.boekingsDatum > CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        $stmt = $dbh->prepare("SELECT reizen.reisNummer, boekingen.boekingsId, reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
+        FROM boekingen 
+        LEFT JOIN klantenreizen on klantenreizen.boekingsId = boekingen.boekingsId 
+        LEFT JOIN reizen on reizen.reisNummer = klantenreizen.reisNummer 
+        INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId 
+        INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
+        
+        INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId 
+        INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
+        WHERE boekingen.heenDatum > CURRENT_DATE AND klanten.klantNummer = :klantNummer");
         $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
         $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -270,10 +276,16 @@ class Boeking
     public function toonVorigeReizen($klantNummer)
     {
         $dbh = new PDO(DBconfig::$DB_CONNSTRING, DBconfig::$DB_USER, DBconfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT reizen.reisNummer, reizen.boekingsId,reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
-        FROM reizen INNER JOIN boekingen on reizen.boekingsId = boekingen.boekingsId INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
-        INNER JOIN klantenreizen on klantenreizen.reisNummer = reizen.reisNummer INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
-        WHERE boekingen.boekingsDatum < CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        $stmt = $dbh->prepare("SELECT reizen.reisNummer, boekingen.boekingsId, reizen.reisOmschrijving, reistypes.reisType, boekingen.boekingsDatum, boekingen.heenDatum, boekingen.aantalDagen,boekingen.aantalPersonen, bestemmingen.stad, bestemmingen.land, hotel.hotelNaam, reizen.prijs 
+        FROM boekingen 
+        LEFT JOIN klantenreizen on klantenreizen.boekingsId = boekingen.boekingsId 
+        LEFT JOIN reizen on reizen.reisNummer = klantenreizen.reisNummer 
+        INNER JOIN bestemmingen on bestemmingen.bestemmingsId = reizen.bestemmingsId 
+        INNER JOIN hotel on hotel.hotelId = reizen.hotelId 
+        
+        INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId 
+        INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
+        WHERE boekingen.heenDatum < CURRENT_DATE AND klanten.klantNummer = :klantNummer");
         $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
         $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);

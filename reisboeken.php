@@ -3,7 +3,7 @@ session_start();
 require_once("header.php");
 require_once("boeking.php");
 require_once("pakket.php");
-
+require_once("exceptions.php");
 
 
 $error="";
@@ -147,8 +147,8 @@ if(isset($_POST["submitKnop"]))
 Uw gekozen pakket: <?php echo $gekozenpakket->getStad() . " (". $gekozenpakket->getLand(). ")<br>";
 echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br>";
 echo $gekozenpakket->getOmschrijving() . "<br>";
-echo "€ ".$gekozenpakket->getPrijs() . " per persoon/nacht.<br>"; ?>
-
+echo "€ ".$gekozenpakket->getPrijs() . " per persoon/nacht.<br>"; 
+echo "error";?>
 <br>
 
 
