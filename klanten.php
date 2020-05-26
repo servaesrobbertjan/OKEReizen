@@ -133,7 +133,7 @@ class Klanten
         }
 
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
-        $stmt = $dbh->prepare("SELECT klantNummer, wachtwoord FROM klanten WHERE emailAdres = :emailAdres");
+        $stmt = $dbh->prepare("SELECT klantNummer,klantNaam,wachtwoord, emailAdres FROM klanten WHERE emailAdres = :emailAdres");
         $stmt->bindValue(":emailAdres", $this->email);
         $stmt->execute();
         $resultSet = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -143,9 +143,12 @@ class Klanten
         if (!$isWachtwoordCorrect) {
             throw new WachtwoordIncorrectException();
         }
-
+        $this->id = $resultSet["klantNummer"];
+        $this->naam = $resultSet["klantNaam"];
         $this->email = $resultSet["emailAdres"];
+        
         $dbh = null;
+        var_dump($this);
         return $this;
     }
 
