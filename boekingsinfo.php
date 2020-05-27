@@ -1,24 +1,28 @@
 <?php
 session_start();
 require_once("boeking.php");
+require_once("klanten.php");
 
 
 
-/*if (empty($_SESSION["boekingsid"])) {
+
+if (empty($_SESSION["boekingsid"])) {
 
   header("Location: pakketdetail.php");
   exit;
 } 
 
 else {
-*/
+
     $boekingObj = new Boeking();
+
     $boeking = $boekingObj->getBoekingbyId($_SESSION["boekingsid"]);
 
+    echo "<br>";
 
-/*
+
 }
-*/
+
 
 
 
@@ -38,6 +42,7 @@ if ($boeking) {
 
     <?php
 
+
 echo "Uw klantengegevens: ". $boeking->klantNummer->getNaam() . "<br>".  $boeking->klantNummer->getEmail() . "<br><br>";
 
 echo "Uw boekingsnummer: ". $boeking->getBoekingsid()  . "<br>";
@@ -47,7 +52,7 @@ echo "Uw reisgegevens:"
 
 . $boeking->getStad() . " (" . $boeking->getLand() . ")<br>"
 
-. "Uw hotel" . $boeking->hotelid->getHotelNaam() . "<br><br>". 
+. "Uw hotel: " . $boeking->hotelnaam->getHotelNaam() . "<br><br>". 
 
 "Heendatum: ".  $boeking->getHeendatum() . "<br>". 
 
@@ -60,7 +65,7 @@ echo "<h2>Totale Prijs:". $boeking->totaalPrijs()  . "</h2><br>";
 
 }
 else {
-    echo "Er liep iets fout. <br>";
+    echo "Oei. Er liep iets fout. <br>";
 }
 
 

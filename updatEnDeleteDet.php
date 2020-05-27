@@ -1,7 +1,7 @@
 <?php
 require_once("pakket.php");
 $pakketObj = new Pakket();
-$pakketLijst = $pakketObj->getAllePakketten();
+$pakketenLijst = $pakketObj->getAllePakketten();
 
 ?>
 <!DOCTYPE html>
@@ -14,8 +14,8 @@ $pakketLijst = $pakketObj->getAllePakketten();
     <ul>
         <?php 
         
-        foreach ($pakketLijst as $pakket) {
-            echo "<li><a href=\"index.php?id=" . $pakket->getReisId() . "\">" . $pakket->getHotelNaam()  . $hotel->getHotelEmail(). "</a></li>";
+        foreach ($pakketenLijst as $pakket) {
+            echo "<li><a href=\"index.php?id=" . $pakket->getPrijs() . "\">" . $pakket->getOmschrijving(). "</a></li>";
         }
         
         ?>

@@ -97,7 +97,6 @@ if (isset($_POST["submitKnop"])) {
 
     if ($error == "" && isset($_SESSION["gebruiker"])) {
 
-
         $gebruiker = unserialize($_SESSION["gebruiker"]);
         $klantnummer = $gebruiker->getId();
         $reisnummer = $gekozenpakket->getReisId();
@@ -116,17 +115,15 @@ if (isset($_POST["submitKnop"])) {
         $boekingObj = new Boeking(null, $reisnummer, $omschrijving, $reistype, $boekingsdatum, $heendatum, $aantaldagen, $aantalpersonen, $stad, $land, $hotelnaam, $prijs, $klantnummer);
 
         $boeking = $boekingObj->addBoeking();
+$boekingsid = $boeking->getBoekingsid();
+ 
+        $_SESSION["boekingsid"] = $boekingsid;
+if (!empty($_SESSION["boekingsid"])){
 
-/* Er is een probleem  met de functie addBoeking er wordt enkel naar de tabel boekingen geschreven terwijl hij ook naar klantenreizen moet schrijven. Hier door zijn
-er ook problemen met de queries die op deze tabel gebaseerd zijn*/
+        header("Location: boekingsinfo.php");
+        exit;
 
-        $_SESSION["boekingsid"] = serialize($boeking->getBoekingsid());
-
-
-        //header("Location: boekingsinfo.php");
-        //exit;
-
-
+}
     } else {
 
         header("Location: pakketdetails.php");
