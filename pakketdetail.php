@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once("pakket.php");
+require_once("reviewClass.php");
+
+
 
 /* 
 Als er geen variable gekend is dan sturen we de gebruiker terug naar de index die ook als zoekpagina fungeert
@@ -33,6 +36,13 @@ if (empty($_GET["id"]) && empty($_SESSION["gekozenreis"])) {
 
 }
 
+
+if (isset($_SESSION["gebruiker"])){
+
+    $gebruiker = unserialize($_SESSION["gebruiker"]);
+    $gebruiker = $gebruiker->getId();
+
+}
 /*Indien de klant de geselecteerde reis wil boeken, klikt hij op "boeken" en wordt hij naar de boekingspagina gestuurd */ 
 
 if (isset($_POST["submitKnop"])){
@@ -44,6 +54,7 @@ if (!empty($_POST["gekozenreis"])) {
 
 } 
 }
+
 
 
 require_once("header.php");
@@ -69,10 +80,22 @@ echo "Wat zal het u kosten? " . "€ ". $pakket->getPrijs() . " per persoon<br>"
     <a href="registreer.php">Registreer je hier<a>
 </form>
 
-<?php } else
+<?php } else {
 
-echo "<br><br> U heeft geen reis geselecteerd.<br><a href=\"zoekresultaat.php\"> Terug naar de zoekresultaten <a>"
+echo "<br><br> U heeft geen reis geselecteerd.<br><a href=\"zoekresultaat.php\"> Terug naar de zoekresultaten <a>";
+
+}
+if (!empty($gebruiker)){
+
+if ($gebruiker >= 0 && $gebruiker <= 4){
+
+    echo "<br><br> <a href=\"deleteEnUpdatePakket.php?id=". $pakket->getReisId(). "\"> Pakket wijzigen <a>";
+}
+
+}
 ?>
+
+
 
 <?php
 require_once("footer.php");
