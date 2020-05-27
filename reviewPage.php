@@ -32,10 +32,10 @@ if (isset($_POST["knopOK"]) && isset($_SESSION["gebruiker"])) {
 
     // controleer of reisnummer is gevuld
 
-    if (empty($_POST["txtReisnummer"])) {
-        $error .= "je klantnummer mag niet leeg zijn";
+    if (empty($_SESSION["reisNummer"])) {
+        $error .= "je reisnummer mag niet leeg zijn";
     } else {
-        $reisNummer = $_POST["txtReisnummer"];
+        $reisNummer = $_SESSION["reisNummer"];
     }
 }
 
@@ -74,7 +74,8 @@ if (isset($_SESSION["gebruiker"])) {
     <H2>Vul hier je review in</H2>
 
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-        Reisnummer: <input type="text" name="txtReisnummer"><br>
+        Reisnummer: <?php echo $_SESSION["reisNummer"]      
+        ?> <br>
         <fieldset>
             <legend>Review jouw reis </legend><br>
             Score: <br> <input type="radio" name="txtScore" value="0">0
