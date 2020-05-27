@@ -91,17 +91,18 @@ if (isset($_POST["btnDelete"]) && !empty($id)) {
     <?php
     if (isset($_POST["btnDelete"])) {
 
-        echo "<b>Pakket \"" . $pakket->getOmschrijving() . "\" verwijderd</b>";
-        echo "<b>prijs \"" . $pakket->getPrijs() . "\" verwijderd</b>";
+        echo "<p><b>Pakket<b> \"" . $pakket->getOmschrijving() . "\" verwijderd</p>";
+        echo "<p><b>Prijs<b> \"" . $pakket->getPrijs() . "\" <b>verwijderd</b></p>";
+
 
         echo "Klik <a href=\"allepakketten.php\">hier</a> om terug te gaan naar de overzichtspagina.";
     } else if (isset($_POST["btnUpdate"])) {
-        echo "<p>Pakket \"" . $pakket->getOmschrijving() . "\" geüpdatet</p>";
-        echo "<p>prijs \"" . $pakket->getPrijs() . "\" geüpdatet</p>";
+        echo "<p><b>Pakket</b> \"" . $pakket->getOmschrijving() . "\" <b>geüpdatet</b></p>";
+        echo "<p><b>Prijs</b> \"" . $pakket->getPrijs() . "\" <b>geüpdatet</b></p>";
         echo "Nieuwe waarden:<br>";
         echo "<ul>";
-        echo "<li>omschrijving: " . $pakket->getOmschrijving() . "</li>";
-        echo "<li>Prijs: " . $pakket->getPrijs() . "</li>";
+        echo "<li><b>Omschrijving:</b> " . $pakket->getOmschrijving() . "</li>";
+        echo "<li><b>Prijs:</b> " . $pakket->getPrijs() . "</li>";
         echo "</ul>";
         echo "Klik <a href=\"allepakketten.php\">hier</a> om terug te gaan naar de overzichtspagina.";
     } else {
