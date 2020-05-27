@@ -27,8 +27,7 @@ class Boeking
     public $hotelnaam;
     private $prijs;
     public $klantNummer;
-
-
+    
     public function __construct($boekingsid = null, $reisid = null, $omschrijving = null, $reistype = null, $boekingsdatum = null, $heendatum = null, $aantalDagen = null, $aantalPersonen = null, $stad = null, $land = null, $hotelnaam = null, $prijs = null, $klantNummer = null)
     {
         $this->boekingsid = $boekingsid;
@@ -44,13 +43,13 @@ class Boeking
         $this->hotelnaam = $hotelnaam;
         $this->prijs = $prijs;
         $this->klantNummer = $klantNummer;
-    }
+     }
 
 
    
      public function getBoekingsid()
         {
-                return $this->boekingsid;
+        return $this->boekingsid;
         }
 
 
@@ -121,7 +120,7 @@ class Boeking
         return $this->klantNummer;
     }
 
-    public function totaalPrijs()
+        public function totaalPrijs()
     {
         $totaalPrijs = $this->aantalDagen * $this->aantalPersonen * $this->prijs;
         return $totaalPrijs;
