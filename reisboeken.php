@@ -158,7 +158,7 @@ if (!empty($_SESSION["boekingsid"])){
         </div>
         <br>
 
-        <h2> Vervoledig de informatie </h2>
+        <h2> Vervolledig de informatie </h2>
    <p>
         <!--invoer velden-->
         Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>"><br>
