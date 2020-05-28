@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 26 mei 2020 om 23:23
+-- Gegenereerd op: 28 mei 2020 om 19:41
 -- Serverversie: 10.4.11-MariaDB
 -- PHP-versie: 7.4.6
 
@@ -118,7 +118,7 @@ CREATE TABLE `klanten` (
 --
 
 INSERT INTO `klanten` (`klantNummer`, `klantNaam`, `klantAdres`, `plaatsId`, `geboortedatum`, `emailAdres`, `wachtwoord`) VALUES
-(0, 'Admin', 'Thor Park 8040', 799, '2020-05-19', 'contact@okereizen.be', '$2y$10$3yp2iizjZ8xEEDTJCac26.6TH1Yp4a3rHkyJK/rPIF1d216WMrb4.'),
+(0, 'Admin', 'Thor Park 8040', 799, '2020-05-19', 'contact@okereizen.be', '$2y$10$ng8v9ZMp917GawSlxO026ubDsMSka5AiibZF1V4N47EG4KHrniLIO'),
 (1, 'Robbert-jan Servaes', 'Grote Baan 120', 1111, '1988-01-25', 'Servaes_Robbert_Jan@hotmail.com', '$2y$10$Y/6Vyrlx12/p90iVN0ALoeszl8e3Jx9KQV1xgiPtKszF7Eojajr2i'),
 (2, 'OLivier Janssen', 'zwarte brugstraat 4', 967, '1990-07-30', 'olivier.janssen@gmail.com', '$2y$10$bGcZ1Z/dkq2Vj2HM3Mn44uNiWKAGPBCMMOvwLjXQXnrxMyvwZVbs2'),
 (3, 'Kristof Mentens', 'groenstraat 9', 283, '1985-10-03', 'kmjmentens@gmail.com', '$2y$10$ukknZAqYzXGlmO6eS.TufeQ873PMb9Hxie/09yHJHW2ocO5FGUXCW'),
@@ -3076,7 +3076,8 @@ CREATE TABLE `reviews` (
 INSERT INTO `reviews` (`reviewId`, `reviewBericht`, `reviewScore`, `reviewDatum`) VALUES
 (1, 'Comfortabele, schone en goed onderhouden kamer, vriendelijk en attent personeel, prachtig historisch gebouw.\r\nDicht bij het centrum van Madrid, het metrostation voor de deur en het vervoersknooppunt Atocha op loopafstand.', 4, '2020-05-14 12:34:23'),
 (2, 'leuke ligging van hotel aan strand en zeer centraal (tussen Adeje en Los Christianos). Keerzijde is dat hotel naast uitgangsbuurt ligt en er \'s avonds wel nachtlawaai kan zijn, dus steeds vragen naar rustige kamer want niet alle kamers hebben er last van.', 3, '2020-05-14 18:45:23'),
-(3, 'Het hotel voldeed niet aan de verwachting die wij hadden. de muren en meubels waren in een verwaarloosde staat.\r\nHet personeel was zeer vriendelijke, toch krijgt men de indruk dat het hotel aaan zijn lot is overgelaten tegen over andere hotels van deze ke', 1, '2020-05-24 13:22:07');
+(3, 'Het hotel voldeed niet aan de verwachting die wij hadden. de muren en meubels waren in een verwaarloosde staat.\r\nHet personeel was zeer vriendelijke, toch krijgt men de indruk dat het hotel aaan zijn lot is overgelaten tegen over andere hotels van deze ke', 1, '2020-05-24 13:22:07'),
+(4, '', 0, '2020-05-28 15:47:11');
 
 -- --------------------------------------------------------
 
@@ -3209,7 +3210,7 @@ ALTER TABLE `reizen`
 -- AUTO_INCREMENT voor een tabel `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
