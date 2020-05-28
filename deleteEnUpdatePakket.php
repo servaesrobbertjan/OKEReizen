@@ -10,7 +10,7 @@ if (isset($_SESSION["gebruiker"])) {
     $gebruiker = unserialize($_SESSION["gebruiker"]);
     $gebruiker = $gebruiker->getId();
 
-    if ($gebruiker < 0 || $gebruiker > 4) {
+    if ($gebruiker < 0 || $gebruiker > 5) {
 
         header("Location: pakketdetail.php");
         exit;
