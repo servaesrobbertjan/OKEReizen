@@ -52,8 +52,8 @@ if ($error == "" && isset($_SESSION["gebruiker"])) {
        
         if (isset($_POST["knopOK"])) {
 
-           unset($_SESSION["reisNummer"]);
-        }
+            unset($_SESSION["reisNummer"]);
+         }
 
 
     } catch (reviewTeLang $e) {
@@ -64,15 +64,17 @@ if ($error == "" && isset($_SESSION["gebruiker"])) {
 
 // als formulier verstuurd en error leeg toon bericht anders toon error
 
+
+
+
+
+require_once("header.php");
+
 if (isset($_POST["knopOK"]) && $error == "") {
     echo "<br><span style=\"color:blue;>\"><b><p>" . " !!! dank voor uw review !!!" . "</p></b></span>";
 } else if (isset($_POST["knopOK"]) && $error !== "") {
     echo "<br><span style=\"color:red;>\"><b>" . $error . "</b></span>";
 }
-
-
-
-require_once("header.php");
 
 // als gebruiker is ingelogd toon formulier
 
