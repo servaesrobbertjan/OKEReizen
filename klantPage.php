@@ -89,15 +89,15 @@ echo $klantnaam; ?></text>
                         $reisNummer = $reis->getreisId();
                         
                         if(isset($_POST["ReviewOK"])&& !empty($reisNummer)){
-                            $_SESSION["reisNummer"] = $reisNummer;
+                            $_SESSION["ReisNummer"] = $reisNummer;
                             
                         }
-var_dump($_SESSION["reisNummer"]);
+var_dump($_SESSION["ReisNummer"]);
 var_dump($reisNummer);
                     ?>
                     <br>
                     <form action="reviewPage.php" method="post">
-                    <input type="submit" name="ReviewOk" value="Review">
+                    <input type="submit" name="ReviewOK" value="Review">
                     </fieldset>
             </ul>
         </div>
