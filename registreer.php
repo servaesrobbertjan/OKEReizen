@@ -81,7 +81,8 @@ require_once("header.php");
 ?>
 
 <h1>Registreren</h1>
-
+<h2>Vul je gegevens in</h1>
+<br>
 <?php
 if ($error == "" && isset($_SESSION["gebruiker"])) {
     echo "U bent succesvol geregistreerd.";
@@ -92,9 +93,9 @@ if (!isset($_SESSION["gebruiker"])) {
 ?>
 
     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
-        Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> <br>
-        Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"> <br>
-        Postcode en gemeente: <select name="txtPlaats">
+    <p>    Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> </p><br>
+    <p> Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"></p> <br>
+    <p> Postcode en Gemeente: <select name="txtPlaats">
             <?php
             $plaatsen = new plaatsen();
             $plaatsen = $plaatsen->getAlleGemeente();
@@ -104,12 +105,12 @@ if (!isset($_SESSION["gebruiker"])) {
             <?php   
             }
             ?>
-            </select><br>
-        Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> <br>
-        E-mailadres: <input type="email" name="txtEmail" maxlength="64"> <br>
-        Wachtwoord: <input type="password" name="txtWachtwoord"> <br>
-        Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> <br>
-        <input type="submit" value="Registreren" name="btnRegistreer">
+            </select></p><br>
+      <p>  Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> </p><br>
+       <p> E-mailadres: <input type="email" name="txtEmail" maxlength="64"></p> <br>
+       <p>   Wachtwoord: <input type="password" name="txtWachtwoord"></p> <br>
+       <p>  Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> </p> <br>
+       <p>  <input type="submit" value="Registreren" name="btnRegistreer"> </p>
 
     </form>
 

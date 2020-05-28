@@ -76,7 +76,9 @@ if (isset($_SESSION["gebruiker"])) {
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
         Reisnummer: <?php echo $_SESSION["reisNummer"];      
         ?> <br>
+            <ul>
         <fieldset>
+        
             <legend>Review jouw reis </legend><br>
             Score: <br> <input type="radio" name="txtScore" value="0">0
             <input type="radio" name="txtScore" value="1">1
@@ -88,8 +90,8 @@ if (isset($_SESSION["gebruiker"])) {
 
             <input type="submit" name="knopOK" value="verzenden">
 
-            </div>
-        </fieldset>
+</fieldset>
+</ul>
     </form>
 
     <body>
@@ -110,22 +112,30 @@ if (isset($_SESSION["gebruiker"])) {
         $beoordeling = $beoordeling->toonReviews();
 
         foreach ($beoordeling as $bericht) { ?>
-
+<div class="plain">
             <ul>
                 <fieldset>
                     <?php
                     echo "<b>" . "Naam: " . "</b>" . $bericht->getNaam() . "<br>" .
-                        "<b>" . "Stad: " . "</b>" . $bericht->getStad() . "<b>" . "<br>" .
-                        "<b>" . "Land: " . "</b>" . $bericht->getLand() . "<b>" . "<br>" .
-                        "<b>" . "Score: " . "</b>" . $bericht->getScore() . "<b>" . "<br>" . "<br>" .
-                        "<b>" . "Review: " . "</b>" . "<br>" . $bericht->getReview() . "<b>" . "<br>" . "<br>" .
-                        $bericht->getDatum() . "<b>" . "<br>";
+                        "<b>" . "Stad: " . "</b>" . $bericht->getStad()  . "<br>" .
+                        "<b>" . "Land: " . "</b>" . $bericht->getLand() . "<br>" .
+                        "<b>" . "Score: " . "</b>" . $bericht->getScore() . "<br>" . "<br>" .
+                        "<b>" . "Review: " . "</b>" . "<br>" . $bericht->getReview() . "<br>" . "<br><div style=\"text-align:right\">" .
+                        $bericht->getDatum() . "<div><br>";
                     ?>
+              </fieldset>
             </ul>
+<div>
 
+
+
+      
         <?php
         }
-
+?>
+<p><text><a href="index.php">Terug naar de startpagina</a></text></p>
+        <?php
+        
         require_once("footer.php");
 
         ?>

@@ -15,11 +15,12 @@ body {
 
 
 p {
+    padding-bottom:15px !important;
+   
     color: #ffffff !important;
     margin: auto;
-    
     width: auto;
-    text-align: left;
+    text-align: center;
     width: auto;
     font-size: calc(15px);
     font-family: Arial, Helvetica, sans-serif;
@@ -29,7 +30,7 @@ p {
 p a{
     color: white !important;
     margin: auto;
-    
+   
     width: auto;
     text-align: left;
     width: auto;
@@ -38,35 +39,50 @@ p a{
    
 }
 p a:hover{
-    color: white !important;
+    color: #f7af36 !important;
     margin: auto;
     
     width: auto;
     text-align: left;
     width: auto;
-    font-size: calc(18px);
+    
     font-family: Arial, Helvetica, sans-serif;
    
 }
 
 
-b{
+i {
+    font-size: 15px;
+    color: #ffffff !important;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.plain{
+
     color: #ffffff !important;
     margin: auto;
     font-style: normal;
-    width: auto;
-    text-align: left;
-    width: auto;
+    width: 100%;
+    text-align: left!important;
+   
     font-size: calc(15px);
     font-family: Arial, Helvetica, sans-serif;
 
 }
 
 
+ul{
+margin:auto;
+padding-bottom:20px;
+
+}
 fieldset{
+margin:auto;
+    width: 50vw;
     border-color:#f7af36;
     border-radius: 5px;
-background-color: #363636;
+background-color: #393939;
 
 }
 
@@ -100,7 +116,7 @@ h2 {
     color: #ffffff !important;
     margin: auto;
     margin-top: 5px;
-    margin-bottom: 8px;
+    margin-bottom: 15px;
     width: auto;
     text-align: center;
     width: auto;
@@ -181,15 +197,6 @@ z-index:100;
    user-select: none;
    }
 
-.pakketwrapper {
-  
-    align-content:space-between ;
-
-    display:flex;
-    background-color: #393939;
-width: 100%;
-
-}
 
 text{
     text-align: center;
@@ -203,7 +210,8 @@ color:white;
 }
 
 text a{
- 
+    margin:auto;
+    text-align: center;
     font-size: 15px;
 
 color:#f7af36;
@@ -215,12 +223,22 @@ text a:hover{
 color:#ffffff;
 }
 
+.pakketwrapper {
+  
+    align-content:space-between ;
+  
+    display:flex;
+    background-color: #393939;
+width: 100%;
+
+}
+
 .pakket {
     width: autp;
     padding:20px;
     margin:10px;
     color:white;
-    font-size: 18px;
+    font-size: 15px;
     text-align: left;
     display:flex;
     flex-grow: 1;
@@ -230,9 +248,42 @@ color:#ffffff;
     background-color:#393939;
 width: auto;
 
+}
+
+.pakketwrapper2 {
+  
+    align-content:space-between ;
+    flex-direction: column; 
+    display:flex;
+    background-color: #393939;
+width: 100%;
 
 }
 
+
+.pakket2 {
+    flex-direction:column;  
+    width: 95% !important;
+    padding: 20px; 
+   margin: 20px;
+    color:white;
+    font-size: 18px;
+    text-align: left;
+    display:flex;
+    flex-grow: 2;
+    flex-shrink: 2;
+    flex-basis: auto;
+    align-self: center;
+    background-color:#515151;
+width: auto;
+
+}
+
+.pakket2.p{
+
+    padding:20px;
+    margin:20px; 
+}
 .zoekwrapper {
   
    
@@ -247,11 +298,11 @@ width: auto;
 }
 
 .zoeken {
-  
+
     justify-content: center;
-    align-content: space-around ;
+padding-right: 55px;
     display:flex;
-   padding-top:20px;
+   padding-top:0px;
     color:white;
     font-size: 15px;
     text-align: center;
@@ -263,7 +314,7 @@ width: auto;
 .zoekelement {
   
 height: auto;
-   
+   flex-wrap: wrap;
       display:flex;
    
       text-align: center;
@@ -291,7 +342,6 @@ width: auto;
 .footer {
    bottom:0;
     padding:20px;
-   
      color:white;
      font-size: 15px;
      text-align: center;
@@ -309,13 +359,13 @@ width: auto;
 
 input[type=text] {
 
-background-color:#d5d5d5;
+background-color:white;
 color:black
 }
 
 input[type=select] {
     width:auto;
-    background-color:#d5d5d5;
+    background-color:white;
     color:black ;   }
 
 input[type=submit ] {

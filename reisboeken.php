@@ -137,7 +137,11 @@ if (!empty($_SESSION["boekingsid"])){
 ?>
 
 
-<h2> Vervolledig de boekingsinformatie </h2>
+<h2> Uw gekozen pakket </h2>
+<div class="plain">
+<div class=pakket>
+
+    
 <!--Kijken of er een gekozenpakket is-->
 <?php if ($gekozenpakket) { ?>
 
@@ -145,34 +149,41 @@ if (!empty($_SESSION["boekingsid"])){
 
         <!--Gekozen pakket weergeven-->
 
-        Uw gekozen pakket: <?php echo $gekozenpakket->getStad() . " (" . $gekozenpakket->getLand() . ")<br>Luchthaven: " . $gekozenpakket->getLuchthaven() . "<br>";
-                            echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br>";
-                            echo $gekozenpakket->getOmschrijving() . "<br>";
-                            echo "€ " . $gekozenpakket->getPrijs() . " per persoon/nacht.<br>";
-                            echo "<span style=\"color:red\">" . $error . "</span>"; ?>
+        <?php echo "<b>" . $gekozenpakket->getStad() . " (" . $gekozenpakket->getLand() . "</b>)<br><br>Luchthaven: " . $gekozenpakket->getLuchthaven() . "<br>";
+                            echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br><br>";
+                            echo $gekozenpakket->getOmschrijving() . "<br><br>";
+                            echo "<text>€ " . $gekozenpakket->getPrijs() . " per persoon/nacht.</text>";
+                            echo "<span style=\"color:red\">" . $error . "</span><br>"; ?>        <br>
+
+        </div>
         <br>
 
-
+        <h2> Vervoledig de informatie </h2>
+   <p>
         <!--invoer velden-->
         Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>"><br>
 
         Aantal personen: <input type="number" id="aantalpersonen" name="personen" value="2" min="1" max="10"><br>
 
 
-        Aantal overnachtingen: <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31"><br>
+        Aantal overnachtingen: <input type="number" id="aantaldagen" name="dagen" value="3" min="1" max="31"><br><br>
 
 
         <input type="submit" value="Boek uw reis" name="submitKnop">
 
-    </form>
+</p>
 
+    </form>
+    
 <?php } else {
 
-    echo "Er werd geen pakket geselecteerd.";
+    echo "<p>Er werd geen pakket geselecteerd.</p>";
 } ?>
 <br>
 
-<a href="zoekresultaat.php">Terug naar zoekresultaten.</a>
+</div>
+
+<p><text><a href="zoekresultaat.php">Terug naar zoekresultaten.</a></text></p>
 
 
 
