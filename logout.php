@@ -1,13 +1,18 @@
 <?php 
 session_start();
 
-unset($_SESSION["gebruiker"]);
+session_unset();
 
 require_once("header.php");
 ?>
 
 <h1>U bent uitgelogd, have a nice day! </h1>
-<h2>Nu kan u beginnen aftellen naar uw vakantie !</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h1>Nu kan u beginnen aftellen naar uw vakantie !</h1>
 
 <?php 
 require_once("footer.php");

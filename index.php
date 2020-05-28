@@ -97,105 +97,128 @@ require_once("header.php");
                 echo " " . $naam;
             } ?>. Welkom op onze Website <h1>
 
+
+
         <h2>Welke reis wil u maken?</h2>
 
         <?php echo "<span style=\"color:red\">" . $error . "</span>" ?>
 
-        <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <div class=zoekwrapper>
 
-            <!-- Van alle reispakketten de bestemming(stad) en reistypes in een selectielijst zetten -->
+            <div class=zoeken>
 
-            Bestemming: <select name="bestemming">
-                <?php
-                foreach ($pakketLijst as $pakket) {
-                    echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
-                }
-                ?>
-            </select><br>
+                <div>
+                    <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-            Type reis: <select name="reistype">
-                <?php
-                foreach ($typesLijst as $reistype) {
-                    echo "<option value=\"" . $reistype  . "\">" . $reistype. "</option>";
-                }
-                ?>
-            </select>
-            <br>
+                        <!-- Van alle reispakketten de bestemming(stad) en reistypes in een selectielijst zetten -->
+
+                        Bestemming: <select name="bestemming">
+                            <?php
+                            foreach ($pakketLijst as $pakket) {
+                                echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
+                            }
+                            ?>
+                        </select><br><br>
+
+                        Type reis: <select name="reistype">
+                            <?php
+                            foreach ($typesLijst as $reistype) {
+                                echo "<option value=\"" . $reistype  . "\">" . $reistype . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <br><br>
+                </div>
 
 
-            Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $vandaag ?>" min=" <?php echo $vandaag ?> " max="<?php echo  $limiet ?>">
-            <br>
+                <div>
+                    Vertrekdatum: <input type="date" id="start" name="startreis" value="<?php echo $vandaag ?>" min=" <?php echo $vandaag ?> " max="<?php echo  $limiet ?>">
+                    <br><br>
 
-            Terugkeerdatum <input type="date" id="einde" name="eindreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo $limiet ?>">
+                    Terugkeerdatum: <input type="date" id="einde" name="eindreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo $limiet ?>">
 
-            <!--eindreis mag niet kleiner of gelijk zijn dan startreis én het veld moet ingevuld zijn, 
+                    <!--eindreis mag niet kleiner of gelijk zijn dan startreis én het veld moet ingevuld zijn, 
 voor de rest gaan we hier niets mee doen bij de zoekresultaten omdat onze reizen geen specifieke start en einddata hebben.
 Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het object opslaan -->
-
-
+                </div>
+            </div>
             <input type="submit" value="Zoek uw reis" name="submitKnop">
-            <br>
 
-<a href="allepakketten.php">Geef alle reispakketten weer.</a>
+<br>
 
-        </form>
+            <text><a href="allepakketten.php">Geef alle reispakketten weer.</a></text>
+
+            </form>
 
 
+
+        </div>
+        <br>
+        <br>
         <h2> Onze best beoordeelde Zomerreizen </h2>
-        <div>
+        <div class=pakketwrapper>
             <?php foreach ($pakkettenzomer as $pakket) {
 
-                echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
-                 . $pakket->getStad()
-                    . " (" . $pakket->getLand() . ")<br> ". $pakket->getOmschrijving()
-                    . " " . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br> " . "</a></li><br><br>";
+                echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
+                    . $pakket->getStad()
+                    . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
+                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br> " . "</p></text></div><br><br>";
             }
             ?>
+            <div class=pakket><img src="1.png"></div>
+        </div>
+        <br>
+        <br>
+        <h2> Onze best beoordeelde Winterreizen </h2>
+        <div class=pakketwrapper>
+            <?php foreach ($pakkettenwinter as $pakket) {
+
+                echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
+                    . $pakket->getStad()
+                    . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
+                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br>" . "</p></text></div><br><br>";
+            } ?>
+            <div class=pakket><img src="2.png"></div>
+        </div>
+        <br>
+        <br>
+
+        <h2> Onze best beoordeelde City Trips </h2>
+        <div class=pakketwrapper>
+            <?php foreach ($pakkettencitytrip as $pakket) {
+                echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
+                    . $pakket->getStad()
+                    . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
+                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br>" . "</p></text></div><br><br>";
+            }
 
 
-            <h2> Onze best beoordeelde Winterreizen </h2>
-            <div>
-                <?php foreach ($pakkettenwinter as $pakket) {
 
- echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
-                        . $pakket->getStad()
-                        . " (" . $pakket->getLand() . ")<br> " . $pakket->getOmschrijving()
-                        . "<br>" . $pakket->hotelid->getHotelNaam(). "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
-                }
-                ?>
+            ?>
+            <div class=pakket><img src="3.png"></div>
 
-                <h2> Onze best beoordeelde City Trips </h2>
-                <div>
-                  <?php foreach ($pakkettencitytrip as $pakket) {
-                        echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
-                        . $pakket->getStad()
-                            . " (" . $pakket->getLand() . ")<br> ". $pakket->getOmschrijving()
-                            . "<br>" . $pakket->hotelid->getHotelNaam() . "<br>" . $pakket->getPrijs() . " euro<br>" . "</a></li><br><br>";
-                    }
+        </div>
 
 
 
-                    ?>
+        <br>
+        <br>
 
+        </div>
 
+        <div class=footer>
+            <h2><text> Over ons </text></h2>
+            <p>
+                Wij zijn een klein reisbureau dat reizen over heel Europa organiseert. <br>
+                Locatie: Genk <br>
+                Tel: xxx/xx xx xx<br>
+                Mail:contact@okereizen.be
+                <!-- Vaste info -->
+            </p>
 
+            <br>
 
-                </div>
-
-
-                <div>
-
-                    <h2> Over ons </h2>
-
-                    Wij zijn een klein reisbureau dat reizen over heel Europa organiseert. <br>
-                    Locatie: Genk <br>
-                    Tel: xxx/xx xx xx<br>
-                    Mail:contact@okereizen.be
-                    <!-- Vaste info -->
-
-                </div>
-
-
-                <?php
-                require_once("footer.php");
-                ?>
+        </div>
+        <?php
+        require_once("footer.php");
+        ?>
