@@ -42,11 +42,14 @@ require_once("header.php");
 ?>
 <h1>Inloggen</h1>
 <h2>Geef hier je e-mailadres en paswoord in.</h2>
-
+<br>
+<div >
 <?php
 
 if ($error == "" && isset($_SESSION["gebruiker"])) {
-    echo "U bent succesvol ingelogd";
+    echo "<p><text>U bent succesvol ingelogd!</text></p>";
+
+    
 } else if ($error != "") {
     echo "<span style=\"color:red;\">" . $error . "</span>";
 }
@@ -54,9 +57,9 @@ if (!isset($_SESSION["gebruiker"])) {
 ?>
 
     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
-        E-mailadres: <input type="email" name="txtEmail"> <br>
-        Wachtwoord: <input type="password" name="txtWachtwoord"> <br>
-        <input type="submit" value="Inloggen" name="btnLogin">
+      <p>  E-mailadres: <input type="email" name="txtEmail"></p> <br>
+      <p>  Wachtwoord: <input type="password" name="txtWachtwoord"> </p> <br>
+        <p> <input type="submit" value="Inloggen" name="btnLogin"> </p>
     </form>
 
 <?php

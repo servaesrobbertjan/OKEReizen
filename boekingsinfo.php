@@ -2,6 +2,7 @@
 session_start();
 require_once("boeking.php");
 require_once("klanten.php");
+require_once("hotels.php");
 
 
 
@@ -40,39 +41,45 @@ if ($boeking) {
     <h1>Bedankt voor uw boeking! <h1> 
     <h2>We contacteren u zo spoedig mogelijk. Hieronder kan u de details van uw boeking terugvinden: </h2>
 
-    <?php
+    
+
+<div class="plain">
 
 
-echo "Uw klantengegevens: ". $boeking->klantNummer->getNaam() . "<br>".  $boeking->klantNummer->getEmail() . "<br><br>";
 
-echo "Uw boekingsnummer: ". $boeking->getBoekingsid()  . "<br>";
+            <ul>
+                <fieldset>
+                    <?php
+                    
+                    echo  
+                    "<b>" . "Uw klantengegevens: " . "</b>" . $boeking->klantNummer->getNaam() . " (".$boeking->klantNummer->getEmail().")<br>". 
+                    "<b>" . "Reisnummer: " . "</b>" . $boeking->getreisId() ."<br>".
+                     "<b>" . "BoekingId: " . "</b>" . $boeking->getBoekingsid() ."<br>" .
+                        "<b>" . "BoekingsDatum: " . "</b>" . $boeking->getboekingsDatum(). "<br>".
+                        "<b>" . "HeenDatum: " . "</b>" . $boeking->getHeendatum() . "<br>".
+                        "<b>" . "Land: " . "</b>" . $boeking->getland() . "<br>".
+                        "<b>" . "Stad: " . "</b>" . $boeking->getstad() . "<br>" . 
+                        "<b>" . "Hotel: " . "</b>" . $boeking->hotelnaam->getHotelNaam() . "<br>" .
+                        "<b>". "Aantal personen: " . "</b>" . $boeking->getaantalPersonen()  . "<br>" .
+                        "<text><b>" . "Totale prijs te betalen: € " . "</b>" . $boeking->totaalPrijs() . "</text>" . "<br>";
+                    ?>
+                      </fieldset>
+            </ul>
 
-echo "Uw bestemminggegevens:" 
+        </div>
 
 
-. $boeking->getStad() . " (" . $boeking->getLand() . ")<br>"
-
-. "Uw hotel: " . $boeking->hotelnaam->getHotelNaam() . "<br><br>". 
-
-"Heendatum: ".  $boeking->getHeendatum() . "<br>". 
-
-"Aantal dagen: " . $boeking->getaantalDagen() . "<br>". 
-
-"Aantal Personen: " . $boeking->getaantalPersonen() . "<br>";
-
-
-echo "<h2>Totale Prijs: € ". $boeking->totaalPrijs()  . "</h2><br>";
-
+<?php
 }
 else {
-    echo "Oei. Er liep iets fout. <br>";
+    echo "<p>Oei. Er liep iets fout.</p> <br>";
 }
 
 
 ?>
 
-<a href="klantPage.php">Ga naar uw klantenpagina om deze boeking te beheren <a><br>
-<a href="index.php">Naar de startpagina <a>
+<p><text><a href="klantPage.php">Ga naar uw klantenpagina om deze boeking te beheren <a></text></p><br>
+<p><text><a href="index.php">Naar de startpagina <a></text></p>
 
 
 

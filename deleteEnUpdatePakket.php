@@ -118,6 +118,8 @@ if (isset($_POST["btnDelete"]) && !empty($id)) {
             <input type="submit" name="btnUpdate" value="Pakket updaten">
         </form>
 
+      <a href="pakketdetail.php"> Terug naar de site <a>
+
     <?php
     }
     ?>

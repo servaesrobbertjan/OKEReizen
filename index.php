@@ -97,7 +97,7 @@ require_once("header.php");
                 echo " " . $naam;
             } ?>. Welkom op onze Website <h1>
 
-
+<br>
 
         <h2>Welke reis wil u maken?</h2>
 
@@ -112,7 +112,7 @@ require_once("header.php");
 
                         <!-- Van alle reispakketten de bestemming(stad) en reistypes in een selectielijst zetten -->
 
-                        Bestemming: <select name="bestemming">
+                        Bestemming: <br><select name="bestemming">
                             <?php
                             foreach ($pakketLijst as $pakket) {
                                 echo "<option value=\"" . $pakket->getBestemmingsId() . "\">" . $pakket->getStad() . " (" . $pakket->getLand() . ")</option>";
@@ -120,7 +120,15 @@ require_once("header.php");
                             ?>
                         </select><br><br>
 
-                        Type reis: <select name="reistype">
+                        Vertrekdatum: <br><input type="date" id="start" name="startreis" value="<?php echo $vandaag ?>" min=" <?php echo $vandaag ?> " max="<?php echo  $limiet ?>">
+                    <br><br>
+ 
+                   
+                </div>
+
+
+                <div>
+                Type reis: <br><select name="reistype">
                             <?php
                             foreach ($typesLijst as $reistype) {
                                 echo "<option value=\"" . $reistype  . "\">" . $reistype . "</option>";
@@ -128,20 +136,16 @@ require_once("header.php");
                             ?>
                         </select>
                         <br><br>
-                </div>
-
-
-                <div>
-                    Vertrekdatum: <input type="date" id="start" name="startreis" value="<?php echo $vandaag ?>" min=" <?php echo $vandaag ?> " max="<?php echo  $limiet ?>">
+                 
+                    Terugkeerdatum: <br><input type="date" id="einde" name="eindreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo $limiet ?>">
                     <br><br>
-
-                    Terugkeerdatum: <input type="date" id="einde" name="eindreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo $limiet ?>">
-
+                   
                     <!--eindreis mag niet kleiner of gelijk zijn dan startreis én het veld moet ingevuld zijn, 
 voor de rest gaan we hier niets mee doen bij de zoekresultaten omdat onze reizen geen specifieke start en einddata hebben.
 Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het object opslaan -->
                 </div>
             </div>
+
             <input type="submit" value="Zoek uw reis" name="submitKnop">
 
 <br>
@@ -162,7 +166,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                 echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                     . $pakket->getStad()
                     . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
-                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br> " . "</p></text></div><br><br>";
+                    . "<br><br>Hotel: " . $pakket->hotelid->getHotelNaam() . "<br><br><text>" . $pakket->getPrijs() . " euro</text><br> " . "</p></text></div><br><br>";
             }
             ?>
             <div class=pakket><img src="1.png"></div>
@@ -176,7 +180,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                 echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                     . $pakket->getStad()
                     . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
-                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br>" . "</p></text></div><br><br>";
+                    . "<br><br>Hotel: " . $pakket->hotelid->getHotelNaam() . "<br><br><text>" . $pakket->getPrijs() . " euro</text><br>" . "</p></text></div><br><br>";
             } ?>
             <div class=pakket><img src="2.png"></div>
         </div>
@@ -189,7 +193,7 @@ Bij de boekingspagina worden de data opnieuw gevraagd en gaan we ze pas in het o
                 echo "<div class=\"pakket\"><text><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">"
                     . $pakket->getStad()
                     . " (" . $pakket->getLand() . ")</a></p><br><p> " . $pakket->getOmschrijving()
-                    . "<br><br>" . $pakket->hotelid->getHotelNaam() . "<br><br>" . $pakket->getPrijs() . " euro<br>" . "</p></text></div><br><br>";
+                    . "<br><br>Hotel: " . $pakket->hotelid->getHotelNaam() . "<br><br><text>" . $pakket->getPrijs() . " euro</text><br>" . "</p></text></div><br><br>";
             }
 
 

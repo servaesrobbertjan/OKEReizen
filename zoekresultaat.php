@@ -6,6 +6,8 @@ require_once("pakket.php");
 
 /* we kijken over de er een zoekopdracht door de klant is ingegeven */ 
 
+unset($_SESSION["gekozenreis"]);
+
 if (isset($_SESSION["zoekresultaat"])){
 $pakketObj = new Pakket();
 
@@ -34,31 +36,34 @@ $pakkettenLijst = $pakketObj->getPakketByReisTypeAndBestemmingsId($reistype,$bes
 <?php
 require_once("header.php");
 ?>
-
-    <ul>
+<h2> Uw Zoekresultaat </h2>
+<div class=pakketwrapper2>
         <?php 
         
 /*We tonen de gezochte pakketten */
 if (count($pakkettenLijst)>0){
 
         foreach ($pakkettenLijst as $pakket) {
-            echo "<li><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">" . $pakket->getStad() 
-            . " (" . $pakket->getLand() . ")<br>". $pakket->getReistype() . " <br><br> €". $pakket->getPrijs() . " per persoon per overnachting". "</a>
-            </li>";
+            echo "<div class=pakket2><p><a href=\"pakketdetail.php?id=" . $pakket->getReisId() . "\">" . $pakket->getStad()
+            . " (" . $pakket->getLand() . ")</a></p><i>" . $pakket->getReistype() . "</i><br><br><text> € " . $pakket->getPrijs()  . " per persoon / per overnachting" . "</text><br></a>
+            </div>";
 
         }
     } else {
 
-        echo "Er werden geen pakketten gevonden die aan uw zoekopdracht voldoen.";
+        echo "<p>Er werden geen pakketten gevonden die aan uw zoekopdracht voldoen.</p>";
     }
 
 
         
         ?>
-    </ul>
+        </div>
+  
 
+<br>
 
-<a href="index.php">Terug naar zoeken</a>
+    <p><text><a href="index.php">Terug naar de startpagina</a></text></p>
+  
 
 </body>
 <?php
