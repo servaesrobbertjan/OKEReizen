@@ -15,6 +15,7 @@
         <div class=menutext>
             <a href="index.php"> Home </a> |
             <a href="allepakketten.php"> Onze Pakketten </a>|
+            <a href="hoteldetail.php"> Onze Hotels </a>|
             <a href="reviewPage.php"> Reviews </a>|
             <?php if (!isset($_SESSION["gebruiker"])) { ?>
                 <a href="login.php"> Login </a>|

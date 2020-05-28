@@ -72,9 +72,9 @@ echo $klantnaam; ?></h2>
             <ul>
                 <fieldset>
                     <?php
-                    echo   "<b>" . "Reisnummer: " . "</b>" . $reis->getreisId() . "<b>"."<br>".
-                     "<b>" . "BoekingId: " . "</b>" . $reis->getBoekingsid() ."<br>" .
-                        "<b>" . "boekingsDatum: " . "</b>" . $reis->getboekingsDatum() . "<b>" . "<br>".
+                    echo   "<b>" . "Reisnummer: " . $reis->getreisId()."</b>"."<br>".
+                     "<b>" . "BoekingId: " .  $reis->getBoekingsid() ."</b>" ."<br>" .
+                        "<b>" . "boekingsDatum: " . $reis->getboekingsDatum() . "<b>" . "<br>".
                         "<b>" . "heenDatum: " . "</b>" . $reis->getHeendatum() . "<b>" . "<br>".
                         "<b>" . "land: " . "</b>" . $reis->getland() . "<b>" . "<br>".
                         "<b>" . "stad: " . "</b>" . $reis->getstad() . "<b>" . "<br>" . 
@@ -83,15 +83,13 @@ echo $klantnaam; ?></h2>
                         "<b>" . "prijs: " . "</b>" . $reis->getprijs() . "<b>" . "<br>";
 
                         $reisNummer = $reis->getreisId();
-                        $land = $reis->getland();
-                        $stad = $reis->getstad();
-                        $hotel = $reis->gethotelnaam();
-
+                        
                         if(isset($_POST["ReviewOK"])&& !empty($reisNummer)){
                             $_SESSION["reisNummer"] = $reisNummer;
                             
                         }
-
+var_dump($_SESSION["reisNummer"]);
+var_dump($reisNummer);
                     ?>
                     <br>
                     <form action="/Eindproject_php/reviewPage.php" method="post">

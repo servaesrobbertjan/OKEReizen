@@ -74,7 +74,7 @@ if (isset($_SESSION["gebruiker"])) {
     <H2>Vul hier je review in</H2>
 
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-        Reisnummer: <?php echo $_SESSION["reisNummer"]      
+        Reisnummer: <?php echo $_SESSION["reisNummer"];      
         ?> <br>
         <fieldset>
             <legend>Review jouw reis </legend><br>
@@ -95,6 +95,7 @@ if (isset($_SESSION["gebruiker"])) {
     <body>
 
     <?php
+    var_dump($_SESSION["reisNummer"]);
 }
 // als gebruiker niet is ingelogd toon reviews
     ?>

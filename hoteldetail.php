@@ -29,6 +29,5 @@ require_once("header.php");
         echo $hotel->getHotelTelefoon() . "<br>"; echo $hotel->getHotelEmail()."<br><hr>";
     }
 
-
-require_once("footer.php");
+    require_once("footer.php");
 ?>
