@@ -11,7 +11,7 @@ if (!isset($_SESSION["gebruiker"])) {
 }
 
 // er is een gebruiker ingelogd
-
+$reisNummer="";
 $gebruiker = unserialize($_SESSION["gebruiker"]);
 $klantNummer = $gebruiker->getId();
 $klantnaam = $gebruiker->getNaam();
@@ -86,18 +86,22 @@ echo $klantnaam; ?></text>
                         "<b>" . "Hotel: " . "</b>" . $reis->gethotelnaam() . "<br>" .
                         "<b>". "Aantal personen: " . "</b>" . $reis->getaantalPersonen()  . "<br>" .
                         "<b>" . "Totale prijs betaald: € " . "</b>" . $reis->totaalPrijs() . "<br>";
-                        $reisNummer = $reis->getreisId();
+                
                         
-                        if(isset($_POST["ReviewOK"])&& !empty($reisNummer)){
-                            $_SESSION["ReisNummer"] = $reisNummer;
+                        if(isset($_POST["reisNummer"])){
+                            $_SESSION["reisNummer"] = $_POST["reisNummer"];
+                            header("Location: reviewPage.php");
+                            exit;
                             
+
                         }
-var_dump($_SESSION["ReisNummer"]);
-var_dump($reisNummer);
+
+
                     ?>
                     <br>
-                    <form action="reviewPage.php" method="post">
-                    <input type="submit" name="ReviewOK" value="Review">
+                    <form action="klantPage.php" method="post">
+                    <input type="hidden" name="reisNummer" value="<?php echo $reis->getreisId() ?>">     
+                    <input type="submit" value="Review">
                     </fieldset>
             </ul>
         </div>

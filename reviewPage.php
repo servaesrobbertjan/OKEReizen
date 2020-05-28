@@ -3,11 +3,12 @@
 session_start();
 require_once("ReviewClass.php");
 require_once("klanten.php");
+require_once("pakket.php");
 
 $review = "";
 $error = "";
 $score = "";
-$reisNummer="";
+$reisNummer = "";
 $naam = "";
 
 // controleer of review is verstuurd en gebruiker is ingelogd
@@ -48,20 +49,30 @@ if ($error == "" && isset($_SESSION["gebruiker"])) {
         $bericht = new review(null, null, $review, $score, null, null, null, $klantNummer, $reisNummer);
         $bericht->setReview($review);
         $bericht = $bericht->reviewToevoegen();
+       
+        if (isset($_POST["knopOK"])) {
+
+           unset($_SESSION["reisNummer"]);
+        }
+
+
     } catch (reviewTeLang $e) {
         $error .= "--uw review is te lang, maximum karakters is 250--";
     }
-}
 
-require_once("header.php");
+}
 
 // als formulier verstuurd en error leeg toon bericht anders toon error
 
 if (isset($_POST["knopOK"]) && $error == "") {
-    echo "<br><span style=\"color:blue;>\"><b>" . " !!! dank voor uw review !!!" . "</b></span>";
+    echo "<br><span style=\"color:blue;>\"><b><p>" . " !!! dank voor uw review !!!" . "</p></b></span>";
 } else if (isset($_POST["knopOK"]) && $error !== "") {
     echo "<br><span style=\"color:red;>\"><b>" . $error . "</b></span>";
 }
+
+
+
+require_once("header.php");
 
 // als gebruiker is ingelogd toon formulier
 
@@ -69,40 +80,46 @@ if (isset($_SESSION["gebruiker"])) {
 
 ?>
 
-    </body>
 
-    <H2>Vul hier je review in</H2>
+    <?php if (isset($_SESSION["gebruiker"]) && isset($_SESSION["reisNummer"])) { 
+        $pakketObj = new Pakket();
+        $pakket = $pakketObj->getPakketById($_SESSION["reisNummer"]);
+        ?>
 
-    <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
-        Reisnummer: <?php echo $_SESSION["reisNummer"];      
-        ?> <br>
+        <H2>Vul hier je review in</H2>
+
+        <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+            <p>Reisnummer:</p> <?php echo "<p><text>". $_SESSION["reisNummer"] . "</text></p>"; ?>
+            <p>Bestemming:</p> <?php echo "<p><text>". $pakket->getStad() ." (". $pakket->getLand() . ")</text></p>"
+                        ?> <br>
             <ul>
-        <fieldset>
-        
-            <legend>Review jouw reis </legend><br>
-            Score: <br> <input type="radio" name="txtScore" value="0">0
-            <input type="radio" name="txtScore" value="1">1
-            <input type="radio" name="txtScore" value="2">2
-            <input type="radio" name="txtScore" value="3">3
-            <input type="radio" name="txtScore" value="4">4
-            <input type="radio" name="txtScore" value="5">5 <br><br>
-            Vertel ons hier jouw ervaring: <br> <textarea rows="5" cols="50" name="txtReview"></textarea> <br><br>
+                <fieldset>
 
-            <input type="submit" name="knopOK" value="verzenden">
+                    <legend>Review jouw reis </legend><br>
+                    Score: <br> <input type="radio" name="txtScore" value="0">0
+                    <input type="radio" name="txtScore" value="1">1
+                    <input type="radio" name="txtScore" value="2">2
+                    <input type="radio" name="txtScore" value="3">3
+                    <input type="radio" name="txtScore" value="4">4
+                    <input type="radio" name="txtScore" value="5">5 <br><br>
+                    Vertel ons hier jouw ervaring: <br> <textarea rows="5" cols="50" name="txtReview"></textarea> <br><br>
 
-</fieldset>
-</ul>
-    </form>
+                    <input type="submit" name="knopOK" value="verzenden">
 
-    <body>
+                </fieldset>
+            </ul>
+        </form>
+
+    <?php } ?>
+
+ 
 
     <?php
-    var_dump($_SESSION["reisNummer"]);
+
 }
 // als gebruiker niet is ingelogd toon reviews
     ?>
 
-    <body>
 
         <H2>Reviews</H2>
 
@@ -111,31 +128,33 @@ if (isset($_SESSION["gebruiker"])) {
         $beoordeling = new review();
         $beoordeling = $beoordeling->toonReviews();
 
+
+
         foreach ($beoordeling as $bericht) { ?>
-<div class="plain">
-            <ul>
-                <fieldset>
-                    <?php
-                    echo "<b>" . "Naam: " . "</b>" . $bericht->getNaam() . "<br>" .
-                        "<b>" . "Stad: " . "</b>" . $bericht->getStad()  . "<br>" .
-                        "<b>" . "Land: " . "</b>" . $bericht->getLand() . "<br>" .
-                        "<b>" . "Score: " . "</b>" . $bericht->getScore() . "<br>" . "<br>" .
-                        "<b>" . "Review: " . "</b>" . "<br>" . $bericht->getReview() . "<br>" . "<br><div style=\"text-align:right\">" .
-                        $bericht->getDatum() . "<div><br>";
-                    ?>
-              </fieldset>
-            </ul>
-<div>
+            <div class="plain">
+                <ul>
+                    <fieldset>
+                        <?php
+                        echo "<b>" . "Naam: " . "</b>" . $bericht->getNaam() . "<br>" .
+                            "<b>" . "Stad: " . "</b>" . $bericht->getStad()  . "<br>" .
+                            "<b>" . "Land: " . "</b>" . $bericht->getLand() . "<br>" .
+                            "<b>" . "Score: " . "</b>" . $bericht->getScore() . "<br>" . "<br>" .
+                            "<b>" . "Review: " . "</b>" . "<br>" . $bericht->getReview() . "<br>" . "<br><div style=\"text-align:right\">" .
+                            $bericht->getDatum() . "<div><br>";
+                        ?>
+                    </fieldset>
+                </ul>
+                <div>
 
 
 
-      
-        <?php
-        }
-?>
-<p><text><a href="index.php">Terug naar de startpagina</a></text></p>
-        <?php
-        
-        require_once("footer.php");
 
-        ?>
+                <?php
+            }
+                ?>
+                <p><text><a href="index.php">Terug naar de startpagina</a></text></p>
+                <?php
+
+                require_once("footer.php");
+
+                ?>
