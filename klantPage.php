@@ -16,7 +16,13 @@ $gebruiker = unserialize($_SESSION["gebruiker"]);
 $klantNummer = $gebruiker->getId();
 $klantnaam = $gebruiker->getNaam();
 
+if(isset($_POST["reisNummer"])){
+    $_SESSION["reisNummer"] = $_POST["reisNummer"];
+    header("Location: reviewPage.php");
+    exit;
+    
 
+}
 
 // Start van de header html
 require_once("header.php");
@@ -87,19 +93,11 @@ echo $klantnaam; ?></text>
                         "<b>". "Aantal personen: " . "</b>" . $reis->getaantalPersonen()  . "<br>" .
                         "<b>" . "Totale prijs betaald: € " . "</b>" . $reis->totaalPrijs() . "<br>";
                 
-                        
-                        if(isset($_POST["reisNummer"])){
-                            $_SESSION["reisNummer"] = $_POST["reisNummer"];
-                            header("Location: reviewPage.php");
-                            exit;
-                            
-
-                        }
-
+                    
 
                     ?>
                     <br>
-                    <form action="klantPage.php" method="post">
+                    <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post">
                     <input type="hidden" name="reisNummer" value="<?php echo $reis->getreisId() ?>">     
                     <input type="submit" value="Review">
                     </fieldset>
