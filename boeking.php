@@ -256,7 +256,8 @@ class Boeking
         
         INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId 
         INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
-        WHERE boekingen.heenDatum >= CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        WHERE boekingen.heenDatum >= CURRENT_DATE AND klanten.klantNummer = :klantNummer
+        order by boekingen.heenDatum asc");
         $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
         $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -295,7 +296,8 @@ class Boeking
         
         INNER JOIN reistypes on reistypes.reisTypeId = reizen.reisTypeId 
         INNER JOIN klanten ON klanten.klantNummer = klantenreizen.klantNummer 
-        WHERE boekingen.heenDatum < CURRENT_DATE AND klanten.klantNummer = :klantNummer");
+        WHERE boekingen.heenDatum < CURRENT_DATE AND klanten.klantNummer = :klantNummer
+        order by boekingen.heenDatum desc");
         $stmt->bindValue(":klantNummer", $klantNummer);
         $stmt->execute();
         $resultset = $stmt->fetchAll(PDO::FETCH_ASSOC);
