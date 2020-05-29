@@ -154,7 +154,7 @@ if ($gekozenpakket) { ?>
                             echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br><br>";
                             echo $gekozenpakket->getOmschrijving() . "<br><br>";
                             echo "<text>€ " . $gekozenpakket->getPrijs() . " per persoon/nacht.</text>";
-                            echo "<b><span style=\"color:red\">" . $error . "</span><br>"; ?>        <br>
+                            echo "<br><span style=\"color:red\">" . $error . "</span><br>"; ?>        <br>
 
         </div>
         <br>
