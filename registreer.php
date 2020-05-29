@@ -5,11 +5,15 @@ session_start();
 require_once("klanten.php");
 require_once("plaatsen.php");
 
+// datum en leeftijdslimiet bepalen
+
 $today = new DateTime(null, new DateTimeZone('Europe/Brussels'));
 $minimumage = $today->modify('-6576 day');
 $minleeftijd = $minimumage->format("Y-m-d");
 
 $error = "";
+
+//vallidatie formulier
 
 if (isset($_POST["btnRegistreer"])) {
     $email = "";

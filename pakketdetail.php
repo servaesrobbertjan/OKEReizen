@@ -87,6 +87,8 @@ require_once("header.php");
 }
 if (!empty($gebruiker)) {
 
+// controle enkel geauthoriseerde users kunnen het pakket aanpassen
+
     if ($gebruiker >= 0 && $gebruiker <= 4) {
 
         echo "<br><br> <p>  <text><a href=\"deleteEnUpdatePakket.php?id=" . $pakket->getReisId() . "\"> << Pakket wijzigen </a></text></p>";

@@ -5,7 +5,7 @@ require_once("klanten.php");
 require_once("hotels.php");
 
 
-
+//controle of boekingsid in de session zit
 
 if (empty($_SESSION["boekingsid"])) {
 
