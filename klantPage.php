@@ -3,7 +3,7 @@
 session_start();
 require_once("klanten.php");
 require_once("boeking.php");
-
+require_once("pakket.php");
 // Er is niemand ingelogd
 if (!isset($_SESSION["gebruiker"])) {
     header("Location: index.php");
@@ -15,14 +15,9 @@ $reisNummer="";
 $gebruiker = unserialize($_SESSION["gebruiker"]);
 $klantNummer = $gebruiker->getId();
 $klantnaam = $gebruiker->getNaam();
-
-if(isset($_POST["reisNummer"])){
-    $_SESSION["reisNummer"] = $_POST["reisNummer"];
-    header("Location: reviewPage.php");
-    exit;
     
 
-}
+
 
 // Start van de header html
 require_once("header.php");
@@ -93,13 +88,22 @@ echo $klantnaam; ?></text>
                         "<b>". "Aantal personen: " . "</b>" . $reis->getaantalPersonen()  . "<br>" .
                         "<b>" . "Totale prijs betaald: € " . "</b>" . $reis->totaalPrijs() . "<br>";
                 
-                    
+                    $id= $reis->getreisId()
 
                     ?>
                     <br>
                     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <input type="hidden" name="reisNummer" value="<?php echo $reis->getreisId() ?>">     
+                    <input type="hidden" name="<?php echo $id ?>" value="<?php echo $id ?>">     
                     <input type="submit" value="Review">
+
+<?php if(!empty($_POST[$id])){
+
+    $_SESSION["reisNummer"] = $_POST[$id];
+   header("Location: reviewPage.php");
+   exit;
+}
+?>
+
                     </fieldset>
             </ul>
         </div>
