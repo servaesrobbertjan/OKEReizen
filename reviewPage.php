@@ -38,7 +38,7 @@ if (isset($_POST["knopOK"]) && isset($_SESSION["gebruiker"])) {
     } else {
         $reisNummer = $_SESSION["reisNummer"];
     }
-}
+
 
 //indien review en score ingevuld en verzonden en de user is ingelogd dan voeg bericht toe aan DB
 
@@ -65,7 +65,7 @@ if ($error == "" && isset($_SESSION["gebruiker"])) {
 // als formulier verstuurd en error leeg toon bericht anders toon error
 
 
-
+}
 
 
 require_once("header.php");
