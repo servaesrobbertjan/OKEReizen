@@ -97,14 +97,14 @@ if (isset($_SESSION["gebruiker"])) {
             <ul>
                 <fieldset>
 
-                    <legend>Review jouw reis </legend><br>
-                    Score: <br> <input type="radio" name="txtScore" value="0">0
-                    <input type="radio" name="txtScore" value="1">1
-                    <input type="radio" name="txtScore" value="2">2
-                    <input type="radio" name="txtScore" value="3">3
-                    <input type="radio" name="txtScore" value="4">4
-                    <input type="radio" name="txtScore" value="5">5 <br><br>
-                    Vertel ons hier jouw ervaring: <br> <textarea rows="5" cols="50" name="txtReview"></textarea> <br><br>
+                    <legend> <text>Review jouw reis</text> </legend><br>
+                    <text> Score: </text> <br> <input type="radio" name="txtScore" value="0"><text>0</text>
+                    <input type="radio" name="txtScore" value="1"><text>1</text>
+                    <input type="radio" name="txtScore" value="2"><text>2</text>
+                    <input type="radio" name="txtScore" value="3"><text>3</text>
+                    <input type="radio" name="txtScore" value="4"><text>4</text>
+                    <input type="radio" name="txtScore" value="5"><text>5</text> <br><br>
+                    <text> Vertel ons hier jouw ervaring: </text> <br> <textarea rows="5" cols="50" name="txtReview"></textarea> <br><br>
 
                     <input type="submit" name="knopOK" value="verzenden">
 
