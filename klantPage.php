@@ -99,8 +99,11 @@ echo $klantnaam; ?></text>
                     <input type="hidden" name="<?php echo $id ?>" value="<?php echo $id ?>">     
                     <input type="submit" name="review<?php echo $id ?>" value="Review">
 
+
+                    <!--controle van welke reviewknop werd gekozen--> 
+
 <?php if(isset($_POST[$id]) && isset($_POST["review".$id])){
-echo $_POST[$id];
+
     $_SESSION["reisNummer"] = $_POST[$id];
  header("Location: reviewPage.php");
 exit;
