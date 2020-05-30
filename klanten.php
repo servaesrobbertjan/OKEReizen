@@ -77,6 +77,7 @@ class Klanten
         $sgeboortedatum=$date->format("Y-m-d");
         $this->geboortedatum = $sgeboortedatum;
     }
+    // als email niet juist is geeft hij een foutcode
     public function setEmail($semail)
     {
         if (!filter_var($semail, FILTER_VALIDATE_EMAIL)) {
@@ -84,7 +85,7 @@ class Klanten
         }
         $this->email = $semail;
     }
-   
+// als wachtwoorden niet overeen komen geeft hij een foutcode
     public function setWachtwoord($swachtwoord, $swachtwoordHerhaal)
     {
         if ($swachtwoord !== $swachtwoordHerhaal) {
@@ -92,7 +93,7 @@ class Klanten
         }
         $this->wachtwoord = password_hash($swachtwoord, PASSWORD_DEFAULT);
     }
-
+//in geval van dat email al bestaat kan men niet registreren
     public function emailAlInGebruik()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
@@ -103,7 +104,7 @@ class Klanten
         $dbh = null;
         return $rowCount;
     }
-
+//Functie registreren
     public function registreer()
     {
         $rowCount = $this->emailAlInGebruik();
@@ -150,7 +151,7 @@ class Klanten
         $dbh = null;
         return $this;
     }
-
+// email uit de database halen
     public function email() {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
         $stmt = $dbh->prepare("SELECT * FROM klanten WHERE emailAdres = :email");

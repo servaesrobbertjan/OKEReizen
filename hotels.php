@@ -59,7 +59,7 @@ class Hotels
         $this->hotelEmail = $hotelEmail;
     
     }
-
+    //alle hotels weergeven 
     public function getAllHotel()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
@@ -87,7 +87,7 @@ class Hotels
         $dbh = null;
         return $hotelObj;
     }
-   
+    // geval van een hotel toe te voegen dat al bestaat
     public function hotelBestaatAl()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
@@ -99,7 +99,7 @@ class Hotels
         return $rowCount;
     }
    
-   
+   // al een functie geschreven om eventueel een hotel toe te voegen maar nog niet mogelijk op de site
     public function hotelToevoegen()
     {
         $rowCount = $this->hotelBestaatAl();
@@ -117,6 +117,8 @@ class Hotels
         $this->id = $laatsteNieuweId;
         return $this;
     }
+
+    //al een functie geschreven om een hotel te verwijderen maar nog niet mogelijk op site 
     public function deleteHotelByID($hotelId) {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
         $stmt = $dbh->prepare("DELETE FROM hotel WHERE hotelId = :id");
@@ -124,6 +126,7 @@ class Hotels
         $stmt->execute();
         $dbh = null;
     }
+    //al een functie geschreven om een hotel te up te daten maar nog niet mogelijk op site
     public function updateHotel()
     {
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USER, DBConfig::$DB_PASSWORD);
@@ -135,6 +138,7 @@ class Hotels
         $stmt->execute();
         $dbh = null;
     }
+    //csv bestand uploaden 
     public function CSVImport($bestand)
     {
         if (empty($bestand)) {
