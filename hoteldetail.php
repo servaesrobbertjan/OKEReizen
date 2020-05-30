@@ -22,13 +22,14 @@ require_once("header.php");
 <body>
     <h1>Top hotels</h1>
     <h2>kies hier je hotel</h2>
+    <div class = "plain">
     <?php
 
     foreach ($hotels as $hotel) {
-        echo "<span style=\"font-weight:bold;\">Naam: </span>" . $hotel->getHotelNaam() . "<br>";
-        echo $hotel->getHotelTelefoon() . "<br>"; echo $hotel->getHotelEmail()."<br><hr>";
+        echo "<text \">Naam:"  . $hotel->getHotelNaam() . "<br>";
+        echo $hotel->getHotelTelefoon() . "<br>"; echo $hotel->getHotelEmail()."</text><br><hr>";
     }
-
-
-require_once("footer.php");
+?> </div>
+<?php
+    require_once("footer.php");
 ?>

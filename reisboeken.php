@@ -55,6 +55,7 @@ if (isset($_SESSION["gekozenreis"])) {
     }
 }
 
+
 /* controle op invoervelden */
 
 if (isset($_POST["submitKnop"])) {
@@ -83,9 +84,6 @@ if (isset($_POST["submitKnop"])) {
 
         $error .= 'U moet een aantal dagen opgeven';
     }
-
-    if ($error == "") {
-    }
 }
 
 
@@ -95,7 +93,7 @@ if (isset($_POST["submitKnop"])) {
 if (isset($_POST["submitKnop"])) {
 
 
-    if ($error == "" && isset($_SESSION["gebruiker"])) {
+    if ($error == "" && isset($_SESSION["gebruiker"])){ 
 
         $gebruiker = unserialize($_SESSION["gebruiker"]);
         $klantnummer = $gebruiker->getId();
@@ -118,17 +116,16 @@ if (isset($_POST["submitKnop"])) {
 $boekingsid = $boeking->getBoekingsid();
  
         $_SESSION["boekingsid"] = $boekingsid;
-if (!empty($_SESSION["boekingsid"])){
 
-        header("Location: boekingsinfo.php");
-        exit;
 
-}
-    } else {
+        if (!empty($_SESSION["boekingsid"]) && $error == ""){
 
-        header("Location: pakketdetails.php");
-        exit;
+      header("Location: boekingsinfo.php");
+      exit;
+
+        }
     }
+    
 }
 
 
@@ -142,8 +139,12 @@ if (!empty($_SESSION["boekingsid"])){
 <div class=pakket>
 
     
+
 <!--Kijken of er een gekozenpakket is-->
-<?php if ($gekozenpakket) { ?>
+<?php
+
+
+if ($gekozenpakket) { ?>
 
     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
 
@@ -153,12 +154,12 @@ if (!empty($_SESSION["boekingsid"])){
                             echo "Hotel: " . $gekozenpakket->hotelid->getHotelNaam() . "<br><br>";
                             echo $gekozenpakket->getOmschrijving() . "<br><br>";
                             echo "<text>€ " . $gekozenpakket->getPrijs() . " per persoon/nacht.</text>";
-                            echo "<span style=\"color:red\">" . $error . "</span><br>"; ?>        <br>
+                            echo "<br><span style=\"color:red\">" . $error . "</span><br>"; ?>        <br>
 
         </div>
         <br>
 
-        <h2> Vervoledig de informatie </h2>
+        <h2> Vervolledig de informatie </h2>
    <p>
         <!--invoer velden-->
         Vertrekdatum:<input type="date" id="start" name="startreis" value="<?php echo $morgen ?>" min=" <?php echo $morgen ?> " max="<?php echo  $limiet ?>"><br>

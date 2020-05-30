@@ -11,12 +11,18 @@ if (!isset($_SESSION["gebruiker"])) {
 }
 
 // er is een gebruiker ingelogd
-
+$reisNummer="";
 $gebruiker = unserialize($_SESSION["gebruiker"]);
 $klantNummer = $gebruiker->getId();
 $klantnaam = $gebruiker->getNaam();
 
+if(isset($_POST["reisNummer"])){
+    $_SESSION["reisNummer"] = $_POST["reisNummer"];
+    header("Location: reviewPage.php");
+    exit;
+    
 
+}
 
 // Start van de header html
 require_once("header.php");
@@ -76,7 +82,7 @@ echo $klantnaam; ?></text>
             <ul>
                 <fieldset>
                     <?php
-                    
+                                        
                     echo   "<b>" . "Reisnummer: " . "</b>" . $reis->getreisId() ."<br>".
                      "<b>" . "BoekingId: " . "</b>" . $reis->getBoekingsid() ."<br>" .
                         "<b>" . "BoekingsDatum: " . "</b>" . $reis->getboekingsDatum(). "<br>".
@@ -86,20 +92,14 @@ echo $klantnaam; ?></text>
                         "<b>" . "Hotel: " . "</b>" . $reis->gethotelnaam() . "<br>" .
                         "<b>". "Aantal personen: " . "</b>" . $reis->getaantalPersonen()  . "<br>" .
                         "<b>" . "Totale prijs betaald: € " . "</b>" . $reis->totaalPrijs() . "<br>";
-                        $reisNummer = $reis->getreisId();
-                        $land = $reis->getland();
-                        $stad = $reis->getstad();
-                        $hotel = $reis->gethotelnaam();
-
-                        if(isset($_POST["ReviewOK"])&& !empty($reisNummer)){
-                            $_SESSION["reisNummer"] = $reisNummer;
-                            
-                        }
+                
+                    
 
                     ?>
                     <br>
-                    <form action="reviewPage.php" method="post">
-                    <input type="submit" name="ReviewOk" value="Review">
+                    <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <input type="hidden" name="reisNummer" value="<?php echo $reis->getreisId() ?>">     
+                    <input type="submit" value="Review">
                     </fieldset>
             </ul>
         </div>
