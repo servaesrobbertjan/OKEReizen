@@ -9,8 +9,11 @@ if (!isset($_SESSION["gebruiker"])) {
     header("Location: index.php");
     exit;
 }
-
+if (isset($_SESSION["reisNummer"])){
+unset($_SESSION["reisNummer"]); 
+}
 // er is een gebruiker ingelogd
+
 $reisNummer="";
 $gebruiker = unserialize($_SESSION["gebruiker"]);
 $klantNummer = $gebruiker->getId();
@@ -94,13 +97,13 @@ echo $klantnaam; ?></text>
                     <br>
                     <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post">
                     <input type="hidden" name="<?php echo $id ?>" value="<?php echo $id ?>">     
-                    <input type="submit" value="Review">
+                    <input type="submit" name="review<?php echo $id ?>" value="Review">
 
-<?php if(!empty($_POST[$id])){
-
+<?php if(isset($_POST[$id]) && isset($_POST["review".$id])){
+echo $_POST[$id];
     $_SESSION["reisNummer"] = $_POST[$id];
-   header("Location: reviewPage.php");
-   exit;
+ header("Location: reviewPage.php");
+exit;
 }
 ?>
 
