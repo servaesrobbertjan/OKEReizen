@@ -19,10 +19,10 @@ if (isset($_POST["btnRegistreer"])) {
     $email = "";
     $wachtwoord = "";
     $wachtwoordHerhaal = "";
-    $naam="";
-    $adres="";
-    $plaats="";
-    $geboortedatum="";
+    $naam = "";
+    $adres = "";
+    $plaats = "";
+    $geboortedatum = "";
 
     if (empty($_POST["txtEmail"])) {
         $error .= "Het e-mailadres moet ingevuld worden<br>";
@@ -53,8 +53,13 @@ if (isset($_POST["btnRegistreer"])) {
     }
     if (empty($_POST["txtGeboorteDatum"])) {
         $error .= "De geboortedatum moet ingevuld worden<br>";
-    } else {
-        $geboortedatum = $_POST["txtGeboorteDatum"];
+
+        if ($_POST["txtGeboorteDatum"] > $minleeftijd) {
+            $error .= "U moet 18 jaar zijn.";
+        } else {
+
+            $geboortedatum = $_POST["txtGeboorteDatum"];
+        }
     }
     if ($error == "") {
         // Alles is ingevuld, dus alles kan opgeslagen worden in de database
@@ -86,39 +91,39 @@ require_once("header.php");
 
 <h1>Registreren</h1>
 <h2>Vul je gegevens in</h1>
-<br>
-<?php
-if ($error == "" && isset($_SESSION["gebruiker"])) {
-    echo "U bent succesvol geregistreerd.";
-} else if ($error !== "") {
-    echo "<span style=\"color:red;\">" . $error . "</span>";
-}
-if (!isset($_SESSION["gebruiker"])) {
-?>
+    <br>
+    <?php
+    if ($error == "" && isset($_SESSION["gebruiker"])) {
+        echo "U bent succesvol geregistreerd.";
+    } else if ($error !== "") {
+        echo "<span style=\"color:red;\">" . $error . "</span>";
+    }
+    if (!isset($_SESSION["gebruiker"])) {
+    ?>
 
-    <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
-    <p>    Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> </p><br>
-    <p> Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"></p> <br>
-    <p> Postcode en Gemeente: <select name="txtPlaats">
-            <?php
-            $plaatsen = new plaatsen();
-            $plaatsen = $plaatsen->getAlleGemeente();
-            foreach ($plaatsen as $plaats) {
-            ?>
-                <option value="<?php echo $plaats->getPlaatsId()?>"><?php echo $plaats->getPostcode() . " " . $plaats->getGemeente() ?></option><br>
-            <?php   
-            }
-            ?>
-            </select></p><br>
-      <p>  Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> </p><br>
-       <p> E-mailadres: <input type="email" name="txtEmail" maxlength="64"></p> <br>
-       <p>   Wachtwoord: <input type="password" name="txtWachtwoord"></p> <br>
-       <p>  Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> </p> <br>
-       <p>  <input type="submit" value="Registreren" name="btnRegistreer"> </p>
+        <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <p> Naam en Voornaam: <input type="text" name="txtNaam" maxlength="64"> </p><br>
+            <p> Straat en Huisnummer: <input type="text" name="txtAdres" maxlength="128"></p> <br>
+            <p> Postcode en Gemeente: <select name="txtPlaats">
+                    <?php
+                    $plaatsen = new plaatsen();
+                    $plaatsen = $plaatsen->getAlleGemeente();
+                    foreach ($plaatsen as $plaats) {
+                    ?>
+                        <option value="<?php echo $plaats->getPlaatsId() ?>"><?php echo $plaats->getPostcode() . " " . $plaats->getGemeente() ?></option><br>
+                    <?php
+                    }
+                    ?>
+                </select></p><br>
+            <p> Geboortedatum: <input type="date" name="txtGeboorteDatum" value="1980-01-01" min="1900-01-01" max="<?php echo  $minleeftijd ?>"> </p><br>
+            <p> E-mailadres: <input type="email" name="txtEmail" maxlength="64"></p> <br>
+            <p> Wachtwoord: <input type="password" name="txtWachtwoord"></p> <br>
+            <p> Herhaal wachtwoord: <input type="password" name="txtWachtwoordHerhaal"> </p> <br>
+            <p> <input type="submit" value="Registreren" name="btnRegistreer"> </p>
 
-    </form>
+        </form>
 
-<?php
-}
-require_once("footer.php");
-?>
+    <?php
+    }
+    require_once("footer.php");
+    ?>
