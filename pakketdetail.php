@@ -2,7 +2,7 @@
 session_start();
 require_once("pakket.php");
 require_once("reviewClass.php");
-
+require_once("klanten.php");
 
 
 /* 
@@ -87,9 +87,11 @@ require_once("header.php");
 }
 if (!empty($gebruiker)) {
 
+    $gebruiker = unserialize($_SESSION["gebruiker"]);
+                    $naam = $gebruiker->getNaam();
 // controle enkel geauthoriseerde users kunnen het pakket aanpassen
 
-    if ($gebruiker >= 0 && $gebruiker <= 4) {
+    if ($naam == "Admin") {
 
         echo "<br><br> <p>  <text><a href=\"deleteEnUpdatePakket.php?id=" . $pakket->getReisId() . "\"> << Pakket wijzigen </a></text></p>";
     }
